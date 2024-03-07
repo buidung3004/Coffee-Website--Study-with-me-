@@ -1,0 +1,120 @@
+/* .header {
+    background: #202020;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.header .inner-logo a {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.body .sider {
+    width: 150px;
+    background: #323232;
+    color: #fff;
+    height: calc(100vh -56px);
+    position: fixed;
+    top: 56px;
+    left: 0;
+}
+
+.body .main {
+    margin: 15px;
+    position: relative;
+    left: 150px;
+    width: calc(100% - 100px);
+} */
+
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Dark theme background */
+    color: #e0e0e0; /* Light text color for contrast */
+}
+
+/* Header styles */
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row.align-items-center {
+    display: flex;
+    align-items: center;
+}
+
+.inner-logo a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Sider styles */
+.sider {
+    background-color: #242424; /* Darker shade for sidebar */
+    color: #aaa; /* Light grey text color for items */
+    padding: 20px;
+    height: 100vh;
+    width: 200px; /* Adjust based on content */
+    position: fixed; /* Make sidebar fixed */
+}
+
+.sider .inner-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sider .inner-menu ul li {
+    padding: 10px 0;
+}
+
+.sider .inner-menu ul li a {
+    color: #e0e0e0; /* Light text color for links */
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s ease-in-out;
+}
+
+.sider .inner-menu ul li a:hover {
+    color: #1e90ff; /* Highlight color on hover */
+}
+
+/* Main content area */
+.main {
+    padding: 20px;
+    background-color: #ffffff; /* Slightly lighter than body for contrast */
+    margin-left: 220px; /* Adjust based on sider width */
+    color: #333; /* Light text for readability */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sider {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    .main {
+        margin-left: 0;
+    }
+}
+
+
+
+
