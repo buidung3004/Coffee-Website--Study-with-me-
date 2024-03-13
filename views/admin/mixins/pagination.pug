@@ -9,7 +9,7 @@ mixin pagination(pagination)
                     ) Trang trước
             -   for (var i = 1; i <= pagination.totalPage; i++)
 
-                li(class=`page-item ${pagination.currentPage == i ? "active" : ""}`)
+                li(class=`page-item ${pagination.currentPage == i ? "available" : ""}`)
                     button(
                         class="page-link"
                         button-pagination=i

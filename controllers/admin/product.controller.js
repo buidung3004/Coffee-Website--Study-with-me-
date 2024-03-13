@@ -45,7 +45,7 @@ const products = await Product.find(find).limit(objectPagination.limitItems).ski
     });
 };
 
-// [GET] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
     const status = req.params.status;
     const id = req.params.id;
@@ -53,4 +53,23 @@ module.exports.changeStatus = async (req, res) => {
     await Product.updateOne({_id:id},{status:status})
     // cập nhật và tự chuyển hướng
     res.redirect("back");
+};
+
+// [PATCH] /admin/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+    const type = req.body.type;
+    const ids = req.body.ids.split(", ");
+    switch (type) {
+        case "available":
+            await Product.updateMany({_id:{$in: ids}}, { status:"available"} )
+            break
+        case "unavailable":
+            await Product.updateMany({_id:{$in: ids}}, {status : "unavailable"})
+            break
+        default:
+            break
+
+    }
+    res.redirect("back")
+
 };

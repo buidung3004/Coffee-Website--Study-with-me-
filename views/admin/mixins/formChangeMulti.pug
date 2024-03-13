@@ -1,0 +1,19 @@
+mixin form-change-multi(path)
+            form(
+                action = path
+                method = "POST"
+                form-change-multi
+            )
+                .d-flex.align-items-start
+                    .form-group
+                        select(name ="type" class = "form-control")
+                            option(value="available") Available
+                            option(value="unavailable") Unavailable
+                    .form-group
+                        input(
+                            type="text"
+                            name="ids"
+                            value=""
+                            class="form-control d-none"
+                        ) 
+                    button(type="submit" class="btn btn-primary") Áp dụng
