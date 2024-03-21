@@ -96,7 +96,7 @@ if (formChangeMulti) {
                 const id = input.value;
                 ids.push(id);
             })
-            console.log(ids)
+            console.log(inputIds)
             inputIds.value = ids.join(", ")
             formChangeMulti.submit()
         } else{

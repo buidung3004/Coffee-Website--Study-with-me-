@@ -73,7 +73,11 @@ block main
                             ) Unavailable
                     td
                         button(class="btn btn-warning btn-sm") Sửa
-                        button(class="btn btn-danger btn-sm ml-1") Xóa
+                        button(
+                            data-id = item.id
+                            button-delete
+                            class="btn btn-danger btn-sm ml-1"
+                            ) Xóa
     +pagination(pagination)
 
     form(
@@ -82,6 +86,14 @@ block main
         id="form-change-status"
         data-path=`${prefixAdmin}/products/change-status`        
     ) 
+
+    form(
+        action="#"
+        method="POST"
+        id="form-delete-item"
+        data-path=`${prefixAdmin}/products/delete`        
+    ) 
+
 
 
     script(src="/admin/js/product.js")
