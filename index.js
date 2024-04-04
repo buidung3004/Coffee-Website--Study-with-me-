@@ -1,6 +1,10 @@
 const express = require("express");
 const methodOverride = require('method-override')
 // const bodyParser = require("body-parser") // ex4.18 ver kh cần cài thêm, đã fix
+const flash = require("express-flash")
+const cookieParser = require("cookie-parser")
+const session = require('express-session')
+
 
 require("dotenv").config();
 
@@ -18,6 +22,10 @@ const port = process.env.PORT;
 app.use(methodOverride('_method'));
 // parse application/x-www/form-urlencoded
 app.use(express.urlencoded({ extended: false}))
+// Flash
+app.use(cookieParser('manchesterunited'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
 
 app.set("views", "./views");
 app.set("view engine", "pug");
