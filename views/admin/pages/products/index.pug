@@ -20,8 +20,14 @@ block main
     .card.mb-3 
         .card-header Danh sách
             .card-body
-                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-
+                .row 
+                    .col-8
+                        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                    .col-4 
+                        a(
+                            href=`${prefixAdmin}/products/create`
+                            class="btn btn-outline-success"
+                        ) + Add Products
     table(
         class="table table-hover table-sm"
         checkbox-multi
