@@ -141,3 +141,29 @@ if (showAlert) {
     })
 }
  
+
+// Upload Image
+const uploadImage = document.querySelector("[upload-image]")
+
+if (uploadImage) {
+    const uploadImageInput = document.querySelector("[upload-image-input]")
+    const uploadImagePreview = document.querySelector("[upload-image-preview]")
+    const deletePreview = document.getElementById("delete-preview");
+
+    uploadImageInput.addEventListener("change", (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            uploadImagePreview.src = URL.createObjectURL(file)
+            deletePreview.style.display = "block"
+        }
+    })
+    if (deletePreview) {
+        deletePreview.addEventListener("click", () => {
+            uploadImageInput.value = '';
+            uploadImagePreview.src = ''; // Xóa src của ảnh
+            deletePreview.style.display = "none"; // Ẩn nút
+        });
+    }
+}
+
+
