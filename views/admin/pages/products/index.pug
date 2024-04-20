@@ -90,7 +90,10 @@ block main
                                 class="badge badge-danger"
                             ) Unavailable
                     td
-                        button(class="btn btn-warning btn-sm") Sửa
+                        a(
+                            href=`${prefixAdmin}/products/edit/${item.id}`
+                            class="btn btn-warning btn-sm"
+                        ) Sửa
                         button(
                             data-id = item.id
                             button-delete

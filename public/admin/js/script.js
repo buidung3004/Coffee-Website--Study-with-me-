@@ -154,9 +154,12 @@ if (uploadImage) {
         const file = e.target.files[0]
         if (file) {
             uploadImagePreview.src = URL.createObjectURL(file)
-            deletePreview.style.display = "block"
+            
         }
     })
+    if (uploadImagePreview.src !== "") {
+        deletePreview.style.display = "block"
+    }
     if (deletePreview) {
         deletePreview.addEventListener("click", () => {
             uploadImageInput.value = '';

@@ -4,12 +4,13 @@ include ../../mixins/alert.pug
 
 block  main
     +alert-error(5000)
+    +alert-success(5000)
 
-    h1(class="mb-4") Add new product
+    h1(class="mb-4") Edit Product
 
     form(
-        action= `${prefixAdmin}/products/create`
-        id= "form-create-product"
+        action= `${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+        id= "form-edit-product"
         method= "POST"
         enctype="multipart/form-data"
     )
@@ -20,6 +21,7 @@ block  main
                 class="form-control"
                 id="title"
                 name="title"
+                value=product.title
             )
         div(class="form-group")
             label(for="desc")  Description
@@ -28,7 +30,7 @@ block  main
                 id="desc"
                 name="description"
                 rows="5"
-            )
+            ) #{product.description}
         div(class="form-group")
             label(for="price") Price
             input(
@@ -36,7 +38,7 @@ block  main
                 class="form-control"
                 id="price"
                 name="price"
-                value="0"
+                value=product.price
                 min="0"
                 step="0.01"
             )
@@ -47,7 +49,7 @@ block  main
                 class="form-control"
                 id="discount"
                 name="discountPercentage"
-                value="0"
+                value=product.discountPercentage
                 min="0"
             )
         div(class="form-group")
@@ -57,7 +59,7 @@ block  main
                 class="form-control"
                 id="stock"
                 name="stock"
-                value="0"
+                value=product.stock
                 min="0"
             )
         div(
@@ -74,7 +76,7 @@ block  main
                 upload-image-input   
             )
             img(
-                src=""
+                src=product.thumbnail
                 upload-image-preview
                 class="image-preview"
             )
@@ -90,7 +92,8 @@ block  main
                 id="position"
                 name="position"
                 placeholder="auto increase"     
-                min="1"   
+                min="1"  
+                value=product.position 
             )    
         div(class="form-group form-check form-check-inline")
             input(
@@ -99,7 +102,7 @@ block  main
                 id="statusAvailable"
                 name="status"
                 value="available"
-                checked
+                checked=(product.status == "available" ? true: false)
             )    
             label(for="statusAvailable" class="form-check-label") Available
         div(class="form-group form-check form-check-inline")
@@ -109,7 +112,7 @@ block  main
                 id="statusUnavailable"
                 name="status"
                 value="unavailable"
-                checked
+                checked=(product.status == "inavailable" ? true: false)
             )    
             label(for="statusUnavailable" class="form-check-label") Unavailable
 
@@ -117,7 +120,7 @@ block  main
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Create
+            ) Update
 
     script(src="/admin/js/product.js")
 

@@ -120,7 +120,7 @@ module.exports.create = async(req,res) => {
 // [POST] /admin/products/create
 module.exports.createPost = async(req,res) => {
 
-    req.body.price = parseInt(req.body.price)
+    req.body.price = parseFloat(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
 
@@ -138,4 +138,46 @@ module.exports.createPost = async(req,res) => {
     await product.save()
 
     res.redirect(`${systemConfig.prefixAdmin}/products`)
+}
+
+// [GET] /admin/products/edit/:id
+module.exports.edit = async(req,res) => {
+    try {
+        const find = {
+            deleted:false,
+            _id: req.params.id
+        }
+
+        const product = await Product.findOne(find)
+
+        res.render("admin/pages/products/edit", {
+            pageTitle:"Edit product",
+            product: product
+        })
+    }
+    catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products`)
+    }
+}
+
+
+// [PATCH] /admin/products/edit/:id
+module.exports.editPatch = async(req,res) => {
+    const id = req.params.id
+
+    req.body.price = parseFloat(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    req.body.position = parseInt(req.body.position)
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
+    try {
+        await Product.updateOne({_id: id }, req.body)
+        req.flash("success", "Update succesful")
+    } catch (error) {
+        req.flash("error", "Update fail")
+    }
+
+    res.redirect("back");
 }
