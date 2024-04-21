@@ -91,14 +91,18 @@ block main
                             ) Unavailable
                     td
                         a(
+                            href=`${prefixAdmin}/products/detail/${item.id}`
+                            class="btn btn-secondary btn-sm"
+                        ) Detail Product
+                        a(
                             href=`${prefixAdmin}/products/edit/${item.id}`
                             class="btn btn-warning btn-sm"
-                        ) Sửa
+                        ) Edit
                         button(
                             data-id = item.id
                             button-delete
                             class="btn btn-danger btn-sm ml-1"
-                            ) Xóa
+                            ) Delete
     +pagination(pagination)
 
     form(
