@@ -34,7 +34,18 @@ let objectPagination = paginationHelper(
     countProducts
 )
 
-const products = await Product.find(find).sort({position: "asc"}).limit(objectPagination.limitItems).skip(objectPagination.skip);
+// Sort
+let sort = {};
+
+if(req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue
+} else {
+    sort.position = "desc"
+}
+
+
+
+const products = await Product.find(find).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip);
 
 
     res.render("admin/pages/products/index", {

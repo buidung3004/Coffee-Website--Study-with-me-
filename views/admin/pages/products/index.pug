@@ -4,6 +4,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
 
 block main 
     +alert-success("5000")
@@ -28,6 +29,13 @@ block main
                             href=`${prefixAdmin}/products/create`
                             class="btn btn-outline-success"
                         ) + Add Products
+
+    .card.mb-3 
+        .card-header Sort 
+        .card-body 
+            .row 
+                .col-4 
+                    +sort()
     table(
         class="table table-hover table-sm"
         checkbox-multi
