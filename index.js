@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path')
 const methodOverride = require('method-override')
 // const bodyParser = require("body-parser") // ex4.18 ver kh cần cài thêm, đã fix
 const flash = require("express-flash")
@@ -22,13 +23,19 @@ const port = process.env.PORT;
 app.use(methodOverride('_method'));
 // parse application/x-www/form-urlencoded
 app.use(express.urlencoded({ extended: false}))
+
+app.set("views", `${__dirname}/views`);
+app.set("view engine", "pug");
+
+
 // Flash
 app.use(cookieParser('manchesterunited'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
-app.set("views", `${__dirname}/views`);
-app.set("view engine", "pug");
+// TinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 
 // App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;

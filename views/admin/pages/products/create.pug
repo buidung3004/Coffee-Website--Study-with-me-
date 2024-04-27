@@ -17,18 +17,26 @@ block  main
             label(for="title")  Title
             input(
                 type="text"
-                class="form-control"
+                class="form-control "
                 id="title"
                 name="title"
             )
         div(class="form-group")
             label(for="desc")  Description
             textarea(
-                class="form-control"
+                class="form-control textarea-mce"
                 id="desc"
                 name="description"
                 rows="5"
             )
+        //- div(class="form-group")
+        //-     label(for="desc")  Content
+        //-     textarea(
+        //-         class="form-control textarea-mce"
+        //-         id="desc"
+        //-         name="content"
+        //-         rows="5"
+        //-     )
         div(class="form-group")
             label(for="price") Price
             input(
