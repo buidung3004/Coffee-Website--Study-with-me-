@@ -1,0 +1,60 @@
+mixin table-tree(items, level = 1)
+    each item, index in items
+        - const prefix = Array(level + 1).join("-- ")
+        tr
+            td 
+                input(
+                    type="checkbox"
+                    name="id"
+                    value=item.id 
+                )
+            td #{index+1}
+            td
+                img(
+                    src=item.thumbnail
+                    alt=item.title
+                    width="100px"
+                    height="auto"
+                )
+            td #{prefix}#{item.title} 
+            td 
+                input(
+                    type= "number"
+                    value=item.position
+                    style="width: 60px"
+                    min="1"
+                    name="position"
+                )
+            td
+                if(item.status=="available")
+                    a(
+                        href="javascript:;"  
+                        data-status =item.status
+                        data-id=item.id
+                        button-change-status
+                        class="badge badge-success"
+                    ) Available
+                else
+                    a(
+                        href="javascript:;"  
+                        data-status =item.status
+                        data-id=item.id
+                        button-change-status
+                        class="badge badge-danger"
+                    ) Unavailable
+            td
+                a(
+                    href=`${prefixAdmin}/products-category/detail/${item.id}`
+                    class="btn btn-secondary btn-sm"
+                ) Detail Product
+                a(
+                    href=`${prefixAdmin}/products-category/edit/${item.id}`
+                    class="btn btn-warning btn-sm"
+                ) Edit
+                button(
+                    data-id = item.id
+                    button-delete
+                    class="btn btn-danger btn-sm ml-1"
+                ) Delete
+        if item.children && item.children.length > 0
+            +table-tree(item.children, level + 1)
