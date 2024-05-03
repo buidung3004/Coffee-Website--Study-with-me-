@@ -3,12 +3,13 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main
-    h1(class="mb-4") Add new product category
+    h1(class="mb-4") Edit product category
 
     +alert-error(5000)
-
+    +alert-success(5000)
+    
     form(
-        action=`${prefixAdmin}/products-category/create`
+        action=`${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -20,7 +21,8 @@ block main
                 id="title"
                 name="title"
                 required
-            )
+                value=data.title
+            ) 
         div(class="form-group")
             label(for="parent_id")  Parent category
             select(
@@ -30,7 +32,7 @@ block main
             )
                 option(value="") -- Select parent category -- 
                 if (records)
-                    +select-tree(records)
+                    +select-tree(records,1,data.parent_id)
         div(class="form-group")
             label(for="desc")  Description
             textarea(
@@ -38,7 +40,7 @@ block main
                 id="desc"
                 name="description"
                 rows="5"
-            )
+            ) #{data.description}
         div(
             class="form-group thumbnail-container"
             upload-image
@@ -53,7 +55,7 @@ block main
                 upload-image-input   
             )
             img(
-                src=""
+                src=data.thumbnail
                 upload-image-preview
                 class="image-preview"
             )
@@ -66,6 +68,7 @@ block main
                 name="position"
                 placeholder="auto increase"     
                 min="1"   
+                value=data.position
             )    
         div(class="form-group form-check form-check-inline")
             input(
@@ -74,17 +77,17 @@ block main
                 id="statusAvailable"
                 name="status"
                 value="available"
-                checked
+                checked=(data.status=="available"  ? true : false)
             )    
             label(for="statusAvailable" class="form-check-label") Available
         div(class="form-group form-check form-check-inline")
             input(
                 type="radio"
-                class="from-check-input"
+                class="form-check-input"
                 id="statusUnavailable"
                 name="status"
                 value="unavailable"
-                checked
+                checked=(data.status =="unavailable"  ? true : false)
             )    
             label(for="statusUnavailable" class="form-check-label") Unavailable
 
@@ -92,4 +95,4 @@ block main
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Create       
+            ) Update     
