@@ -6,7 +6,7 @@ mongoose.plugin(slug)
 const productSchema = new mongoose.Schema(
     {
         title: String,
-        productCategoryId:{
+        product_category_id:{
             type:String,
             default:""
         },
