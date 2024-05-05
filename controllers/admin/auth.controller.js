@@ -3,9 +3,15 @@ const systemConfig = require("../../config/system")
 const md5 = require("md5")
 // [GET] /admin/auth/login
 module.exports.login =  (req, res) => {
-    res.render("admin/pages/auth/login", {
-        pageTitle: "Trang đăng nhập"
-    });
+    console.log(req.cookies.token)
+    if(req.cookies.token) {
+        res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
+    } else {
+        res.render("admin/pages/auth/login", {
+            pageTitle: "Trang đăng nhập"
+        });
+    }
+
 }
 
 // [POST] /admin/auth/login
