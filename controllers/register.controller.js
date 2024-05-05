@@ -1,62 +1,75 @@
 const Joi = require('joi');
-const nodemailer = require('nodemailer');
 const User = require('../models/user');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy((username, password, done) => {
+  User.findOne({ username: username })
+    .then(user => {
+      if (!user || user.password !== password) {
+        done(null, false, { message: 'Credentials are invalid.' });
+      } else {
+        done(null, user);
+      }
+    })
+    .catch(done);
+}));
+
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => done(null, user))
+    .catch(done);
+});
+
+exports.registerPage = (req, res) => {
+  res.render("register", {
+    title: "Register",
+    csrfToken: req.csrfToken() // Add this line
+  });
+};
 
 exports.register = async (req, res) => {
   // Validate the request data
   const schema = Joi.object({
-    email: Joi.string().email().required(),
+    username: Joi.string().required(),
     password: Joi.string().min(6).required(),
+    confirmPassword: Joi.string().required().valid(Joi.ref('password')),
     // Add any other fields you want to validate here
   });
 
   const { error } = schema.validate(req.body);
   if (error) {
-    return res.status(400).send(error.details[0].message);
+    return res.render("register", {
+      title: "Register",
+      csrfToken: req.csrfToken(),
+      registrationError: error.details[0].message
+    });
   }
 
-  // Check if the email is already in use
-  const existingUser = await User.findOne({ email: req.body.email });
+  // Check if the username is already in use
+  const existingUser = await User.findOne({ username: req.body.username });
   if (existingUser) {
-    return res.status(400).send('Email already in use');
+    return res.render("register", {
+      title: "Register",
+      csrfToken: req.csrfToken(),
+      registrationError: 'Username already in use'
+    });
   }
-
-  // Generate a 6-digit verification code
-  const verificationCode = Math.floor(100000 + Math.random() * 900000);
 
   // Save the user to the database
   const user = new User({
-    email: req.body.email,
+    username: req.body.username,
     password: req.body.password,
-    verificationCode: verificationCode,
     // Add any other fields you want to save here
   });
 
   await user.save();
 
-  // Send the verification code to the user's email
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
+  req.login(user, (loginError) => {
+    if (loginError) {
+      throw new Error('User was created but could not be logged in.');
     }
+    res.send('Registration successful. Please log in.');
   });
-
-  let mailOptions = {
-    from: process.env.EMAIL,
-    to: user.email,
-    subject: 'Email Verification Code',
-    text: `Your verification code is ${verificationCode}`
-  };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-
-  res.send('Registration successful. Please check your email for the verification code.');
 };

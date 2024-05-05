@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const controller = require("../controllers/login.controller");
-const { loginPage } = require("../controllers/login.controller");
 
 // GET route for /login
 router.get("/login", controller.loginPage);
