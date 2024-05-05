@@ -7,6 +7,8 @@ const flash = require("express-flash")
 const cookieParser = require("cookie-parser")
 const session = require('express-session')
 const csurf = require('csurf');
+const { v4: uuidv4 } = require('uuid');
+const passport = require('passport');
 
 require("dotenv").config();
 
@@ -32,9 +34,9 @@ app.set("view engine", "pug");
 
 
 // Flash
-app.use(cookieParser('manchesterunited'));
+app.use(cookieParser(uuidv4()));
 app.use(session({
-  secret: 'manchesterunited',
+  secret: process.env.SESSION_SECRET || uuidv4(),
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000, secure: false } // set secure to true if you're using https
@@ -57,6 +59,10 @@ app.get('/register', function(req, res) {
   res.render('register', { csrfToken: req.csrfToken() });
 });
 
+app.get('/login', function(req, res) {
+  res.render('login', { csrfToken: req.csrfToken() });
+});
+
 app.post('/register', function(req, res) {
   // handle the form submission
   const username = req.body.username;
@@ -68,8 +74,12 @@ app.post('/register', function(req, res) {
   res.send('Registration successful');
 });
 
-app.get('/login', function(req, res) {
-  res.render('login', { csrfToken: req.csrfToken() });
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
 });
 
 //Route

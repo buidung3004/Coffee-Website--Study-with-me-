@@ -14,3 +14,8 @@ header.header#header
                         li
                             a(href="/products") Products
 
+    .user-info
+        if user
+            include logout
+        else
+            include login
