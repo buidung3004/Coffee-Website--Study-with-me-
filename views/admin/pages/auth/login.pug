@@ -1,0 +1,38 @@
+extend ../../layouts/auth.pug 
+include ../../mixins/alert.pug 
+
+block main
+
+
+    +alert-error(5000)
+
+    .container.my-5
+        .row.justify-content-center
+            .col-8
+                h1(class="text-center") Đăng nhập
+    
+                form(
+                    action=`${prefixAdmin}/auth/login`
+                    method="POST"
+                )
+                    div(class="form-group")
+                        label(for="email") Email *
+                        input(
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                        )
+                    div(class="form-group")
+                        label(for="password") Password *
+                        input(
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                        )
+                    div(class="form-group")
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Login
