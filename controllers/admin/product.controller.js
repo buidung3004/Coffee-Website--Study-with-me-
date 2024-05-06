@@ -98,7 +98,10 @@ module.exports.changeMulti = async (req, res) => {
                 {_id:{$in: ids}}, 
                 {
                     deleted: true,
-                    deletedAt: new Date()
+                    deletedBy: {
+                        account_id: res.locals.user.id,
+                        deletedAt: new Date(),
+                    }
                 })
             req.flash("success",`Đã xóa thành công ${ids.length} sản phẩm`)
         case "change-position":
@@ -125,7 +128,10 @@ module.exports.deleteItem = async (req, res) => {
     // await Product.deleteOne({_id:id})
     await Product.updateOne({_id:id}, { 
         deleted: true,
-        deletedAt: new Date()
+        deletedBy: {
+            account_id: res.locals.user.id,
+            deletedAt: new Date(),
+        }
     })
     req.flash("success",`Đã xóa thành công sản phẩm`)
     // cập nhật và tự chuyển hướng
