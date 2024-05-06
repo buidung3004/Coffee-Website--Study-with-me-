@@ -51,12 +51,23 @@ if(req.query.sortKey && req.query.sortValue) {
 const products = await Product.find(find).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip);
 
 for (const product of products) {
-    const user = await Account.findOne({
+    // Lấy thông tin account tạo
+    const userCreate = await Account.findOne({
         _id: product.createdBy.account_id
     })
-    if(user) {
+    if(userCreate) {
         product.accountFullName = user.fullName
     }
+
+    // Lấy thông tin acc sửa
+    const updatedBy = product.updatedBy.slice(-1)[0]
+    if(updatedBy) {
+        const userUpdate = await Account.findOne({
+            _id: updatedBy.account_id
+        })
+        updatedBy.accountFullName = userUpdate.fullName
+    }
+
 }
 
 
@@ -74,7 +85,14 @@ module.exports.changeStatus = async (req, res) => {
     const status = req.params.status;
     const id = req.params.id;
 
-    await Product.updateOne({_id:id},{status:status})
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updateAt: new Date(),
+    }
+
+    await Product.updateOne({_id:id},{status:status,
+        $push: { updatedBy: updatedBy}
+    })
     // cập nhật và tự chuyển hướng
     req.flash("success","Cập nhật trạng thái thành công")
     res.redirect("back");
@@ -84,13 +102,19 @@ module.exports.changeStatus = async (req, res) => {
 module.exports.changeMulti = async (req, res) => {
     const type = req.body.type;
     const ids = req.body.ids.split(", ");
+
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updateAt: new Date(),
+    }
+
     switch (type) {
         case "available":
-            await Product.updateMany({_id:{$in: ids}}, { status:"available"} )
+            await Product.updateMany({_id:{$in: ids}}, { status:"available", $push: { updatedBy: updatedBy}} )
             req.flash("success",`Cập nhật trạng thái thành công ${ids.length} sản phẩm`)
             break
         case "unavailable":
-            await Product.updateMany({_id:{$in: ids}}, {status : "unavailable"})
+            await Product.updateMany({_id:{$in: ids}}, {status : "unavailable", $push: { updatedBy: updatedBy}})
             req.flash("success",`Cập nhật trạng thái thành công ${ids.length} sản phẩm`)
             break
         case "delete-all":
@@ -108,7 +132,7 @@ module.exports.changeMulti = async (req, res) => {
             for (const item of ids) {
                 let [id, position] = item.split("-")
                 position = parseInt(position)
-                await Product.updateOne({_id: id}, {position:position})
+                await Product.updateOne({_id: id}, {position:position, $push: { updatedBy: updatedBy}})
                 
             }
             req.flash("success",`Đã đổi vị trí thành công ${ids.length} sản phẩm`)
@@ -217,7 +241,15 @@ module.exports.editPatch = async(req,res) => {
         req.body.thumbnail = `/uploads/${req.file.filename}`
     }
     try {
-        await Product.updateOne({_id: id }, req.body)
+        const updatedBy = {
+            account_id: res.locals.user.id,
+            updateAt: new Date(),
+        }
+
+        await Product.updateOne({_id: id }, {
+            ...req.body,
+            $push: {updatedBy: updatedBy}
+        })
         req.flash("success", "Update succesful")
     } catch (error) {
         req.flash("error", "Update fail")
