@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/formChangeMulti.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 
 block main 
     +alert-success("5000")
@@ -54,6 +55,7 @@ block main
                     th Giá
                     th Vị trí 
                     th Trạng thái
+                    th Người tạo
                     th Hành động
 
             tbody
@@ -101,6 +103,9 @@ block main
                                         button-change-status
                                         class="badge badge-danger"
                                     ) Unavailable
+                        td 
+                            p #{item.accountFullName}
+                            +formatDateTime(item.createdBy.createdAt)
                         td
                             a(
                                 href=`${prefixAdmin}/products/detail/${item.id}`
