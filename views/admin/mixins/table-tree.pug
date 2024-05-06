@@ -26,35 +26,38 @@ mixin table-tree(items, level = 1)
                     name="position"
                 )
             td
-                if(item.status=="available")
-                    a(
-                        href="javascript:;"  
-                        data-status =item.status
-                        data-id=item.id
-                        button-change-status
-                        class="badge badge-success"
-                    ) Available
-                else
-                    a(
-                        href="javascript:;"  
-                        data-status =item.status
-                        data-id=item.id
-                        button-change-status
-                        class="badge badge-danger"
-                    ) Unavailable
+                if(role.permissions.includes("products-category_edit"))
+                    if(item.status=="available")
+                        a(
+                            href="javascript:;"  
+                            data-status =item.status
+                            data-id=item.id
+                            button-change-status
+                            class="badge badge-success"
+                        ) Available
+                    else
+                        a(
+                            href="javascript:;"  
+                            data-status =item.status
+                            data-id=item.id
+                            button-change-status
+                            class="badge badge-danger"
+                        ) Unavailable
             td
                 a(
                     href=`${prefixAdmin}/products-category/detail/${item.id}`
                     class="btn btn-secondary btn-sm"
                 ) Detail Product
-                a(
-                    href=`${prefixAdmin}/products-category/edit/${item.id}`
-                    class="btn btn-warning btn-sm"
-                ) Edit
-                button(
-                    data-id = item.id
-                    button-delete
-                    class="btn btn-danger btn-sm ml-1"
-                ) Delete
+                if(role.permissions.includes("products-category_edit"))               
+                    a(
+                        href=`${prefixAdmin}/products-category/edit/${item.id}`
+                        class="btn btn-warning btn-sm"
+                    ) Edit
+                if(role.permissions.includes("products-category_delete"))                      
+                    button(
+                        data-id = item.id
+                        button-delete
+                        class="btn btn-danger btn-sm ml-1"
+                    ) Delete
         if item.children && item.children.length > 0
             +table-tree(item.children, level + 1)

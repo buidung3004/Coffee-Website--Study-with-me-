@@ -2,108 +2,109 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main 
-    h1(class="mb-4") Thêm mới tài khoản
+    if(role.permissions.includes("accounts_edit")) 
+        h1(class="mb-4") Thêm mới tài khoản
 
-    +alert-error(5000)
-    +alert-success(5000)
+        +alert-error(5000)
+        +alert-success(5000)
 
-    if(roles)
-        form(
-            action=`${prefixAdmin}/accounts/edit/${data.id}?_method=PATCH`
-            method="POST"
-            enctype="multipart/form-data"
-        )
-            div(class="form-group")
-                label(for="fullName") Full name *
-                input(
-                    type="text"
-                    class="form-control"
-                    id="fullName"
-                    name="fullName"
-                    value=data.fullName
-                )
-            div(class="form-group")
-                label(for="email") Email *
-                input(
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    value=data.email
-                )
-            div(class="form-group")
-                label(for="password") Password *
-                input(
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    name="password"
-                
-                )
-            div(class="form-group")
-                label(for="phone") Phone *
-                input(
-                    type="text"
-                    class="form-control"
-                    id="phone"
-                    name="phone"
-                    required
-                    value=data.phone
-                )
-            div(
-                class="form-group"
-                upload-image
+        if(roles)
+            form(
+                action=`${prefixAdmin}/accounts/edit/${data.id}?_method=PATCH`
+                method="POST"
+                enctype="multipart/form-data"
             )
-                label(for="avatar") Avatar
-                input(
-                    type="file"
-                    class="form-control-file"
-                    id="avatar"
-                    name="avatar"
-                    accept="image/*"
-                    upload-image-input
+                div(class="form-group")
+                    label(for="fullName") Full name *
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="fullName"
+                        name="fullName"
+                        value=data.fullName
+                    )
+                div(class="form-group")
+                    label(for="email") Email *
+                    input(
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        value=data.email
+                    )
+                div(class="form-group")
+                    label(for="password") Password *
+                    input(
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                    
+                    )
+                div(class="form-group")
+                    label(for="phone") Phone *
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="phone"
+                        name="phone"
+                        required
+                        value=data.phone
+                    )
+                div(
+                    class="form-group"
+                    upload-image
                 )
-                img(
-                    src=data.avatar
-                    class="image-preview"
-                    upload-image-preview
-                )
-            div(class="form-group")
-                label(for="role_id") Permission
-                select(name="role_id" id="role_id" class="form-control")
-                    option(disabled) -- Select --
-                    each item in roles
-                        option(
-                            value=item.id
-                            selected=(item.id == data.role_id ? true : false)
-                            ) #{item.title}
-            div(class="form-group form-check form-check-inline")
-                input(
-                    type="radio"
-                    class="form-check-input"
-                    id="statusActive"
-                    name="status"
-                    value="active"
-                    checked=(data.status === "active" ? true : false)
-                ) 
-                label(for="statusActive" class="form-check-label")  Active
-            div(class="form-group form-check form-check-inline")
-                input(
-                    type="radio"
-                    class="form-check-input"
-                    id="statusInactive"
-                    name="status"
-                    value="inactive"
-                    checked=(data.status === "inactive" ? true : false)
-                ) 
-                label(for="statusInactive" class="form-check-label")  Inactive            
+                    label(for="avatar") Avatar
+                    input(
+                        type="file"
+                        class="form-control-file"
+                        id="avatar"
+                        name="avatar"
+                        accept="image/*"
+                        upload-image-input
+                    )
+                    img(
+                        src=data.avatar
+                        class="image-preview"
+                        upload-image-preview
+                    )
+                div(class="form-group")
+                    label(for="role_id") Permission
+                    select(name="role_id" id="role_id" class="form-control")
+                        option(disabled) -- Select --
+                        each item in roles
+                            option(
+                                value=item.id
+                                selected=(item.id == data.role_id ? true : false)
+                                ) #{item.title}
+                div(class="form-group form-check form-check-inline")
+                    input(
+                        type="radio"
+                        class="form-check-input"
+                        id="statusActive"
+                        name="status"
+                        value="active"
+                        checked=(data.status === "active" ? true : false)
+                    ) 
+                    label(for="statusActive" class="form-check-label")  Active
+                div(class="form-group form-check form-check-inline")
+                    input(
+                        type="radio"
+                        class="form-check-input"
+                        id="statusInactive"
+                        name="status"
+                        value="inactive"
+                        checked=(data.status === "inactive" ? true : false)
+                    ) 
+                    label(for="statusInactive" class="form-check-label")  Inactive            
 
-            div(class="form-group")
-                button(
-                    type="submit"
-                    class="btn btn-primary"
-                ) Update
-    else
-        p Please creating permissions before editting account 
-        p
-            a(href=`${prefixAdmin}/roles/create` class="btn btn-secondary") Create Permission
+                div(class="form-group")
+                    button(
+                        type="submit"
+                        class="btn btn-primary"
+                    ) Update
+        else
+            p Please creating permissions before editting account 
+            p
+                a(href=`${prefixAdmin}/roles/create` class="btn btn-secondary") Create Permission

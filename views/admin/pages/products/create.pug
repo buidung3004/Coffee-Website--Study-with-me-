@@ -3,139 +3,140 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block  main
-    +alert-error(5000)
+    if(role.permissions.includes("products_create"))  
+        +alert-error(5000)
 
-    h1(class="mb-4") Add new product
+        h1(class="mb-4") Add new product
 
-    form(
-        action= `${prefixAdmin}/products/create`
-        id= "form-create-product"
-        method= "POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="title")  Title
-            input(
-                type="text"
-                class="form-control "
-                id="title"
-                name="title"
-            )
-        div(class="form-group")
-            label(for="product_category_id")  Category
-            select(
-                name="product_category_id"
-                id="product_category_id"
-                class="form-control"
-            )
-                option(value="") -- Select category -- 
-                if (category)
-                    +select-tree(category)
-        div(class="form-group")
-            label(for="desc")  Description
-            textarea(
-                class="form-control textarea-mce"
-                id="desc"
-                name="description"
-                rows="5"
-            )
-        //- div(class="form-group")
-        //-     label(for="desc")  Content
-        //-     textarea(
-        //-         class="form-control textarea-mce"
-        //-         id="desc"
-        //-         name="content"
-        //-         rows="5"
-        //-     )
-        div(class="form-group")
-            label(for="price") Price
-            input(
-                type="number"
-                class="form-control"
-                id="price"
-                name="price"
-                value="0"
-                min="0"
-                step="0.01"
-            )
-        div(class="form-group")
-            label(for="discount") Discount Percentage
-            input(
-                type="number"
-                class="form-control"
-                id="discount"
-                name="discountPercentage"
-                value="0"
-                min="0"
-            )
-        div(class="form-group")
-            label(for="discount") Stock
-            input(
-                type="number"
-                class="form-control"
-                id="stock"
-                name="stock"
-                value="0"
-                min="0"
-            )
-        div(
-            class="form-group thumbnail-container"
-            upload-image
+        form(
+            action= `${prefixAdmin}/products/create`
+            id= "form-create-product"
+            method= "POST"
+            enctype="multipart/form-data"
         )
-            label(for="thumbnail") Thumbnail
-            input(
-                type="file"
-                class="form-control-file"
-                id="thumbnail"
-                name="thumbnail"    
-                accept="image/*" 
-                upload-image-input   
+            div(class="form-group")
+                label(for="title")  Title
+                input(
+                    type="text"
+                    class="form-control "
+                    id="title"
+                    name="title"
+                )
+            div(class="form-group")
+                label(for="product_category_id")  Category
+                select(
+                    name="product_category_id"
+                    id="product_category_id"
+                    class="form-control"
+                )
+                    option(value="") -- Select category -- 
+                    if (category)
+                        +select-tree(category)
+            div(class="form-group")
+                label(for="desc")  Description
+                textarea(
+                    class="form-control textarea-mce"
+                    id="desc"
+                    name="description"
+                    rows="5"
+                )
+            //- div(class="form-group")
+            //-     label(for="desc")  Content
+            //-     textarea(
+            //-         class="form-control textarea-mce"
+            //-         id="desc"
+            //-         name="content"
+            //-         rows="5"
+            //-     )
+            div(class="form-group")
+                label(for="price") Price
+                input(
+                    type="number"
+                    class="form-control"
+                    id="price"
+                    name="price"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                )
+            div(class="form-group")
+                label(for="discount") Discount Percentage
+                input(
+                    type="number"
+                    class="form-control"
+                    id="discount"
+                    name="discountPercentage"
+                    value="0"
+                    min="0"
+                )
+            div(class="form-group")
+                label(for="discount") Stock
+                input(
+                    type="number"
+                    class="form-control"
+                    id="stock"
+                    name="stock"
+                    value="0"
+                    min="0"
+                )
+            div(
+                class="form-group thumbnail-container"
+                upload-image
             )
-            img(
-                src=""
-                upload-image-preview
-                class="image-preview"
-            )
-            button(
-                id="delete-preview" 
-                style="display: none;"
-            ) X
-        div(class="form-group")
-            label(for="position") Position
-            input(
-                type="number"
-                class="form-control"
-                id="position"
-                name="position"
-                placeholder="auto increase"     
-                min="1"   
-            )    
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="from-check-input"
-                id="statusAvailable"
-                name="status"
-                value="available"
-                checked
-            )    
-            label(for="statusAvailable" class="form-check-label") Available
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio"
-                class="from-check-input"
-                id="statusUnavailable"
-                name="status"
-                value="unavailable"
-                checked
-            )    
-            label(for="statusUnavailable" class="form-check-label") Unavailable
+                label(for="thumbnail") Thumbnail
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="thumbnail"
+                    name="thumbnail"    
+                    accept="image/*" 
+                    upload-image-input   
+                )
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                )
+                button(
+                    id="delete-preview" 
+                    style="display: none;"
+                ) X
+            div(class="form-group")
+                label(for="position") Position
+                input(
+                    type="number"
+                    class="form-control"
+                    id="position"
+                    name="position"
+                    placeholder="auto increase"     
+                    min="1"   
+                )    
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="from-check-input"
+                    id="statusAvailable"
+                    name="status"
+                    value="available"
+                    checked
+                )    
+                label(for="statusAvailable" class="form-check-label") Available
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="from-check-input"
+                    id="statusUnavailable"
+                    name="status"
+                    value="unavailable"
+                    checked
+                )    
+                label(for="statusUnavailable" class="form-check-label") Unavailable
 
-        div(class="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Create
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Create
 
-    script(src="/admin/js/product.js")
+        script(src="/admin/js/product.js")
 

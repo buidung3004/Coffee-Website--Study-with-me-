@@ -9,124 +9,130 @@ include ../../mixins/sort.pug
 block main 
     +alert-success("5000")
 
-    h1 Danh sách sản phẩm
-    .card.mb-3 
-        .card-header Bộ lọc và Tìm kiếm
-        .card-body
-            .row
-                .col-6
-                    +filter-status(filterStatus)
-                .col-6 
-                    +search(keyword)
-    .card.mb-3 
-        .card-header Danh sách
+    if(role.permissions.includes("products_view"))      
+        h1 Danh sách sản phẩm
+        .card.mb-3 
+            .card-header Bộ lọc và Tìm kiếm
             .card-body
+                .row
+                    .col-6
+                        +filter-status(filterStatus)
+                    .col-6 
+                        +search(keyword)
+        .card.mb-3 
+            .card-header Danh sách
+                .card-body
+                    .row 
+                        .col-8
+                            if(role.permissions.includes("products_edit"))  
+                                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                        .col-4 
+                            if(role.permissions.includes("products_create"))      
+                                a(
+                                    href=`${prefixAdmin}/products/create`
+                                    class="btn btn-outline-success"
+                                ) + Add Products
+
+        .card.mb-3 
+            .card-header Sort 
+            .card-body 
                 .row 
-                    .col-8
-                        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
                     .col-4 
-                        a(
-                            href=`${prefixAdmin}/products/create`
-                            class="btn btn-outline-success"
-                        ) + Add Products
+                        +sort()
+        table(
+            class="table table-hover table-sm"
+            checkbox-multi
+            
+        )
+            thead 
+                tr 
+                    th 
+                        input(type="checkbox" name="checkall")
+                    th STT 
+                    th Hình ảnh
+                    th Tiêu đề
+                    th Giá
+                    th Vị trí 
+                    th Trạng thái
+                    th Hành động
 
-    .card.mb-3 
-        .card-header Sort 
-        .card-body 
-            .row 
-                .col-4 
-                    +sort()
-    table(
-        class="table table-hover table-sm"
-        checkbox-multi
-        
-    )
-        thead 
-            tr 
-                th 
-                    input(type="checkbox" name="checkall")
-                th STT 
-                th Hình ảnh
-                th Tiêu đề
-                th Giá
-                th Vị trí 
-                th Trạng thái
-                th Hành động
-
-        tbody
-            each item, index in products
-                tr
-                    td 
-                        input(
-                            type="checkbox"
-                            name="id"
-                            value=item.id 
-                        )
-                    td #{pagination.limitItems*(pagination.currentPage - 1) + (index + 1)}
-                    td
-                        img(
-                            src=item.thumbnail
-                            alt=item.title
-                            width="100px"
-                            height="auto"
-                        )
-                    td #{item.title} 
-                    td #{item.price}$
-                    td 
-                        input(
-                            type= "number"
-                            value=item.position
-                            style="width: 60px"
-                            min="1"
-                            name="position"
-                        )
-                    td
-                        if(item.status=="available")
+            tbody
+                each item, index in products
+                    tr
+                        td 
+                            input(
+                                type="checkbox"
+                                name="id"
+                                value=item.id 
+                            )
+                        td #{pagination.limitItems*(pagination.currentPage - 1) + (index + 1)}
+                        td
+                            img(
+                                src=item.thumbnail
+                                alt=item.title
+                                width="100px"
+                                height="auto"
+                            )
+                        td #{item.title} 
+                        td #{item.price}$
+                        td 
+                            input(
+                                type= "number"
+                                value=item.position
+                                style="width: 60px"
+                                min="1"
+                                name="position"
+                            )
+                        td
+                            if(role.permissions.includes("products_edit"))      
+                                if(item.status=="available")
+                                    a(
+                                        href="javascript:;"  
+                                        data-status =item.status
+                                        data-id=item.id
+                                        button-change-status
+                                        class="badge badge-success"
+                                    ) Available
+                                else
+                                    a(
+                                        href="javascript:;"  
+                                        data-status =item.status
+                                        data-id=item.id
+                                        button-change-status
+                                        class="badge badge-danger"
+                                    ) Unavailable
+                        td
                             a(
-                                href="javascript:;"  
-                                data-status =item.status
-                                data-id=item.id
-                                button-change-status
-                                class="badge badge-success"
-                            ) Available
-                        else
-                            a(
-                                href="javascript:;"  
-                                data-status =item.status
-                                data-id=item.id
-                                button-change-status
-                                class="badge badge-danger"
-                            ) Unavailable
-                    td
-                        a(
-                            href=`${prefixAdmin}/products/detail/${item.id}`
-                            class="btn btn-secondary btn-sm"
-                        ) Detail Product
-                        a(
-                            href=`${prefixAdmin}/products/edit/${item.id}`
-                            class="btn btn-warning btn-sm"
-                        ) Edit
-                        button(
-                            data-id = item.id
-                            button-delete
-                            class="btn btn-danger btn-sm ml-1"
-                        ) Delete
-    +pagination(pagination)
+                                href=`${prefixAdmin}/products/detail/${item.id}`
+                                class="btn btn-secondary btn-sm"
+                            ) Detail Product
+                            if(role.permissions.includes("products_edit"))  
+                                a(
+                                    href=`${prefixAdmin}/products/edit/${item.id}`
+                                    class="btn btn-warning btn-sm"
+                                ) Edit
+                            if(role.permissions.includes("products_delete"))  
+                                button(
+                                    data-id = item.id
+                                    button-delete
+                                    class="btn btn-danger btn-sm ml-1"
+                                ) Delete
+        +pagination(pagination)
 
-    form(
-        action="#"
-        method="POST"
-        id="form-change-status"
-        data-path=`${prefixAdmin}/products/change-status`        
-    ) 
+        form(
+            action="#"
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/products/change-status`        
+        ) 
 
-    form(
-        action="#"
-        method="POST"
-        id="form-delete-item"
-        data-path=`${prefixAdmin}/products/delete`        
-    ) 
+        form(
+            action="#"
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/products/delete`        
+        ) 
 
 
 
-    script(src="/admin/js/product.js")
+        script(src="/admin/js/product.js")
