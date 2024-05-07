@@ -15,6 +15,7 @@ require("dotenv").config();
 const database = require("./config/database");
 const systemConfig = require("./config/system")
 
+const verifyRouter = require('./routes/verify.route');
 const registerRoute = require('./routes/registration.route');
 const loginRoute = require('./routes/login.route'); 
 const route = require("./routes/client/index.route");
@@ -54,37 +55,29 @@ app.use(express.static(`${__dirname}/public`));
 
 // Enable CSRF protection
 app.use(csurf());
+
 app.get('/register', function(req, res) {
-  // pass the csrfToken to the view
+  req.session.test = 'Session is working';
+  const csrfToken = req.csrfToken();
+  console.log(csrfToken); // Log the CSRF token
   res.render('register', { csrfToken: req.csrfToken() });
 });
 
-app.get('/login', function(req, res) {
-  res.render('login', { csrfToken: req.csrfToken() });
+// Add this route to set a test value in the session
+app.get('/test-session', function(req, res) {
+  req.session.test = 'Session is working';
+  res.send('Session test value set');
 });
 
-app.post('/register', function(req, res) {
-  // handle the form submission
-  const username = req.body.username;
-  const password = req.body.password;
-
-  // TODO: Validate the username and password
-  // TODO: Create a new user in your database
-
-  res.send('Registration successful');
-});
-
-app.post('/login', function(req, res, next) {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  })(req, res, next);
+// Add this route to check the test value in the session
+app.get('/check-session', function(req, res) {
+  res.send(req.session.test); // Should send 'Session is working'
 });
 
 //Route
 app.use(registerRoute); 
 app.use(loginRoute);
+app.use(verifyRouter);
 route(app);
 routeAdmin(app);
 

@@ -8,6 +8,7 @@ block content
       p= registrationError
 
   form.login(action='/register', method='post')
+    input(type='hidden', name='_csrf', value=csrfToken)
     p User Registration
     div
       label(for='username') Username
@@ -19,8 +20,8 @@ block content
       label(for='confirm_password') Confirm Password
       input(type='password', id='confirm_password', name='confirmPassword')
     div
-      input(type='hidden', name='_csrf', value=csrfToken)
-      
+      label(for='email') Email
+      input(type='email', id='email', name='email')
     if registerFormExtraParams
       each value, key in registerFormExtraParams
         div

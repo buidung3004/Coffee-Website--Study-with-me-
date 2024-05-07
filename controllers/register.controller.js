@@ -2,15 +2,27 @@ const Joi = require('joi');
 const User = require('../models/user');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 passport.use(new LocalStrategy((username, password, done) => {
   User.findOne({ username: username })
     .then(user => {
-      if (!user || user.password !== password) {
-        done(null, false, { message: 'Credentials are invalid.' });
-      } else {
-        done(null, user);
+      if (!user) {
+        return done(null, false, { message: 'Credentials are invalid.' });
       }
+
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+          return done(err);
+        }
+
+        if (!isMatch) {
+          return done(null, false, { message: 'Credentials are invalid.' });
+        }
+
+        return done(null, user);
+      });
     })
     .catch(done);
 }));
@@ -25,7 +37,7 @@ passport.deserializeUser((id, done) => {
 exports.registerPage = (req, res) => {
   res.render("register", {
     title: "Register",
-    csrfToken: req.csrfToken() // Add this line
+    csrfToken: req.csrfToken()
   });
 };
 
@@ -35,8 +47,19 @@ exports.register = async (req, res) => {
     username: Joi.string().required(),
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().required().valid(Joi.ref('password')),
-    // Add any other fields you want to validate here
+    email: Joi.string().email().required(),
+    _csrf: Joi.string().required(),
   });
+
+  // Check if the email is already in use
+  const existingEmail = await User.findOne({ email: req.body.email });
+  if (existingEmail) {
+    return res.render("register", {
+      title: "Register",
+      csrfToken: req.csrfToken(),
+      registrationError: 'Email already in use'
+    });
+  }
 
   const { error } = schema.validate(req.body);
   if (error) {
@@ -57,19 +80,33 @@ exports.register = async (req, res) => {
     });
   }
 
+  // Hash the password before saving the user
+  const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+  // Generate a numeric verification code
+  const verificationCode = Math.floor(Math.random() * 1000000); // generates a six-digit number
+
+  console.log(verificationCode);
+
   // Save the user to the database
   const user = new User({
     username: req.body.username,
-    password: req.body.password,
-    // Add any other fields you want to save here
+    password: hashedPassword,
+    email: req.body.email,
+    verificationCode: verificationCode // save the verification code to the user
   });
 
   await user.save();
+  console.log(user.verificationCode);
 
-  req.login(user, (loginError) => {
-    if (loginError) {
-      throw new Error('User was created but could not be logged in.');
+  // Set the username in the session and save the session
+  req.session.username = req.body.username;
+  req.session.save(err => {
+    if(err) {
+      console.log(err); // log the error if there is one
     }
-    res.send('Registration successful. Please log in.');
+
+    // Redirect the user to the verification page
+    res.redirect('/verify');
   });
 };
