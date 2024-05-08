@@ -32,6 +32,26 @@ block  main
                     option(value="") -- Select category -- 
                     if (category)
                         +select-tree(category)
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="from-check-input"
+                    id="featured1"
+                    name="featured"
+                    value="1"
+                    checked
+                )    
+                label(for="featured1" class="form-check-label") Signature
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="from-check-input"
+                    id="featured0"
+                    name="featured"
+                    value="0"
+                    checked
+                )    
+                label(for="featured0" class="form-check-label") Not
             div(class="form-group")
                 label(for="desc")  Description
                 textarea(
