@@ -1,32 +1,23 @@
 const express = require("express");
 const multer = require("multer")
+
 const router = express.Router()
-
 const upload = multer()
-const controller = require("../../controllers/admin/account.controller");
 
+const controller = require("../../controllers/admin/my-account.controller");
 const uploadCloud = require("../../middlewares/admin/uploadCloud.middleware")
 
 const validate = require("../../validates/admin/account.validate");
 
 router.get("/", controller.index);
 
-router.get("/create", controller.create);
-
-router.post(
-    "/create", 
-    upload.single("avatar"),
-    uploadCloud.upload,
-    validate.createPost,
-    controller.createPost);
-
-router.get("/edit/:id",controller.edit)
+router.get("/edit", controller.edit);
 
 router.patch(
-    "/edit/:id", 
+    "/edit",
     upload.single("avatar"),
     uploadCloud.upload,
-    controller.editPatch);
-
+    controller.editPatch
+);
 
 module.exports = router

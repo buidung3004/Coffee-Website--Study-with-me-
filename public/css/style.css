@@ -83,3 +83,45 @@
     padding: 10px 0;
     border-bottom: 1px solid #686868; /* Lighter grey for better visibility */
 }
+
+
+/* sub-menu */
+
+.sub-menu{
+    position: relative;
+    z-index: 999;
+}
+
+.sub-menu ul {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #eae9e9;
+    min-width: 180px;
+    display: none;
+}
+
+.sub-menu ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sub-menu:hover > ul {
+    display:block;
+}
+
+.sub-menu ul li {
+    position: relative;
+}
+
+.sub-menu ul li ul {
+    right: 100%;
+    top: 0;
+}
+
+.sub-menu ul li:hover > ul {
+    display: block;
+}

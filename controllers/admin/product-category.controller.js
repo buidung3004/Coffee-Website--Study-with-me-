@@ -31,7 +31,7 @@ module.exports.create =  async(req, res) => {
     // console.log(records)
     const newRecords = createTree.tree(records)
 
-    console.log(newRecords)
+
     res.render("admin/pages/products-category/create", {
         pageTitle: "Tạo danh mục",
         records: newRecords
