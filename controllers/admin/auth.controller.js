@@ -3,7 +3,6 @@ const systemConfig = require("../../config/system")
 const md5 = require("md5")
 // [GET] /admin/auth/login
 module.exports.login =  (req, res) => {
-    console.log(req.cookies.token)
     if(req.cookies.token) {
         res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
     } else {
