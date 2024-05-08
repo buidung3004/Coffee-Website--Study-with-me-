@@ -111,7 +111,8 @@ block main
                             - const updatedBy = item.updatedBy.slice(-1)[0]
                             if(updatedBy)
                                 p #{updatedBy.accountFullName}
-                                +formatDateTime(updatedBy.updatedAt)
+                                p 
+                                    +formatDateTime(updatedBy.updatedAt)
                         td
                             a(
                                 href=`${prefixAdmin}/products/detail/${item.id}`

@@ -25,50 +25,50 @@ module.exports.index =  async(req, res) => {
     if(objectSearch.regex){
         find.title = objectSearch.regex;
     }
-// Pagination
-const countProducts = await Product.countDocuments(find);
+    // Pagination
+    const countProducts = await Product.countDocuments(find);
 
-let objectPagination = paginationHelper(
-    {
-    currentPage: 1,
-    limitItems: 4
-    },
-    req.query,
-    countProducts
-)
+    let objectPagination = paginationHelper(
+        {
+        currentPage: 1,
+        limitItems: 4
+        },
+        req.query,
+        countProducts
+    )
 
-// Sort
-let sort = {};
+    // Sort
+    let sort = {};
 
-if(req.query.sortKey && req.query.sortValue) {
-    sort[req.query.sortKey] = req.query.sortValue
-} else {
-    sort.position = "desc"
-}
-
-
-
-const products = await Product.find(find).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip);
-
-for (const product of products) {
-    // Lấy thông tin account tạo
-    const userCreate = await Account.findOne({
-        _id: product.createdBy.account_id
-    })
-    if(userCreate) {
-        product.accountFullName = user.fullName
+    if(req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue
+    } else {
+        sort.position = "desc"
     }
 
-    // Lấy thông tin acc sửa
-    const updatedBy = product.updatedBy.slice(-1)[0]
-    if(updatedBy) {
-        const userUpdate = await Account.findOne({
-            _id: updatedBy.account_id
+
+
+    const products = await Product.find(find).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip);
+
+    for (const product of products) {
+        // Lấy thông tin account tạo
+        const userCreate = await Account.findOne({
+            _id: product.createdBy.account_id
         })
-        updatedBy.accountFullName = userUpdate.fullName
-    }
+        if(userCreate) {
+            product.accountFullName = userCreate.fullName
+        }
 
-}
+        // Lấy thông tin acc sửa
+        const updatedBy = product.updatedBy.slice(-1)[0]
+        if(updatedBy) {
+            const userUpdate = await Account.findOne({
+                _id: updatedBy.account_id
+            })
+            updatedBy.accountFullName = userUpdate.fullName
+        }
+
+    }
 
 
     res.render("admin/pages/products/index", {
@@ -237,25 +237,27 @@ module.exports.editPatch = async(req,res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
     req.body.position = parseInt(req.body.position)
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`
-    }
+    // if (req.file) {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`
+    // }
+    // console.log(req.body.thumbnail)
     try {
         const updatedBy = {
             account_id: res.locals.user.id,
-            updateAt: new Date(),
+            updatedAt: new Date(),
         }
 
-        await Product.updateOne({_id: id }, {
+        await Product.updateOne({_id:id} ,{
             ...req.body,
-            $push: {updatedBy: updatedBy}
+            $push: { updatedBy: updatedBy}
         })
-        req.flash("success", "Update succesful")
+        req.flash("success", "Cập nhật sản phẩm thành công  ")
     } catch (error) {
         req.flash("error", "Update fail")
     }
 
     res.redirect("back");
+
 }
 
 // [GET] /admin/products/detail/:id

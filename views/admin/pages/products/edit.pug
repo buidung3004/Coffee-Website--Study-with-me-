@@ -2,29 +2,27 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
-block  main
-    +alert-error(5000)
-    +alert-success(5000)
-
-
+block main
     if(role.permissions.includes("products_edit"))  
-        h1(class="mb-4") Edit Product
+        h1(class="mb-4") Edit product 
 
+        +alert-error(5000)
+        +alert-success(5000)
+        
         form(
-            action= `${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
-            id= "form-edit-product"
-            method= "POST"
+            action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+            method="POST"
             enctype="multipart/form-data"
         )
             div(class="form-group")
-                label(for="title")  Title
+                label(for="title") Title
                 input(
                     type="text"
                     class="form-control"
                     id="title"
                     name="title"
                     value=product.title
-                )
+                ) 
             div(class="form-group")
                 label(for="product_category_id")  Category
                 select(
@@ -34,8 +32,7 @@ block  main
                 )
                     option(value="") -- Select category -- 
                     if (category)
-                        +select-tree(category, 1, product.product_category_id)
-
+                        +select-tree(category, 1, product.product_category_id)          
             div(class="form-group")
                 label(for="desc")  Description
                 textarea(
@@ -74,7 +71,7 @@ block  main
                     name="stock"
                     value=product.stock
                     min="0"
-                )
+                )           
             div(
                 class="form-group thumbnail-container"
                 upload-image
@@ -93,10 +90,6 @@ block  main
                     upload-image-preview
                     class="image-preview"
                 )
-                button(
-                    id="delete-preview" 
-                    style="display: none;"
-                ) X
             div(class="form-group")
                 label(for="position") Position
                 input(
@@ -105,8 +98,8 @@ block  main
                     id="position"
                     name="position"
                     placeholder="auto increase"     
-                    min="1"  
-                    value=product.position 
+                    min="1"   
+                    value=product.position
                 )    
             div(class="form-group form-check form-check-inline")
                 input(
@@ -115,17 +108,17 @@ block  main
                     id="statusAvailable"
                     name="status"
                     value="available"
-                    checked=(product.status == "available" ? true: false)
+                    checked=(product.status=="available"  ? true : false)
                 )    
                 label(for="statusAvailable" class="form-check-label") Available
             div(class="form-group form-check form-check-inline")
                 input(
                     type="radio"
-                    class="from-check-input"
+                    class="form-check-input"
                     id="statusUnavailable"
                     name="status"
                     value="unavailable"
-                    checked=(product.status == "inavailable" ? true: false)
+                    checked=(product.status =="unavailable"  ? true : false)
                 )    
                 label(for="statusUnavailable" class="form-check-label") Unavailable
 
@@ -133,7 +126,5 @@ block  main
                 button(
                     type="submit"
                     class="btn btn-primary"
-                ) Update
-
+                ) Update     
         script(src="/admin/js/product.js")
-
