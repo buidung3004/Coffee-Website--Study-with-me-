@@ -10,7 +10,7 @@ module.exports.index =  async (req, res) => {
         status: "available",
         deleted: false
     }).sort({position:"asc"});
-    
+
     const newProducts = productsHelper.priceNewProducts(products)
 
     res.render("client/pages/products/index", {
@@ -25,12 +25,22 @@ module.exports.detail =  async (req, res) => {
     try {
         const find = {
             deleted:false,
-            slug: req.params.slug,
+            slug: req.params.slugProduct,
             status: "available"
         }
 
         const product = await Product.findOne(find)
 
+        if(product.product_category_id) {
+            const category = await ProductCategory.findOne({
+                _id: product.product_category_id,
+                status: "available",
+                deleted: false
+            })
+            product.category = category
+        }
+
+        product.priceNew = productsHelper.priceNewProduct(product)
 
         res.render("client/pages/products/detail", {
             pageTitle: product.title,

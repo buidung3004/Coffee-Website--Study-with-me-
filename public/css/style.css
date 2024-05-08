@@ -138,3 +138,117 @@
     font-size: 14px;
     border-radius: 8px;
 }
+
+/* Styling for the overall container and spacing */
+.container {
+    width: 80%;
+    margin: auto; /* Center the container on the page */
+    padding: 20px;
+}
+
+.my-5 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Row and column layout */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-6 {
+    width: 50%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Product image styling */
+.inner-thumb img {
+    width: auto;  /* Cho phép hình ảnh tự động điều chỉnh kích thước để giữ nguyên tỷ lệ */
+    max-width: 75%;  /* Giới hạn kích thước tối đa của hình ảnh */
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.inner-thumb img {
+    width: 300px;  /* Đặt chiều rộng cố định cho hình ảnh */
+    height: auto;  /* Giữ tỷ lệ chiều cao tự nhiên dựa trên chiều rộng mới */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+
+/* Product details styling */
+.inner-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.inner-category, .inner-price-new, .inner-price-old, .inner-percent, .inner-stock {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.inner-category a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.inner-price-new {
+    color: #28a745; /* Green, for new price */
+    font-weight: bold;
+}
+
+.inner-price-old {
+    color: #6c757d; /* Grey, for old price */
+    text-decoration: line-through;
+}
+
+.inner-percent span {
+    color: #dc3545; /* Red, indicates discount percentage */
+}
+
+.inner-stock span {
+    color: #ffc107; /* Yellow, indicates remaining stock */
+}
+
+/* Form styling */
+form {
+    margin-top: 2rem;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    color: white;
+    background-color: #28a745; /* Bootstrap success color */
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Description box styling */
+.inner-desc {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
