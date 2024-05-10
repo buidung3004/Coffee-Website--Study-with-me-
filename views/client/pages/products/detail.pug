@@ -1,7 +1,10 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 
 block main
+    +alert-success(3000)
+
     .product-detail 
         .container.my-5 
             .row 
@@ -28,7 +31,7 @@ block main
                         div(class="inner-stock") Còn lại: <span> #{product.stock} </span> sản phẩm
 
                     form(
-                        action=`cart/add/${product.id}`
+                        action=`/cart/add/${product.id}`
                         method="POST"
                     )
                         input(

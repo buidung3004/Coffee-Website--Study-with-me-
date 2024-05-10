@@ -19,8 +19,7 @@ module.exports.index =  async (req, res) => {
     });
 }
 
-// [GET] /products/:slug
-
+// [GET] /products/detail/:slug
 module.exports.detail =  async (req, res) => {
     try {
         const find = {
