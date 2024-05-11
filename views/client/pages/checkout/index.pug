@@ -1,0 +1,95 @@
+extends ../../layouts/default.pug 
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+
+block main  
+    +alert-success(5000)
+    +alert-error(5000)
+
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head("Đặt hàng")
+
+        .row 
+            .col-12 
+                table(class="table table-bordered")
+                    thead 
+                        tr 
+                            th STT
+                            th Ảnh
+                            th Tên 
+                            th  Giá
+                            th Số lượng
+                            th Tổng tiền
+                    tbody
+                        if(cartDetail.products.length > 0)
+                            each item, index in cartDetail.products
+                                tr 
+                                    td #{index+1}
+                                    td 
+                                        img(src=item.productInfo.thumbnail,alt=item.productInfo.title width="80px")
+                                    td 
+                                        a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
+                                    td #{item.productInfo.newPrice}$
+                                    td 
+                                        input(
+                                            type="number"
+                                            name="quantity"
+                                            value=item.quantity
+                                            min="1"
+                                            product-id=item.product_id
+                                            style="width: 60px"
+                
+                                        )
+                                    td #{item.totalPrice}$
+
+                        else
+                            tr 
+                                td(
+                                    colspan="7"
+                                    class="text-center"
+                                ) Giỏ hàng rỗng
+                if(cartDetail.products.length > 0)
+                    h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPrice}$ 
+
+        if(cartDetail.products.length > 0)
+            .row 
+                .col-12
+                    .card.p-4.my-4 
+                        form(
+                            action="/checkout/order"
+                            method="POST"
+                        )
+                            div(class="form-group") 
+                                label(for="fullName") Họ tên
+                                input(
+                                    type="text"
+                                    class="form-control"
+                                    id="fullName"
+                                    name="fullName"
+                                    required
+                                ) 
+                            div(class="form-group") 
+                                label(for="phone") Số điện thoại
+                                input(
+                                    type="text"
+                                    class="form-control"
+                                    id="phone"
+                                    name="phone"
+                                    required
+                                )
+                            div(class="form-group") 
+                                label(for="address") Địa chỉ
+                                input(
+                                    type="text"
+                                    class="form-control"
+                                    id="address"
+                                    name="address"
+                                    required
+                                ) 
+                            button(
+                                type="submit"
+                                class="btn btn-success btn-block"
+                            ) Đặt hàng
+
