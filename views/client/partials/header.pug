@@ -37,3 +37,6 @@ header.header
                             - const pathProduct = "/products"
                             a(href=pathProduct) Products
                                 +sub-menu(layoutProductsCategory, pathProduct)
+                        li
+                            a(href="/cart") Cart (#{miniCart ? miniCart.totalQuantity : "0"})
+                        
