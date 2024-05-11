@@ -41,6 +41,7 @@ block main
                                             min="1"
                                             product-id=item.product_id
                                             style="width: 60px"
+                
                                         )
                                     td #{item.totalPrice}$
                                     td 
@@ -54,3 +55,5 @@ block main
 
                 div(class="text-right mt-3")
                     a(href="/checkout" class="btn btn-success") Thanh toán
+
+    script(src='/js/cart.js')
