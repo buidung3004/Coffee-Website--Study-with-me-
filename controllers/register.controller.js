@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const nodemailer = require('nodemailer');
-const User = require('../models/user');
+const User = require('../models/user.model');
 
 exports.register = async (req, res) => {
   // Validate the request data
