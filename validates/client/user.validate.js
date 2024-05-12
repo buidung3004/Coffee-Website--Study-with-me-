@@ -33,3 +33,14 @@ module.exports.loginPost = (req,res,next) => {
     next()
 
 }
+
+module.exports.forgotPasswordPost = (req,res,next) => {
+    if (!req.body.email) {
+        req.flash("error", "Please enter a email")
+        res.redirect("back")
+        return
+    }
+
+    next()
+
+}
