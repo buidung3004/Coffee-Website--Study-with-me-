@@ -9,30 +9,23 @@ block main
     .container.my-5
         .row.justify-content-center
             .col-8
-                h1(class="text-center") Đăng ký tài khoản
+                h1(class="text-center") Đăng nhập tài khoản
     
                 form(
-                    action=`/user/register`
+                    action=`/user/login`
                     method="POST"
                 )
                     div(class="form-group")
-                        label(for="fullName") Full Name
-                        input(
-                            type="text"
-                            class="form-control"
-                            id="fullName"
-                            name="fullName"
-                        )
-                    div(class="form-group")
-                        label(for="email") Email *
+                        label(for="email") Email 
                         input(
                             type="email"
                             class="form-control"
                             id="email"
                             name="email"
+                            required
                         )
                     div(class="form-group")
-                        label(for="password") Password *
+                        label(for="password") Password 
                         input(
                             type="password"
                             class="form-control"
@@ -43,4 +36,4 @@ block main
                         button(
                             type="submit"
                             class="btn btn-primary"
-                        ) Register
+                        ) Login
