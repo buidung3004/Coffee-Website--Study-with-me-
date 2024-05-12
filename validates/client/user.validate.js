@@ -42,5 +42,24 @@ module.exports.forgotPasswordPost = (req,res,next) => {
     }
 
     next()
+}
 
+module.exports.resetPasswordPost = (req,res,next) => {
+    if (!req.body.password) {
+        req.flash("error", "Please enter a password")
+        res.redirect("back")
+        return
+    }
+    if (!req.body.confirmPassword) {
+        req.flash("error", "Please enter a confirm password")
+        res.redirect("back")
+        return
+    }
+
+    if (req.body.password != req.body.confirmPassword) {
+        req.flash("error", "Confirmation password does not match")
+        res.redirect("back")
+        return
+    }
+    next()
 }
