@@ -34,7 +34,7 @@ module.exports.login= async (req, res) => {
     })
 }
 
-// [PÓT] user/login
+// [POST] user/login
 module.exports.loginPost = async (req, res) => {
     const email = req.body.email 
     const password = req.body.password 
@@ -62,5 +62,12 @@ module.exports.loginPost = async (req, res) => {
     } 
     res.cookie("tokenUser",user.tokenUser)
     
+    res.redirect("/")
+}
+
+// [POST] user/logout
+module.exports.logout = async (req, res) => {
+    res.clearCookie("tokenUser")
+
     res.redirect("/")
 }
