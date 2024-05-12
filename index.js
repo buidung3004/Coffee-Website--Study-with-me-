@@ -12,8 +12,8 @@ require("dotenv").config();
 const database = require("./config/database");
 const systemConfig = require("./config/system")
 
-const registerRoute = require('./routes/registration.route');
-const loginRoute = require('./routes/login.route'); 
+// const registerRoute = require('./routes/registration.route');
+// const loginRoute = require('./routes/login.route'); 
 const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 
@@ -50,9 +50,9 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment
 app.use(express.static(`${__dirname}/public`));
 
-//Route
-app.use(registerRoute); 
-app.use(loginRoute);
+// //Route
+// app.use(registerRoute); 
+// app.use(loginRoute);
 route(app);
 routeAdmin(app);
 
