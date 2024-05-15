@@ -2,6 +2,50 @@ extends ../../layouts/default.pug
 
 block main 
     h1 Trang tổng quan
-    div #{user}
-    p ---------------------------
-    div #{role.permissions}
+
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header Thông tin tài khoản
+                .card-body
+                    if(user.avatar)
+                        img(
+                            src=user.avatar
+                            style="height: 100px; margin-bottom: 15px"
+                        )
+                    if(user.fullName)
+                        p Full name: <b> #{user.fullName} </b>
+                    if(user.email)
+                        p Email: <b> #{user.email} </b>
+                    if(user.phone)
+                        p Phone: <b> #{user.phone} </b>
+                    if(role.title)
+                        p Role: <b> #{role.title} </b>
+        .col-6 
+            .card.mb-4 
+                .card-header Danh mục sản phẩm
+                .card-body 
+                    p Số lượng: <b> #{statistic.categoryProduct.total} </b>
+                    p Lưu hành: <b>  #{statistic.categoryProduct.available} </b>
+                    p Ngừng lưu hành: <b>  #{statistic.categoryProduct.unavailable} </b>
+        .col-6 
+            .card.mb-4 
+                .card-header Danh sách sản phẩm
+                .card-body 
+                    p Số lượng: <b> #{statistic.product.total} </b>
+                    p Lưu hành: <b>  #{statistic.product.available} </b>
+                    p Ngừng lưu hành: <b>  #{statistic.product.unavailable} </b>
+        .col-6 
+            .card.mb-4 
+                .card-header Tài khoản admin
+                .card-body 
+                    p Số lượng: <b> #{statistic.account.total} </b>
+                    p Hoạt động: <b>  #{statistic.account.active} </b>
+                    p Ngừng hoạt động: <b>  #{statistic.account.inactive} </b>
+        .col-6 
+            .card.mb-4 
+                .card-header Tài khoản client
+                .card-body 
+                    p Số lượng: <b> #{statistic.user.total} </b>
+                    p Hoạt động: <b>  #{statistic.user.active} </b>
+                    p Ngừng hoạt động: <b>  #{statistic.user.inactive} </b>                
