@@ -57,10 +57,11 @@ route(app);
 routeAdmin(app);
 
 //Error Handling
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
+app.get("*",(req,res) => {
+  res.render("client/pages/errors/404",{
+    pageTitle: "404 Not Found"
+  })
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
