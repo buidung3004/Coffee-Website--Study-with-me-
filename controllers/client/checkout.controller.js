@@ -32,9 +32,14 @@ module.exports.index = async (req, res) => {
 
 // [POST] /checkout/order
 module.exports.order = async (req, res) => {
-    const cartId = req.cookies.cartId
-    const userInfo =  req.body
 
+    const cartId = req.cookies.cartId
+
+    const userInfo = {
+        fullName: req.body.fullName,
+        phone: req.body.phone,
+        address: req.body.address
+    };
     const cart = await Cart.findOne({_id:cartId})
     let products = []
 
@@ -55,15 +60,19 @@ module.exports.order = async (req, res) => {
     const objectOrder = {
         cart_id: cartId,
         userInfo:userInfo,
-        products: products
+        products: products,
+        deliveryMethod: req.body.deliveryMethod,
+        paymentMethod: req.body.paymentMethod
     }
 
     const order = new Order(objectOrder);
     await order.save()
 
     await Cart.updateOne({_id:cartId},{products: []})
-    
+
     res.redirect(`/checkout/success/${order.id}`)
+
+
 }
 
 // [GET] /checkout/success/:orderid

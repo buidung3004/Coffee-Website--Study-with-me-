@@ -59,6 +59,22 @@ block main
                                         td #{item.priceNew}$  
                                         td #{item.quantity}
                                         td #{item.totalPrice}$ 
+
+            .row
+                .col-6
+                    h4(class="mb-2") Phương thức vận chuyển
+                    p 
+                        if order.deliveryMethod == 'fast'
+                            | Giao hàng nhanh
+                        else
+                            | Giao hàng tiết kiệm
+                .col-6
+                    h4(class="mb-2") Phương thức thanh toán
+                    p 
+                        if order.paymentMethod == 'paypal'
+                            | Thanh toán bằng PayPal
+                        else
+                            | Thanh toán khi nhận hàng
                     if(order.products.length > 0)
                         h3(class="text-right") Tổng đơn hàng: #{order.totalPrice}$
                             

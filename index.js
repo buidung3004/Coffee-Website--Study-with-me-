@@ -1,12 +1,13 @@
 const express = require("express");
 const path = require('path')
 const methodOverride = require('method-override')
+const cors = require('cors');
 // const bodyParser = require("body-parser") // ex4.18 ver kh cần cài thêm, đã fix
 const flash = require("express-flash")
 const cookieParser = require("cookie-parser")
 const session = require('express-session')
 const moment = require("moment")
-
+// const bodyParser = require('body-parser');
 require("dotenv").config();
 
 const database = require("./config/database");
@@ -25,7 +26,13 @@ const port = process.env.PORT;
 
 app.use(methodOverride('_method'));
 // parse application/x-www/form-urlencoded
-app.use(express.urlencoded({ extended: false}))
+app.use(cors());
+app.use(express.urlencoded({ extended: true}))
+app.use(express.json());
+
+// app.use(bodyParser.urlencoded({ extended: true }));  // Parse application/x-www-form-urlencoded
+// app.use(bodyParser.json());  // Parse application/json
+
 
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");

@@ -17,7 +17,17 @@ const orderSchema = new mongoose.Schema(
                 discountPercentage: Number,
                 quantity: Number
             }
-        ]
+        ] ,
+        deliveryMethod: String,
+        paymentMethod: String,
+        status:{
+            type: String,
+            default:"pending"
+        },
+        statusPayment:{
+            type: String,
+            default:"unpaid"
+        }
     },
     {
         timestamps: true
