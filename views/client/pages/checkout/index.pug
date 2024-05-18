@@ -137,8 +137,16 @@ block main
                                         value="paypal"
                                     )
                                     label(for="paymentMethodPaypal") Thanh toán bằng PayPal
+                                    input(
+                                        type="radio",
+                                        id="paymentMethodVnpay",
+                                        name="paymentMethod",
+                                        value="vnpay"
+                                    )
+                                    label(for="paymentMethodVnpay") Thanh toán bằng VNPay
 
                     div#paypal-button-container(data-total-price=cartDetail.totalPrice style="display: none;")
+                    div#vnpay-button-container(style="display: none;")
 
                 button(
                     type="submit",

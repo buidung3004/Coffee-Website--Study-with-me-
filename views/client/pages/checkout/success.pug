@@ -73,6 +73,8 @@ block main
                     p 
                         if order.paymentMethod == 'paypal'
                             | Thanh toán bằng PayPal
+                        else if order.paymentMethod == 'vnpay'
+                            | Thanh toán bằng VNPay
                         else
                             | Thanh toán khi nhận hàng
                     if(order.products.length > 0)
