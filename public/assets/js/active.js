@@ -438,7 +438,51 @@
 
 })(jQuery);	
 
+// Pagination
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
 
+    function updatePage(newPage) {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('page', newPage);
+        window.location.href = newUrl.toString();
+    }
+
+    document.querySelectorAll('.pagination a').forEach(function(pageLink) {
+        pageLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            const pageHref = pageLink.getAttribute('href');
+            const pageMatch = pageHref.match(/#page=(\d+)/);
+            if (pageMatch) {
+                const newPage = parseInt(pageMatch[1]);
+                if (!isNaN(newPage)) {
+                    updatePage(newPage);
+                }
+            }
+        });
+    });
+
+    function updateActivePage() {
+        document.querySelectorAll('.pagination li').forEach(function(pageItem) {
+            const pageLink = pageItem.querySelector('a');
+            if (pageLink) {
+                const pageHref = pageLink.getAttribute('href');
+                const pageMatch = pageHref.match(/#page=(\d+)/);
+                if (pageMatch) {
+                    const page = parseInt(pageMatch[1]);
+                    if (page === currentPage) {
+                        pageItem.classList.add('active');
+                    } else {
+                        pageItem.classList.remove('active');
+                    }
+                }
+            }
+        });
+    }
+
+    updateActivePage();
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
