@@ -58,7 +58,7 @@ body
               button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-search')
                 i.sli-magnifier
             .header-action-item
-              button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-cart')
+              a.header-action-toggle(href='/cart')
                 i.sli-basket-loaded
                   span.count (#{miniCart ? miniCart.totalQuantity : "0"})
             .header-action-item.dropdown
@@ -91,40 +91,6 @@ body
             input(type="text" placeholder="Nhập từ khóa..." class="form-control" name="keyword" value=keyword)
             button(type="submit" class="btn btn-primary")
               i.sli-magnifier
-  #offcanvas-cart.offcanvas.offcanvas-end
-    .offcanvas-header
-      h5 Shoping Cart
-      button.btn-close.text-reset(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
-    .offcanvas-body.d-flex.flex-column
-      .header-cart-body
-        .header-cart-products
-          .header-cart-product
-            .header-cart-product-thumb
-              a.header-cart-product-image(href='product-details.html')
-                img(src='assets/images/products/cart/product-1.jpg' alt='House Coffee Original' width='90' height='103')
-              button.header-cart-product-remove
-                i.sli-close
-            .header-cart-product-content
-              h5.header-cart-product-title
-                a(href='product-details.html') House Coffee Original
-              span.header-cart-product-quantity 1 x $110.00
-          .header-cart-product
-            .header-cart-product-thumb
-              a.header-cart-product-image(href='product-details.html')
-                img(src='assets/images/products/cart/product-2.jpg' alt='Medium Roast Ground Coffee' width='90' height='103')
-              button.header-cart-product-remove
-                i.sli-close
-            .header-cart-product-content
-              h5.header-cart-product-title
-                a(href='product-details.html') Medium Roast Ground Coffee
-              span.header-cart-product-quantity 1 x $19.00
-      .header-cart-footer
-        h4.header-cart-total
-          | Total: 
-          span $129.00
-        .header-cart-buttons
-          a.btn.btn-outline-dark.btn-primary-hover(href='checkout.html') CHECKOUT
-          a.btn.btn-outline-dark.btn-primary-hover(href='cart.html') VIEW CART
           li
             a(href='contact.html') Contact Us
 

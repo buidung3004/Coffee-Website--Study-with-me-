@@ -24,7 +24,7 @@ module.exports.index = async (req, res) => {
     }
     cart.totalPrice = cart.products.reduce((sum,item) =>sum+item.totalPrice,0)
 
-    res.render("client/pages/checkout/index", {
+    res.render("client/pages/checkout/index-test", {
         pageTitle: "Đặt hàng",
         cartDetail: cart
     });
@@ -70,7 +70,7 @@ module.exports.order = async (req, res) => {
 
     await Cart.updateOne({_id:cartId},{products: []})
 
-    res.redirect(`/checkout/success/${order.id}`)
+    res.redirect(`/checkout/success-test/${order.id}`)
 
 
 }
@@ -97,7 +97,7 @@ module.exports.success = async (req, res) => {
 
 
 
-    res.render("client/pages/checkout/success", {
+    res.render("client/pages/checkout/success-test", {
         pageTitle: "Đặt hàng thành công",
         order: order 
     })

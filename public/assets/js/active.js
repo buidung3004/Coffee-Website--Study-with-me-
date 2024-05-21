@@ -329,17 +329,17 @@
         bottomSpacing: 60
     });
     
-    /* Product Quantity */
-    $('.product-quantity-count').on('click', '.qty-btn', function(e) {
-        e.preventDefault()
-        const $btn = $(this),
-            $box = $btn.siblings('.product-quantity-box')[0];
-        if($btn.hasClass('inc')) {
-            $box.value = Number($box.value) + 1
-        } else if($btn.hasClass('dec') && Number($box.value) > 1) {
-            $box.value = Number($box.value) - 1
-        }
-    })
+    // /* Product Quantity */
+    // $('.product-quantity-count').on('click', '.qty-btn', function(e) {
+    //     e.preventDefault()
+    //     const $btn = $(this),
+    //         $box = $btn.siblings('.product-quantity-box')[0];
+    //     if($btn.hasClass('inc')) {
+    //         $box.value = Number($box.value) + 1
+    //     } else if($btn.hasClass('dec') && Number($box.value) > 1) {
+    //         $box.value = Number($box.value) - 1
+    //     }
+    // })
 
     /* Shipping Form Toggle */
     if($('[data-toggle-shipping]').length) {
@@ -486,3 +486,49 @@ document.addEventListener('DOMContentLoaded', function() {
     updateActivePage();
 });
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    const inputsQuantity = document.querySelectorAll("input[name='quantity']");
+    const buttonsDec = document.querySelectorAll(".dec.qty-btn");
+    const buttonsInc = document.querySelectorAll(".inc.qty-btn");
+
+    if (inputsQuantity.length > 0) {
+        inputsQuantity.forEach(input => {
+            input.addEventListener("change", (e) => {
+                const productId = input.getAttribute("product-id");
+                const quantity = parseInt(input.value);
+                if (quantity > 0) {
+                    window.location.href = `/cart/update/${productId}/${quantity}`;
+                }
+            });
+        });
+    }
+
+    if (buttonsDec.length > 0) {
+        buttonsDec.forEach(button => {
+            button.addEventListener("click", (e) => {
+                const productId = button.getAttribute("data-product-id");
+                const input = document.querySelector(`input[product-id='${productId}']`);
+                let quantity = parseInt(input.value);
+                if (quantity > 1) {
+                    quantity -= 1;
+                    input.value = quantity;
+                    window.location.href = `/cart/update/${productId}/${quantity}`;
+                }
+            });
+        });
+    }
+
+    if (buttonsInc.length > 0) {
+        buttonsInc.forEach(button => {
+            button.addEventListener("click", (e) => {
+                const productId = button.getAttribute("data-product-id");
+                const input = document.querySelector(`input[product-id='${productId}']`);
+                let quantity = parseInt(input.value);
+                quantity += 1;
+                input.value = quantity;
+                window.location.href = `/cart/update/${productId}/${quantity}`;
+            });
+        });
+    }
+});

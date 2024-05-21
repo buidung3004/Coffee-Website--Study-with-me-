@@ -1,0 +1,393 @@
+include ../../mixins/sub-menu.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug 
+
+doctype html
+
+head
+  script(src="https://unpkg.com/react@17/umd/react.production.min.js")
+  script(src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js")
+  script(src=`https://www.paypal.com/sdk/js?client-id=${process.env.CLIENT_ID}&currency=USD`)
+
+
+  meta(charset='utf-8')
+  meta(http-equiv='x-ua-compatible' content='ie=edge')
+  title #{pageTitle}
+  meta(name='robots' content='noindex, follow')
+  meta(name='description' content='Kofi - Coffee Shop Website Template')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  // Favicon
+  link(rel='shortcut icon' type='image/x-icon' href='assets/images/favicon.png')
+  // CSS (Font, Vendor, Icon, Plugins & Style CSS files)
+  // Fonts CSS
+  link(rel='preconnect' href='https://fonts.googleapis.com/')
+  link(rel='preconnect' href='https://fonts.gstatic.com/' crossorigin='')
+  link(href='https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Oswald:wght@200;300;400;500;600;700&display=swap' rel='stylesheet')
+  // Vendor CSS (Bootstrap & Icon Font)
+  link(rel='stylesheet' href='/assets/css/vendor/bootstrap.min.css')
+  // Icons CSS
+  link(rel='stylesheet' href='/assets/css/plugins/simple-line-icons.min.css')
+  // Plugins CSS
+  link(rel='stylesheet' href='/assets/css/plugins/swiper-bundle.min.css')
+  link(rel='stylesheet' href='/assets/css/plugins/magnific-popup.css')
+  link(rel='stylesheet' href='/assets/css/plugins/ion.rangeSlider.min.css')
+  // Style CSS
+  link(rel='stylesheet' href='/assets/css/style.css')
+
+
+body
+
+  +alert-success(5000)
+  +alert-error(5000)
+
+  .header.sticky-header.section
+    .container-fluid
+      .row.align-items-center
+        // Logo Start
+        .col-lg-2.col
+          .header-logo
+            a(href="/")
+              img(src=settingGeneral.logo, width='125' height='42' alt='kofi logo')
+              img.light(src='assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
+        // Logo End
+        // Menu Start
+        .col.d-none.d-lg-block
+          nav.main-menu
+            ul
+              li.has-sub-menu
+                a(href="/") Home
+              li(class="sub-menu-abc")
+                  - const pathProduct = "/products"
+                  a(href=pathProduct) Products
+                      +sub-menu(layoutProductsCategory, pathProduct)
+              li
+                a(href='contact.html') Contact Us
+        // Menu End
+        // Action Start
+        .col-auto
+          .header-action
+            .header-action-item
+              button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-search')
+                i.sli-magnifier
+            .header-action-item
+              a.header-action-toggle(href='/cart')
+                i.sli-basket-loaded
+                  span.count (#{miniCart ? miniCart.totalQuantity : "0"})
+            .header-action-item.dropdown
+              button.header-action-toggle(type='button' data-bs-toggle='dropdown')
+                i.sli-settings
+              .dropdown-menu.header-dropdown-menu
+                h6.header-dropdown-menu-title Account
+                ul
+                  if(user)
+                      li
+                          a(href="/user/info") #{user.fullName}
+                      li
+                          a(href="/user/logout") Đăng xuất
+                  else
+                      li 
+                          a(href="/user/login") Đăng nhập
+                      li 
+                          a(href="/user/register") Đăng ký
+
+            .header-action-item.d-lg-none
+              button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-header')
+                i.sli-menu
+        // Action End
+  #offcanvas-search.offcanvas.offcanvas-end.w-100.bg-dark.border-0
+    .offcanvas-body.d-flex.align-items-center.justify-content-center
+      button.btn-close.offcanvas-search-close-btn.text-white(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+      .offcanvas-search-form
+        form(action="/search" method="GET")
+          div(class="form-group d-flex mb-0")
+            input(type="text" placeholder="Nhập từ khóa..." class="form-control" name="keyword" value=keyword)
+            button(type="submit" class="btn btn-primary")
+              i.sli-magnifier
+          li
+            a(href='contact.html') Contact Us
+// Page Banner Section Start
+.page-banner-section.section
+  .container
+    ul.breadcrumb
+      li
+        a(href='/') Home
+      li Checkout
+// Page Banner Section End
+// Product Section Start
+.shop-product-section.section.section-padding
+  .container
+    script.
+      var totalPrice = !{JSON.stringify(cartDetail.totalPrice)};
+    form#checkout-form(
+      action="/checkout/order"
+      method="POST"
+    )
+      .row.g-4
+        .col-lg-7
+          // Shipping Address
+          #billing-form
+            h4.mb-4 Shipping Address
+            .row.row-cols-sm-2.row-cols-1.g-4
+              .col
+                label(for="fullName") Full Name
+                input.form-field(type='text', id="fullName", name="fullName", placeholder='Full Name' required)
+              .col
+                label Phone no*
+                input.form-field(type='text', id="phone", name="phone" , placeholder='Phone number' required)
+              .col-sm-12
+                label Address*
+                input.form-field(type='text',id="address",name="address", placeholder='Address')
+              //- .col
+              //-   label Country*
+              //-   select.form-field
+              //-     option Bangladesh
+              //-     option China
+              //-     option country
+              //-     option India
+              //-     option Japan
+              //- .col
+              //-   label Town/City*
+              //-   input.form-field(type='text' placeholder='Town/City')
+              //- .col
+              //-   label State*
+              //-   input.form-field(type='text' placeholder='State')
+              //- .col
+              //-   label Zip Code*
+              //-   input.form-field(type='text' placeholder='Zip Code')
+              .col-sm-12.d-flex.flex-wrap
+                .form-check.me-4
+                  input#create_account.form-check-input(type='checkbox')
+                  label.form-check-label(for='/register') Create an Account?
+                //- .form-check.m-0
+                //-   input#shiping_address.form-check-input(type='checkbox' data-toggle-shipping='#shipping-form')
+                //-   label.form-check-label(for='shiping_address') Ship to Different Address
+          // Shipping Address
+          //- #shipping-form.mt-md-8.mt-6
+          //-   h4.mb-4 Shipping Address
+          //-   .row.row-cols-sm-2.row-cols-1.g-4
+          //-     .col
+          //-       label First Name*
+          //-       input.form-field(type='text' placeholder='First Name')
+          //-     .col
+          //-       label Last Name*
+          //-       input.form-field(type='text' placeholder='Last Name')
+          //-     .col
+          //-       label Email Address*
+          //-       input.form-field(type='email' placeholder='Email Address')
+          //-     .col
+          //-       label Phone no*
+          //-       input.form-field(type='text' placeholder='Phone number')
+          //-     .col-sm-12
+          //-       label Company Name
+          //-       input.form-field(type='text' placeholder='Company Name')
+          //-     .col-sm-12
+          //-       label Address*
+          //-       input.form-field(type='text' placeholder='Address line 1')
+          //-     .col-sm-12
+          //-       input.form-field(type='text' placeholder='Address line 2')
+          //-     .col
+          //-       label Country*
+          //-       select.form-field
+          //-         option Bangladesh
+          //-         option China
+          //-         option country
+          //-         option India
+          //-         option Japan
+          //-     .col
+          //-       label Town/City*
+          //-       input.form-field(type='text' placeholder='Town/City')
+          //-     .col
+          //-       label State*
+          //-       input.form-field(type='text' placeholder='State')
+          //-     .col
+          //-       label Zip Code*
+          //-       input.form-field(type='text' placeholder='Zip Code')
+        .col-lg-5
+          // Checkout Summary Start
+          .checkout-box
+            h4.mb-4 Cart Total
+            table.checkout-summary-table.table.table-borderless
+              thead
+                tr
+                  th Product
+                  th Total
+              tbody
+                if(cartDetail.products.length > 0)
+                  each item, index in cartDetail.products
+                    tr
+                      td #{item.productInfo.title} x #{item.quantity}
+                      td #{item.productInfo.newPrice}$ 
+                    //- tr
+                    //-   td.border-top Sub Total
+                    //-   td.border-top $129.00
+                    //- tr
+                    //-   td.border-top Shipping Fee
+                    //-   td.border-top $10.00
+                  tfoot
+                    tr
+                      th.border-top Grand Total
+                      th.border-top #{cartDetail.totalPrice}$ 
+          // Checkout Summary End
+          // Delivery Method Start
+          .checkout-box
+            h4.mb-4 Delivery Method
+            .checkout-delivery-method
+              .single-method.form-check
+                input.form-check-input(type="radio",id="deliveryMethodFast",name="deliveryMethod",value="fast",checked)
+                label.form-check-label(for="deliveryMethodFast") Fast
+              .single-method.form-check
+                input.form-check-input(type="radio",id="deliveryMethodEconomical",name="deliveryMethod",value="economical",checked)
+                label.form-check-label(for="deliveryMethodEconomical") Economical
+          // Delivery Method End
+          // Payment Method Start
+          .checkout-box
+            h4.mb-4 Payment Method
+            .checkout-payment-method
+              .single-method.form-check
+                input.form-check-input(type="radio",id="paymentMethodCod",name="paymentMethod",value="cod",checked)
+                label.form-check-label(for="paymentMethodCod") Payment on delivery
+                p
+                  | Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.
+              .single-method.form-check
+                input.form-check-input(type="radio",id="paymentMethodPaypal",name="paymentMethod",value="paypal")
+                label.form-check-label(for="paymentMethodPaypal") PayPal
+                p
+                  | Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.
+              .single-method.form-check
+                input.form-check-input(type="radio",id="paymentMethodVnpay",name="paymentMethod",value="vnpay")
+                label.form-check-label(for='paymentMethodVnpay') VNPay
+                p
+                  | Please send a Check to Store name with Store Street, Store Town, Store State, Store Postcode, Store Country.
+          div#paypal-button-container(data-total-price=cartDetail.totalPrice style="display: none;")
+          div#vnpay-button-container(style="display: none;")
+
+
+          button(
+            type="submit",
+            id="submit-button",
+            class=".btn.btn-dark.btn-primary-hover.rounded-0.mt-6"
+          ) Place Order
+
+          // Payment Method End
+// Product Section End
+// Footer Section Start
+.footer-section.section
+  // Footer Top Section Start
+  .footer-top.section
+    .container
+      .row.mb-n8.gy-lg-0.gy-4
+        // Footer Widget Start
+        .col-lg-4.col-sm-6.col-12.mb-8
+          .footer-widget.footer-widget-dark
+            h5.footer-widget-title About Info
+            p
+              | This is the perfect place to find a nice and cozy spot to sip some. You&apos;ll find the Java Jungle.
+            ul.footer-widget-list-icon
+              li
+                i.sli-location-pin
+                | Addresss: 123 Pall Mall, London England
+              li
+                i.sli-envelope
+                | Email: hello@example.com
+              li
+                i.sli-phone
+                | Phone: (012) 345 6789
+        // Footer Widget End
+        // Footer Widget Start
+        .col-lg-3.col-sm-6.col-12.mb-8
+          .footer-widget.footer-widget-dark
+            h5.footer-widget-title Information
+            ul.footer-widget-list
+              li
+                a(href='#') Returns Policy
+              li
+                a(href='#') Support Policy
+              li
+                a(href='#') Size Guide
+              li
+                a(href='#') FAQs
+              li
+                a(href='#') Privacy Policy
+        // Footer Widget End
+        // Footer Widget Start
+        .col-lg-3.col-sm-6.col-12.mb-8
+          .footer-widget.footer-widget-dark
+            h5.footer-widget-title Quick Links
+            ul.footer-widget-list
+              li
+                a(href='about-us.html') About us
+              li
+                a(href='wishlist.html') Wishlist
+              li
+                a(href='my-account.html') My Account
+              li
+                a(href='login.html') Login
+              li
+                a(href='register.html') Register
+        // Footer Widget End
+        // Footer Widget Start
+        .col-lg-2.col-sm-6.col-12.mb-8
+          .footer-widget.footer-widget-dark
+            h5.footer-widget-title Follow Us On
+            ul.footer-widget-list-icon
+              li
+                a(href='#')
+                  i.sli-social-facebook
+                  | Facebook
+              li
+                a(href='#')
+                  i.sli-social-twitter
+                  | Twitter
+              li
+                a(href='#')
+                  i.sli-social-instagram
+                  | Instagram
+              li
+                a(href='#')
+                  i.sli-social-youtube
+                  | Youtube
+              li
+                a(href='#')
+                  i.sli-social-pinterest
+                  | Pinterest
+        // Footer Widget End
+  // Footer Top Section End
+  // Footer Bottom Section Start
+  .footer-bottom.footer-bottom-dark.section
+    .container
+      .row.justify-content-between.align-items-center.mb-n2
+        // Footer Widget Start
+        .col-md-auto.col-12.mb-2
+          p.footer-copyright.footer-copyright-dark.text-center
+            | Copyright 
+            b.text-primary Kofi
+            |  &copy;2023
+        // Footer Widget End
+        // Footer Widget Start
+        .col-md-auto.col-12.mb-2
+          .footer-payment.text-center
+            img(loading='lazy' src='assets/images/footer/footer-payment.png' alt='footer payment' width='342' height='30')
+        // Footer Widget End
+  // Footer Bottom Section End
+// Footer Section End
+button.scroll-to-top
+  i.sli-arrow-up
+// JS Vendor, Plugins & Activation Script Files
+// Vendors JS
+script(src='assets/js/vendor/modernizr-3.11.7.min.js')
+script(src='assets/js/vendor/jquery-3.6.0.min.js')
+script(src='assets/js/vendor/jquery-migrate-3.3.2.min.js')
+script(src='assets/js/vendor/bootstrap.bundle.min.js')
+// Plugins JS
+script(src='assets/js/plugins/swiper-bundle.min.js')
+script(src='assets/js/plugins/jquery.countdown.min.js')
+script(src='assets/js/plugins/svg-inject.min.js')
+script(src='assets/js/plugins/jquery.magnific-popup.min.js')
+script(src='assets/js/plugins/ion.rangeSlider.min.js')
+script(src='assets/js/plugins/jquery.zoom.min.js')
+script(src='assets/js/plugins/resize-sensor.js')
+script(src='assets/js/plugins/jquery.sticky-sidebar.min.js')
+// Activation JS
+script(src='assets/js/active.js')
+script(src="/js/payment.js")
+// Mirrored from htmldemo.net/kofi/kofi/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:08 GMT

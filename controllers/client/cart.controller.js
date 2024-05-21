@@ -22,7 +22,7 @@ module.exports.index = async (req, res) => {
     }
     cart.totalPrice = cart.products.reduce((sum,item) =>sum+item.totalPrice,0)
 
-    res.render("client/pages/cart/index", {
+    res.render("client/pages/cart/index-test", {
         pageTitle: "Giỏ hàng",
         cartDetail: cart,
 
