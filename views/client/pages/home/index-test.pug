@@ -1,0 +1,739 @@
+include ../../mixins/sub-menu.pug
+
+doctype html
+// Mirrored from htmldemo.net/kofi/kofi/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:41:25 GMT
+head
+  meta(charset='utf-8')
+  meta(http-equiv='x-ua-compatible' content='ie=edge')
+  title #{pageTitle}
+  meta(name='robots' content='noindex, follow')
+  meta(name='description' content='Kofi - Coffee Shop Website Template')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  // Favicon
+  link(rel='shortcut icon' type='image/x-icon' href='assets/images/favicon.png')
+  // CSS (Font, Vendor, Icon, Plugins & Style CSS files)
+  // Fonts CSS
+  link(rel='preconnect' href='https://fonts.googleapis.com/')
+  link(rel='preconnect' href='https://fonts.gstatic.com/' crossorigin='')
+  link(href='https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Oswald:wght@200;300;400;500;600;700&display=swap' rel='stylesheet')
+  // Vendor CSS (Bootstrap & Icon Font)
+  link(rel='stylesheet' href='/assets/css/vendor/bootstrap.min.css')
+  // Icons CSS
+  link(rel='stylesheet' href='/assets/css/plugins/simple-line-icons.min.css')
+  // Plugins CSS
+  link(rel='stylesheet' href='/assets/css/plugins/swiper-bundle.min.css')
+  link(rel='stylesheet' href='/assets/css/plugins/magnific-popup.css')
+  link(rel='stylesheet' href='/assets/css/plugins/ion.rangeSlider.min.css')
+  // Style CSS
+  link(rel='stylesheet' href='/assets/css/style.css')
+body 
+  .header.sticky-header.section
+    .container-fluid
+      .row.align-items-center
+        // Logo Start
+        .col-lg-2.col
+          .header-logo
+            a(href="/")
+              img(src=settingGeneral.logo, width='125' height='42' alt='kofi logo')
+              img.light(src='assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
+        // Logo End
+        // Menu Start
+        .col.d-none.d-lg-block
+          nav.main-menu
+            ul
+              li.has-sub-menu
+                a(href="/") Home
+              li(class="sub-menu-abc")
+                  - const pathProduct = "/products"
+                  a(href=pathProduct) Products
+                      +sub-menu(layoutProductsCategory, pathProduct)
+              li
+                a(href='contact.html') Contact Us
+        // Menu End
+        // Action Start
+        .col-auto
+          .header-action
+            .header-action-item
+              button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-search')
+                i.sli-magnifier
+            .header-action-item
+              button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-cart')
+                i.sli-basket-loaded
+                  span.count (#{miniCart ? miniCart.totalQuantity : "0"})
+            .header-action-item.dropdown
+              button.header-action-toggle(type='button' data-bs-toggle='dropdown')
+                i.sli-settings
+              .dropdown-menu.header-dropdown-menu
+                h6.header-dropdown-menu-title Account
+                ul
+                  if(user)
+                      li
+                          a(href="/user/info") #{user.fullName}
+                      li
+                          a(href="/user/logout") Đăng xuất
+                  else
+                      li 
+                          a(href="/user/login") Đăng nhập
+                      li 
+                          a(href="/user/register") Đăng ký
+
+            .header-action-item.d-lg-none
+              button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-header')
+                i.sli-menu
+        // Action End
+  #offcanvas-search.offcanvas.offcanvas-end.w-100.bg-dark.border-0
+    .offcanvas-body.d-flex.align-items-center.justify-content-center
+      button.btn-close.offcanvas-search-close-btn.text-white(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+      .offcanvas-search-form
+        form(action="/search" method="GET")
+          div(class="form-group d-flex mb-0")
+            input(type="text" placeholder="Nhập từ khóa..." class="form-control" name="keyword" value=keyword)
+            button(type="submit" class="btn btn-primary")
+              i.sli-magnifier
+  #offcanvas-cart.offcanvas.offcanvas-end
+    .offcanvas-header
+      h5 Shoping Cart
+      button.btn-close.text-reset(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+    .offcanvas-body.d-flex.flex-column
+      .header-cart-body
+        .header-cart-products
+          .header-cart-product
+            .header-cart-product-thumb
+              a.header-cart-product-image(href='product-details.html')
+                img(src='assets/images/products/cart/product-1.jpg' alt='House Coffee Original' width='90' height='103')
+              button.header-cart-product-remove
+                i.sli-close
+            .header-cart-product-content
+              h5.header-cart-product-title
+                a(href='product-details.html') House Coffee Original
+              span.header-cart-product-quantity 1 x $110.00
+          .header-cart-product
+            .header-cart-product-thumb
+              a.header-cart-product-image(href='product-details.html')
+                img(src='assets/images/products/cart/product-2.jpg' alt='Medium Roast Ground Coffee' width='90' height='103')
+              button.header-cart-product-remove
+                i.sli-close
+            .header-cart-product-content
+              h5.header-cart-product-title
+                a(href='product-details.html') Medium Roast Ground Coffee
+              span.header-cart-product-quantity 1 x $19.00
+      .header-cart-footer
+        h4.header-cart-total
+          | Total: 
+          span $129.00
+        .header-cart-buttons
+          a.btn.btn-outline-dark.btn-primary-hover(href='checkout.html') CHECKOUT
+          a.btn.btn-outline-dark.btn-primary-hover(href='cart.html') VIEW CART
+          li
+            a(href='contact.html') Contact Us
+  // Slider Section Start
+  .h1-hero-section.section
+    .hero-slider.hero-slider-1.swiper
+      .swiper-wrapper
+        .swiper-slide.hero-slide-1.bg-light
+          .container
+            .row.align-items-center.mb-n6
+              .col-lg-6.col-sm-7.col-12.mb-6
+                .hero-slide-1-content
+                  h5.hero-slide-1-sub-title Black coffee is awesome.
+                  h2.hero-slide-1-title
+                    | TIME DISCOVER 
+                    br
+                    |  COFFEE HOUSE
+                  p.hero-slide-1-text
+                    | Experience the decibels like your ears deserve to. Safe for the ears, very for the heart. A treat to your ears.
+                  .hero-slide-1-button
+                    a.btn.btn-primary.btn-dark-hover(href='shop-left-sidebar.html')
+                      | Explore More 
+                      i.sli-basket-loaded
+              .col-lg-6.col-sm-5.col-12.mb-6
+                .hero-slide-1-image
+                  img(src='assets/images/hero-slider/home-1/slide-1.png' alt='TIME DISCOVER COFFEE HOUSE' width='570' height='512')
+        .swiper-slide.hero-slide-1.bg-light
+          .container
+            .row.align-items-center.mb-n6
+              .col-lg-6.col-sm-7.col-12.mb-6
+                .hero-slide-1-content
+                  h5.hero-slide-1-sub-title Black coffee is awesome.
+                  h2.hero-slide-1-title
+                    | TIME DISCOVER 
+                    br
+                    |  COFFEE HOUSE
+                  p.hero-slide-1-text
+                    | Experience the decibels like your ears deserve to. Safe for the ears, very for the heart. A treat to your ears.
+                  .hero-slide-1-button
+                    a.btn.btn-primary.btn-dark-hover(href='shop-left-sidebar.html')
+                      | Explore More 
+                      i.sli-basket-loaded
+              .col-lg-6.col-sm-5.col-12.mb-6
+                .hero-slide-1-image
+                  img(src='assets/images/hero-slider/home-1/slide-2.png' alt='TIME DISCOVER COFFEE HOUSE' width='570' height='633')
+        .swiper-slide.hero-slide-1.bg-light
+          .container
+            .row.align-items-center.mb-n6
+              .col-lg-6.col-sm-7.col-12.mb-6
+                .hero-slide-1-content
+                  h5.hero-slide-1-sub-title Black coffee is awesome.
+                  h2.hero-slide-1-title
+                    | TIME DISCOVER 
+                    br
+                    |  COFFEE HOUSE
+                  p.hero-slide-1-text
+                    | Experience the decibels like your ears deserve to. Safe for the ears, very for the heart. A treat to your ears.
+                  .hero-slide-1-button
+                    a.btn.btn-primary.btn-dark-hover(href='shop-left-sidebar.html')
+                      | Explore More 
+                      i.sli-basket-loaded
+              .col-lg-6.col-sm-5.col-12.mb-6
+                .hero-slide-1-image
+                  img(src='assets/images/hero-slider/home-1/slide-3.png' alt='TIME DISCOVER COFFEE HOUSE' width='570' height='632')
+      .swiper-pagination
+      .swiper-button-prev.d-none.d-md-flex
+      .swiper-button-next.d-none.d-md-flex
+  // Slider Section End
+  // Feature Section Start
+  .h1-feature-section.section.section-padding
+    .container
+      .section-title.section-title-center
+        p.title Popular Item
+        h2.sub-title COFFEE BUILD YOUR BASE.
+      .row.row-cols-lg-3.row-cols-1.mb-n8
+        .col.mb-8
+          .feature-1.reverse
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/croissant.svg' onload='SVGInject(this)' alt='CROISSANT' width='50' height='50')
+            .feature-content
+              h3.feature-title CROISSANT
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+          .feature-1.reverse
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/hot-dog.svg' onload='SVGInject(this)' alt='FRENCH TOAST' width='50' height='50')
+            .feature-content
+              h3.feature-title FRENCH TOAST
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+          .feature-1.reverse
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/cup-cake.svg' onload='SVGInject(this)' alt='PANCAKES' width='50' height='50')
+            .feature-content
+              h3.feature-title PANCAKES
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+          .feature-1.reverse
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/donut.svg' onload='SVGInject(this)' alt='CHOCOLATE' width='50' height='50')
+            .feature-content
+              h3.feature-title CHOCOLATE
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+        .col.text-center.mb-8
+          img(loading='lazy' src='assets/images/feature/one/feature-image.png' alt='feature image' width='365' height='475')
+        .col.mb-8
+          .feature-1
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/coffee-alt.svg' onload='SVGInject(this)' alt='TURKISH COFFEE' width='50' height='50')
+            .feature-content
+              h3.feature-title TURKISH COFFEE
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+          .feature-1
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/coffee-mug.svg' onload='SVGInject(this)' alt='COFFEE TO GO' width='50' height='50')
+            .feature-content
+              h3.feature-title COFFEE TO GO
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+          .feature-1
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/coffee-pot.svg' onload='SVGInject(this)' alt='MORNING COFFEE' width='50' height='50')
+            .feature-content
+              h3.feature-title MORNING COFFEE
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+          .feature-1
+            .feature-icon
+              img(loading='lazy' src='assets/images/feature/one/french-fries.svg' onload='SVGInject(this)' alt='ESPRESSO' width='50' height='50')
+            .feature-content
+              h3.feature-title ESPRESSO
+              p.feature-text This is the perfect place to find a nice and cozy spot to sip some.
+  // Feature Section End
+  // Coffee Menu Section Start
+  .h1-coffee-menu-section.section.section-padding
+    .container
+      .section-title.section-title-center
+        p.title Simple Menu
+        h2.sub-title OUR POPULAR MENU
+      .row.row-cols-lg-2.row-cols-1.mb-n6
+        each item in productsNew 
+          .col.mb-6
+            .coffee-menu
+              a.coffee-menu-thumb(href=`/products/detail/${item.slug}`)
+                img(loading='lazy' src=item.thumbnail alt=item.title width='85' height='85')
+              .coffee-menu-content
+                h3.coffee-menu-title
+                  a(href=`/products/detail/${item.slug}`) #{item.title} 
+                p #{item.shortDescription}
+              span.coffee-menu-price
+                | #{item.priceNew}$ 
+                del #{item.price}$
+  // Coffee Menu Section End
+  // Product Section Start
+  .h1-product-section.section.section-padding.pt-0
+    .container
+      .section-title.section-title-center
+        p.title What Happens Here
+        h2.sub-title FEATURED COLLECTION
+      .product-carousel.swiper
+        .swiper-wrapper
+          each item in productsFeatured
+            .swiper-slide
+              .product
+                .product-thumb
+                  a.product-image(href=`/products/detail/${item.slug}`)
+                    img(loading='lazy' src=item.thumbnail alt=item.title width='268' height='306')
+                  .product-badge-left
+                    span.product-badge-new new
+                  if  item.discountPercentage > 0
+                    .product-badge-right
+                      span.product-badge-sale sale
+                      span.product-badge-sale -#{item.discountPercentage}%
+                  .product-action
+                    form(
+                      action=`/cart/add/${item.id}`
+                      method="POST"
+                    )
+                      input(
+                        class="form-control mb-2"
+                        type="number"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                        max=item.stock
+                        style="display: none;"
+                      )
+                      button.product-action-btn(data-tooltip-text='Add to cart' type="submit")
+                        i.sli-bag
+                .product-content
+                  h5.product-title
+                    a(href=`/products/detail/${item.slug}`) #{item.title}
+                  .product-price
+                    del #{item.price}$
+                    | #{item.priceNew}$ 
+                  .product-rating
+                    span.product-rating-bg
+                      span.product-rating-active(style='width: 90%;')
+        .swiper-pagination.d-md-none
+        .swiper-button-prev.d-none.d-md-flex
+        .swiper-button-next.d-none.d-md-flex
+  // Product Section End
+  // Testimonial Section Start
+  .h1-testimonial-section.section.section-padding.bg-light
+    .container
+      .section-title.section-title-center
+        p.title What Client Says
+        h2.sub-title Testimonials
+      .testimonial-slider.swiper
+        .swiper-wrapper
+          .swiper-slide
+            .testimonial
+              .testimonial-client-thumb
+                img(loading='lazy' src='assets/images/testimonial/testimonial-1.png' alt='Hester Perkins' width='100' height='100')
+              .testimonial-text
+                p
+                  | I&apos;ve been drinking coffee for years and I can honestly say that coffee is the best product out there. Coffee has a perfect taste and it wakes me up in the morning. It&apos;s also really affordable.
+              .testimonial-client-info
+                h5.testimonial-client-name Hester Perkins
+          .swiper-slide
+            .testimonial
+              .testimonial-client-thumb
+                img(loading='lazy' src='assets/images/testimonial/testimonial-2.png' alt='Hester Perkins' width='100' height='100')
+              .testimonial-text
+                p
+                  | I&apos;ve been drinking coffee for years and I can honestly say that coffee is the best product out there. Coffee has a perfect taste and it wakes me up in the morning. It&apos;s also really affordable.
+              .testimonial-client-info
+                h5.testimonial-client-name Hester Perkins
+        .swiper-pagination
+        .swiper-button-prev.d-none.d-md-flex
+        .swiper-button-next.d-none.d-md-flex
+  // Testimonial Section End
+  // Gallery Section Start
+  .h1-gallery-section.section.section-padding
+    .container
+      .section-title.section-title-center
+        p.title What Happens Here
+        h2.sub-title KOFI SHOP GALLERY
+      .mfp-zoom-gallery.row.row-cols-lg-3.row-cols-sm-2.row-cols-1.mb-n6
+        .col.mb-6
+          a.gallery-item(href='assets/images/gallery/big/gallery-1.png')
+            img(loading='lazy' src='assets/images/gallery/gallery-1.jpg' alt='gallery 1' width='348' height='418')
+            .gallery-item-overlay
+              i.sli-size-fullscreen
+        .col.mb-6
+          a.gallery-item(href='assets/images/gallery/big/gallery-2.png')
+            img(loading='lazy' src='assets/images/gallery/gallery-2.jpg' alt='gallery 2' width='348' height='418')
+            .gallery-item-overlay
+              i.sli-size-fullscreen
+        .col.mb-6
+          a.gallery-item(href='assets/images/gallery/big/gallery-3.png')
+            img(loading='lazy' src='assets/images/gallery/gallery-3.jpg' alt='gallery 3' width='348' height='418')
+            .gallery-item-overlay
+              i.sli-size-fullscreen
+        .col.mb-6
+          a.gallery-item(href='assets/images/gallery/big/gallery-4.png')
+            img(loading='lazy' src='assets/images/gallery/gallery-4.jpg' alt='gallery 4' width='348' height='418')
+            .gallery-item-overlay
+              i.sli-size-fullscreen
+        .col.mb-6
+          a.gallery-item(href='assets/images/gallery/big/gallery-5.png')
+            img(loading='lazy' src='assets/images/gallery/gallery-5.jpg' alt='gallery 5' width='348' height='418')
+            .gallery-item-overlay
+              i.sli-size-fullscreen
+        .col.mb-6
+          a.gallery-item(href='assets/images/gallery/big/gallery-6.png')
+            img(loading='lazy' src='assets/images/gallery/gallery-6.jpg' alt='gallery 6' width='348' height='418')
+            .gallery-item-overlay
+              i.sli-size-fullscreen
+  // Gallery Section End
+  // Blog Section Start
+  .h1-blog-section.section.section-padding.pt-0
+    .container
+      .section-title.section-title-center
+        p.title What Happens Here
+        h2.sub-title FEATURED BLOG
+      .blog-carousel.swiper
+        .swiper-wrapper
+          .swiper-slide
+            .blog
+              a.blog-thumb(href='blog-details-left-sidebar.html')
+                img(loading='lazy' src='assets/images/blog/blog-1.jpg' alt='Watch misni sdedn nises' width='348' height='232')
+              .blog-content
+                h4.blog-title
+                  a(href='blog-details-left-sidebar.html') Watch misni sdedn nises
+                ul.blog-meta
+                  li 14 November, 2023
+                  li
+                    a(href='blog-details-left-sidebar.html') 0 Comments
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore...
+                a.btn(href='blog-details-left-sidebar.html') Explore More
+          .swiper-slide
+            .blog
+              a.blog-thumb(href='blog-details-left-sidebar.html')
+                img(loading='lazy' src='assets/images/blog/blog-2.jpg' alt='Jininsi smart watch mnisyh nise' width='348' height='232')
+              .blog-content
+                h4.blog-title
+                  a(href='blog-details-left-sidebar.html') Jininsi smart watch mnisyh nise
+                ul.blog-meta
+                  li 14 November, 2023
+                  li
+                    a(href='blog-details-left-sidebar.html') 0 Comments
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore...
+                a.btn(href='blog-details-left-sidebar.html') Explore More
+          .swiper-slide
+            .blog
+              a.blog-thumb(href='blog-details-left-sidebar.html')
+                img(loading='lazy' src='assets/images/blog/blog-3.jpg' alt='Minis mnies anide ewnis' width='348' height='232')
+              .blog-content
+                h4.blog-title
+                  a(href='blog-details-left-sidebar.html') Minis mnies anide ewnis
+                ul.blog-meta
+                  li 14 November, 2023
+                  li
+                    a(href='blog-details-left-sidebar.html') 0 Comments
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore...
+                a.btn(href='blog-details-left-sidebar.html') Explore More
+          .swiper-slide
+            .blog
+              a.blog-thumb(href='blog-details-left-sidebar.html')
+                img(loading='lazy' src='assets/images/blog/blog-4.jpg' alt='Smgori tuin nibes kninwe' width='348' height='232')
+              .blog-content
+                h4.blog-title
+                  a(href='blog-details-left-sidebar.html') Smgori tuin nibes kninwe
+                ul.blog-meta
+                  li 14 November, 2023
+                  li
+                    a(href='blog-details-left-sidebar.html') 0 Comments
+                p
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore...
+                a.btn(href='blog-details-left-sidebar.html') Explore More
+        .swiper-pagination.d-md-none
+        .swiper-button-prev.d-none.d-md-flex
+        .swiper-button-next.d-none.d-md-flex
+  // Blog Section End
+  // Footer Section Start
+  .footer-section.section
+    // Footer Top Section Start
+    .footer-top.section
+      .container
+        .row.mb-n8.gy-lg-0.gy-4
+          // Footer Widget Start
+          .col-lg-4.col-sm-6.col-12.mb-8
+            .footer-widget.footer-widget-dark
+              h5.footer-widget-title About Info
+              p
+                | This is the perfect place to find a nice and cozy spot to sip some. You&apos;ll find the Java Jungle.
+              ul.footer-widget-list-icon
+                li
+                  i.sli-location-pin
+                  | Addresss: 123 Pall Mall, London England
+                li
+                  i.sli-envelope
+                  | Email: hello@example.com
+                li
+                  i.sli-phone
+                  | Phone: (012) 345 6789
+          // Footer Widget End
+          // Footer Widget Start
+          .col-lg-3.col-sm-6.col-12.mb-8
+            .footer-widget.footer-widget-dark
+              h5.footer-widget-title Information
+              ul.footer-widget-list
+                li
+                  a(href='#') Returns Policy
+                li
+                  a(href='#') Support Policy
+                li
+                  a(href='#') Size Guide
+                li
+                  a(href='#') FAQs
+                li
+                  a(href='#') Privacy Policy
+          // Footer Widget End
+          // Footer Widget Start
+          .col-lg-3.col-sm-6.col-12.mb-8
+            .footer-widget.footer-widget-dark
+              h5.footer-widget-title Quick Links
+              ul.footer-widget-list
+                li
+                  a(href='about-us.html') About us
+                li
+                  a(href='wishlist.html') Wishlist
+                li
+                  a(href='my-account.html') My Account
+                li
+                  a(href='login.html') Login
+                li
+                  a(href='register.html') Register
+          // Footer Widget End
+          // Footer Widget Start
+          .col-lg-2.col-sm-6.col-12.mb-8
+            .footer-widget.footer-widget-dark
+              h5.footer-widget-title Follow Us On
+              ul.footer-widget-list-icon
+                li
+                  a(href='#')
+                    i.sli-social-facebook
+                    | Facebook
+                li
+                  a(href='#')
+                    i.sli-social-twitter
+                    | Twitter
+                li
+                  a(href='#')
+                    i.sli-social-instagram
+                    | Instagram
+                li
+                  a(href='#')
+                    i.sli-social-youtube
+                    | Youtube
+                li
+                  a(href='#')
+                    i.sli-social-pinterest
+                    | Pinterest
+          // Footer Widget End
+    // Footer Top Section End
+    // Footer Bottom Section Start
+    .footer-bottom.footer-bottom-dark.section
+      .container
+        .row.justify-content-between.align-items-center.mb-n2
+          // Footer Widget Start
+          .col-md-auto.col-12.mb-2
+            p.footer-copyright.footer-copyright-dark.text-center
+              | Copyright 
+              b.text-primary Kofi
+              |  &copy;2023
+          // Footer Widget End
+          // Footer Widget Start
+          .col-md-auto.col-12.mb-2
+            .footer-payment.text-center
+              img(loading='lazy' src='assets/images/footer/footer-payment.png' alt='footer payment' width='342' height='30')
+          // Footer Widget End
+    // Footer Bottom Section End
+  // Footer Section End
+  #exampleProductModal.quickview-product-modal.modal.fade
+    .modal-dialog.modal-dialog-centered.mw-100
+      .container
+        .modal-content
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            // Single Product Top Area Start
+            .row.row-cols-md-2.row-cols-1.mb-n6
+              // Product Image Start
+              .col.mb-6
+                .single-product-image
+                  // Product Badge Start
+                  .single-product-badge-left
+                    span.single-product-badge-new new
+                  .single-product-badge-right
+                    span.single-product-badge-sale sale
+                    span.single-product-badge-sale -11%
+                  // Product Badge End
+                  // Product Image Slider Start
+                  .quickview-product-image-slider.swiper
+                    .swiper-wrapper
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-1.png' alt='Signature Blend Roast Coffee')
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-2.png' alt='Signature Blend Roast Coffee')
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-3.png' alt='Signature Blend Roast Coffee')
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-4.png' alt='Signature Blend Roast Coffee')
+                    .swiper-pagination.d-none
+                    .swiper-button-prev.d-none
+                    .swiper-button-next.d-none
+                  // Product Image Slider End
+                  // Product Thumbnail Carousel Start
+                  .quickview-product-thumb-carousel.swiper
+                    .swiper-wrapper
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-1.png' alt='Signature Blend Roast Coffee')
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-2.png' alt='Signature Blend Roast Coffee')
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-3.png' alt='Signature Blend Roast Coffee')
+                      .swiper-slide
+                        img(loading='lazy' src='assets/images/products/single/single-product-4.png' alt='Signature Blend Roast Coffee')
+                    .swiper-pagination.d-none
+                    .swiper-button-prev
+                    .swiper-button-next
+                  // Product Thumbnail Carousel End
+              // Product Image End
+              // Product Content Start
+              .col.mb-6
+                .single-product-content
+                  h1.single-product-title Signature Blend Roast Coffee
+                  .single-product-price
+                    | $99.00 
+                    del $110.00
+                  ul.single-product-meta
+                    li
+                      span.label Availability :
+                      span.value 11 Left in Stock
+                  .single-product-text
+                    p
+                      | There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&apos;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&apos;t anything embarrassing hidden in the middle of text.
+                  ul.single-product-variations
+                    li
+                      span.label Size :
+                      .value
+                        .single-product-variation-size-wrap
+                          .single-product-variation-size-item
+                            input#qv-size-s(type='radio' name='qv-size' checked='')
+                            label(for='qv-size-s') s
+                          .single-product-variation-size-item
+                            input#qv-size-m(type='radio' name='qv-size')
+                            label(for='qv-size-m') m
+                          .single-product-variation-size-item
+                            input#qv-size-l(type='radio' name='qv-size')
+                            label(for='qv-size-l') l
+                          .single-product-variation-size-item
+                            input#qv-size-xl(type='radio' name='qv-size')
+                            label(for='qv-size-xl') xl
+                    li
+                      span.label Color :
+                      .value
+                        .single-product-variation-color-wrap
+                          .single-product-variation-color-item
+                            input#qv-color-purple(type='radio' name='qv-color' checked='')
+                            label(for='qv-color-purple' style='background-color: purple;') purple
+                          .single-product-variation-color-item
+                            input#qv-color-violet(type='radio' name='qv-color')
+                            label(for='qv-color-violet' style='background-color: violet;') violet
+                          .single-product-variation-color-item
+                            input#qv-color-black(type='radio' name='qv-color')
+                            label(for='qv-color-black' style='background-color: black;') black
+                          .single-product-variation-color-item
+                            input#qv-color-pink(type='radio' name='qv-color')
+                            label(for='qv-color-pink' style='background-color: pink;') pink
+                          .single-product-variation-color-item
+                            input#qv-color-orange(type='radio' name='qv-color')
+                            label(for='qv-color-orange' style='background-color: orange;') orange
+                    li
+                      span.label Material :
+                      .value
+                        .single-product-variation-material-wrap
+                          .single-product-variation-material-item
+                            input#qv-material-metal(type='radio' name='qv-material' checked='')
+                            label(for='qv-material-metal') metal
+                          .single-product-variation-material-item
+                            input#qv-material-resin(type='radio' name='qv-material')
+                            label(for='qv-material-resin') resin
+                          .single-product-variation-material-item
+                            input#qv-material-leather(type='radio' name='qv-material')
+                            label(for='qv-material-leather') leather
+                          .single-product-variation-material-item
+                            input#qv-material-slag(type='radio' name='qv-material')
+                            label(for='qv-material-slag') slag
+                          .single-product-variation-material-item
+                            input#qv-material-fiber(type='radio' name='qv-material')
+                            label(for='qv-material-fiber') fiber
+                  .single-product-actions
+                    .single-product-actions-item
+                      .product-quantity-count
+                        button.dec.qty-btn -
+                        input.product-quantity-box(type='text' name='quantity' value='1')
+                        button.inc.qty-btn +
+                    .single-product-actions-item
+                      button.btn.btn-dark.btn-primary-hover.rounded-0 ADD TO CART
+                    .single-product-actions-item
+                      button.btn.btn-icon.btn-light.btn-primary-hover.rounded-0
+                        i.sli-heart
+                    .single-product-actions-item
+                      button.btn.btn-icon.btn-light.btn-primary-hover.rounded-0
+                        i.sli-refresh
+                  ul.single-product-meta
+                    li
+                      span.label Categories :
+                      span.value.links
+                        a(href='#') Coffee
+                        a(href='#') Deal Collection
+                        a(href='#') Featured Products
+                        a(href='#') Green coffee
+                        a(href='#') Italian
+                    li
+                      span.label Tags :
+                      span.value.links
+                        a(href='#') black
+                        a(href='#') fiber
+                        a(href='#') leather
+                    li
+                      span.label Share :
+                      span.value.social
+                        a(href='#')
+                          img(src='assets/images/icons/social/facebook.png' alt='facebook')
+                        a(href='#')
+                          img(src='assets/images/icons/social/twitter.png' alt='twitter')
+                        a(href='#')
+                          img(src='assets/images/icons/social/pinterest.png' alt='pinterest')
+                  .single-product-safe-payment
+                    p Guaranteed safe checkout
+                    img(src='assets/images/footer/footer-payment.png' alt='payment')
+              // Product Content End
+            // Single Product Top Area End
+  button.scroll-to-top
+    i.sli-arrow-up
+  // JS Vendor, Plugins & Activation Script Files
+  // Vendors JS
+  script(src='assets/js/vendor/modernizr-3.11.7.min.js')
+  script(src='assets/js/vendor/jquery-3.6.0.min.js')
+  script(src='assets/js/vendor/jquery-migrate-3.3.2.min.js')
+  script(src='assets/js/vendor/bootstrap.bundle.min.js')
+  // Plugins JS
+  script(src='assets/js/plugins/swiper-bundle.min.js')
+  script(src='assets/js/plugins/jquery.countdown.min.js')
+  script(src='assets/js/plugins/svg-inject.min.js')
+  script(src='assets/js/plugins/jquery.magnific-popup.min.js')
+  script(src='assets/js/plugins/ion.rangeSlider.min.js')
+  script(src='assets/js/plugins/jquery.zoom.min.js')
+  script(src='assets/js/plugins/resize-sensor.js')
+  script(src='assets/js/plugins/jquery.sticky-sidebar.min.js')
+  // Activation JS
+  script(src='assets/js/active.js')
+  // Mirrored from htmldemo.net/kofi/kofi/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:41:53 GMT

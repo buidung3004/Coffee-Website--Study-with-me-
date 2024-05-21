@@ -56,7 +56,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 // App Local Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment = moment
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // //Route
 // app.use(registerRoute); 

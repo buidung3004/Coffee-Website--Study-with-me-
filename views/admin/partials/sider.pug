@@ -17,7 +17,10 @@
                     a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
             if(role.permissions.includes("accounts_view"))  
                 li 
-                    a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
-                        if(role.permissions.includes("accounts_view"))  
+                    a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản 
             li 
                 a(href=`${prefixAdmin}/settings/general`) Cài đặt chung
+                        if(role.permissions.includes("accounts_view"))  
+            if(role.permissions.includes("power_bi"))
+                li 
+                    a(href=`${prefixAdmin}/powerbi`) Báo cáo
