@@ -1,27 +1,51 @@
 const Product = require("../../models/product.model")
 const ProductCategory = require("../../models/product-category.model")
 
+const paginationHelper = require("../../helpers/pagination")
 const productsHelper = require("../../helpers/product") 
 const productsCategoryHelper = require("../../helpers/products-category") 
 
 // [GET] /products
 module.exports.index =  async (req, res) => {
+
+
+    let find = {
+        deleted: false
+    };
+
+    // Pagination
+    const countProducts = await Product.countDocuments(find);
+
+    let objectPagination = paginationHelper(
+        {
+        currentPage: 1,
+        limitItems: 6
+        },
+        req.query,
+        countProducts
+    )
+
     const products = await Product.find({
         status: "available",
         deleted: false
-    }).sort({position:"asc"});
+    }).sort({position:"asc"}).limit(objectPagination.limitItems).skip(objectPagination.skip);
 
     const newProducts = productsHelper.priceNewProducts(products)
 
-    res.render("client/pages/products/index", {
+
+    res.render("client/pages/products/index-test", {
         pageTitle: "Danh sách sản phẩm",
-        newProducts: newProducts
+        newProducts: newProducts,
+        pagination: objectPagination
     });
+
 }
 
 // [GET] /products/detail/:slug
 module.exports.detail =  async (req, res) => {
     try {
+
+
         const find = {
             deleted:false,
             slug: req.params.slugProduct,
@@ -41,9 +65,24 @@ module.exports.detail =  async (req, res) => {
 
         product.priceNew = productsHelper.priceNewProduct(product)
 
-        res.render("client/pages/products/detail", {
+        const category = await ProductCategory.findOne({
+            _id: product.product_category_id
+        })
+        const listSubCategory = await productsCategoryHelper.getSubCategory(category.id)
+    
+        const listSubCategoryId = listSubCategory.map(item => item.id)
+
+        const products = await Product.find({
+            product_category_id: { $in:[category.id, ...listSubCategoryId ]},
+            deleted: false,        
+            status: "available",
+        })
+
+
+        res.render("client/pages/products/detail-test", {
             pageTitle: product.title,
-            product: product
+            product: product,
+            products: products
         })
     } catch (error) {
         res.redirect(`/products`)
@@ -58,7 +97,21 @@ module.exports.category =  async (req, res) => {
         status: "available",
         deleted: false
     })
+    let find = {
+        deleted: false
+    };
 
+    // Pagination
+    const countProducts = await Product.countDocuments(find);
+
+    let objectPagination = paginationHelper(
+        {
+        currentPage: 1,
+        limitItems: 6
+        },
+        req.query,
+        countProducts
+    )
 
     const listSubCategory = await productsCategoryHelper.getSubCategory(category.id)
     
@@ -66,14 +119,17 @@ module.exports.category =  async (req, res) => {
 
     const products = await Product.find({
         product_category_id: { $in:[category.id, ...listSubCategoryId ]},
-        deleted: false
-    }).sort({position: "desc"})
+        deleted: false,        
+        status: "available",
+    }).sort({position: "desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip);
 
     const newProducts = productsHelper.priceNewProducts(products)
 
-    res.render("client/pages/products/index", {
+
+    res.render("client/pages/products/index-test", {
         pageTitle: category.title,
-        newProducts: newProducts
-    });
+        newProducts: newProducts,        
+        pagination: objectPagination
+    })
 }
 

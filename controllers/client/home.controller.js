@@ -20,7 +20,7 @@ module.exports.index = async (req, res) => {
 
     const newProductsNew = productsHelper.priceNewProducts(productsNew)
 
-    res.render("client/pages/home/index", {
+    res.render("client/pages/home/index-test", {
         pageTitle: "Trang chủ",
         productsFeatured: newProductsFeatured,
         productsNew: newProductsNew

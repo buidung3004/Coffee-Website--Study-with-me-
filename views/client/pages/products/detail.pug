@@ -20,7 +20,7 @@ block main
                     if (product.category)
                         div(class="inner-category")
                             span Danh mục: 
-                            a(href=`products/${product.category.slug}`) #{product.category.title}
+                            a(href=`/products/${product.category.slug}`) #{product.category.title}
                     
                     if (product.priceNew)
                         div(class="inner-price-new") #{product.priceNew}$

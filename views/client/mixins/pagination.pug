@@ -1,0 +1,22 @@
+mixin pagination(pagination)
+    nav
+        ul(class="pagination")
+            if (pagination.currentPage > 1)
+                li
+                    a(href=`#page=${pagination.currentPage-1}`)
+                        i.sli-arrow-left
+            else
+                li(class="disabled")
+                    a(href="#")
+                        i.sli-arrow-left
+            - for (var i = 1; i <= pagination.totalPage; i++)
+                li(class=`${pagination.currentPage == i ? "active" : ""}`)
+                    a(href=`#page=${i}`) #{i}
+            if (pagination.currentPage < pagination.totalPage)
+                li
+                    a(href=`#page=${pagination.currentPage+1}`)
+                        i.sli-arrow-right
+            else
+                li(class="disabled")
+                    a(href="#")
+                        i.sli-arrow-right
