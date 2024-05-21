@@ -24,6 +24,7 @@ database.connect();
 const app = express();
 const port = process.env.PORT;
 
+app.use('/public', express.static('public'));
 app.use(methodOverride('_method'));
 // parse application/x-www/form-urlencoded
 app.use(cors());
@@ -62,6 +63,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(loginRoute);
 route(app);
 routeAdmin(app);
+
+app.get('/login', function(req, res) {
+  res.render('client/pages/login');
+});
+
 
 //Error Handling
 app.get("*",(req,res) => {

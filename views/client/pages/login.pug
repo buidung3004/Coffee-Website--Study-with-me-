@@ -1,15 +1,298 @@
 doctype html
-html
+html.no-js(lang="en")
   head
-    title Login Page
+    meta(charset="utf-8")
+    meta(http-equiv="x-ua-compatible", content="ie=edge")
+    title Kofi - Coffee Shop Website Template
+    meta(name="robots", content="noindex, follow")
+    meta(name="description", content="Kofi - Coffee Shop Website Template")
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    link(rel="shortcut icon", type="image/x-icon", href="public/assets/images/favicon.png")
+    link(rel="preconnect", href="https://fonts.googleapis.com/")
+    link(rel="preconnect", href="https://fonts.gstatic.com/", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&amp;family=Oswald:wght@200;300;400;500;600;700&amp;display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="public/assets/css/vendor/bootstrap.min.css")
+    link(rel="stylesheet", href="public/assets/css/vendor/simple-line-icons.css")
+    link(rel="stylesheet", href="public/assets/css/plugins/swiper-bundle.min.css")
+    link(rel="stylesheet", href="public/assets/css/plugins/magnific-popup.css")
+    link(rel="stylesheet", href="public/assets/css/plugins/ion.rangeSlider.min.css")
+    link(rel="stylesheet", href="public/assets/css/style.css")
   body
-    h2 Login Page
-    form(action="/login" method="post")
-      div
-        label(for="username") Username:
-        input(type="text" id="username" name="username" required)
-      div
-        label(for="password") Password:
-        input(type="password" id="password" name="password" required)
-      div
-        input(type="submit" value="Login")
+    div.header.sticky-header.section
+      div.container-fluid
+        div.row.align-items-center
+          // Logo Start
+          div.col-lg-2.col
+            div.header-logo
+              a(href="index.html")
+                img(src="public/assets/images/logo/logo-dark.png", width="125", height="42", alt="kofi logo")
+                img.light(src="public/assets/images/logo/logo-light.png", width="125", height="42", alt="kofi logo")
+          // Logo End
+          // Menu Start
+          div.col.d-none.d-lg-block
+            nav.main-menu
+              ul
+                li.has-sub-menu
+                  a(href="index.html") Home
+                  ul.sub-menu
+                    li
+                      a(href="index.html") Home One
+                    li
+                      a(href="index-2.html") Home Two
+                    li
+                      a(href="index-3.html") Home Three
+                    li
+                      a(href="index-4.html") Home Four
+                li
+                  a(href="shop-left-sidebar.html") Shop
+                  ul.mega-menu
+                    li
+                      a(href="shop.html") Shop Grid Layout
+                      ul
+                        li
+                          a(href="shop-left-sidebar.html") Shop Grid Left Sidebar
+                        li
+                          a(href="shop-right-sidebar.html") Shop Grid Right Sidebar
+                        li
+                          a(href="shop-3-column.html") Shop Grid 3 Column (no sidebar)
+                        li
+                          a(href="shop-4-column.html") Shop Grid 4 Column (no sidebar)
+                    li
+                      a(href="index-2.html") Shop List Layout
+                      ul
+                        li
+                          a(href="shop-list-left-sidebar.html") Shop List Left Sidebar
+                        li
+                          a(href="shop-list-right-sidebar.html") Shop List Right Sidebar
+                        li
+                          a(href="shop-list-no-sidebar.html") Shop List (no sidebar)
+                    li
+                      a(href="index-3.html") Product Pages
+                      ul
+                        li
+                          a(href="product-details.html") Product Details
+                        li
+                          a(href="product-details-sticky-content.html") Product Details Sticky Content
+                        li
+                          a(href="product-details-thumbnail-right.html") Product Details Right Thumbnail
+                        li
+                          a(href="product-details-gallery.html") Product Details Gallery
+                    li
+                      a(href="index-4.html") Others
+                      ul
+                        li
+                          a(href="shopping-cart.html") Shopping Cart
+                        li
+                          a(href="checkout.html") Checkout
+                        li
+                          a(href="wishlist.html") Wishlist
+                        li
+                          a(href="my-account.html") My Account
+                li.has-sub-menu
+                  a(href="index.html") Pages
+                  ul.sub-menu
+                    li
+                      a(href="about-us.html") About Us
+                    li
+                      a(href="contact.html") Contact Us
+                    li
+                      a(href="login.html") Login
+                    li
+                      a(href="register.html") Register
+                    li
+                      a(href="faq.html") FAQ
+                li.has-sub-menu
+                  a(href="blog-left-sidebar.html") Blog
+                  ul.sub-menu
+                    li
+                      a(href="blog-left-sidebar.html") Blog Left Sidebar
+                    li
+                      a(href="blog-right-sidebar.html") Blog Right Sidebar
+                    li
+                      a(href="blog-no-sidebar.html") Blog No Sidebar
+                    li
+                      a(href="blog-details-left-sidebar.html") Blog Details Left Sidebar
+                    li
+                      a(href="blog-details-right-sidebar.html") Blog Details Right Sidebar
+                li
+                  a(href="contact.html") Contact Us
+                  
+          // Action Start
+div.col-auto
+  div.header-action
+    // Header Action Item Start
+    div.header-action-item
+      button.header-action-toggle(type="button", data-bs-toggle="offcanvas", data-bs-target="#offcanvas-search")
+        i.sli-magnifier
+    // Header Action Item End
+
+    // Header Action Item Start
+    div.header-action-item
+      button.header-action-toggle(type="button", data-bs-toggle="offcanvas", data-bs-target="#offcanvas-cart")
+        i.sli-basket-loaded
+          span.count 02
+        span.amount $229.00
+    // Header Action Item End
+
+    // Header Action Item Start
+    div.header-action-item.dropdown
+      button.header-action-toggle(type="button", data-bs-toggle="dropdown")
+        i.sli-settings
+      div.dropdown-menu.header-dropdown-menu
+        h6.header-dropdown-menu-title Currency
+        ul
+          li
+            a(href="javascript:void(0)") USD - US Dollar
+          li
+            a(href="javascript:void(0)") EUR - Euro
+          li
+            a(href="javascript:void(0)") GBP - British Pound
+        h6.header-dropdown-menu-title Account
+        ul
+          li
+            a(href="login.pug") Login
+          li
+            a(href="register.pug") Register
+          li
+            a(href="my-account.pug") My Account
+    // Header Action Item End
+
+    // Header Action Item Start
+    div.header-action-item.d-lg-none
+      button.header-action-toggle(type="button", data-bs-toggle="offcanvas", data-bs-target="#offcanvas-header")
+        i.sli-menu
+    // Header Action Item End
+// Action End
+
+// Offcanvas Search Start
+div.offcanvas.offcanvas-end.w-100.bg-dark.border-0#offcanvas-search
+  div.offcanvas-body.d-flex.align-items-center.justify-content-center
+    button.btn-close.offcanvas-search-close-btn.text-white(type="button", data-bs-dismiss="offcanvas", aria-label="Close")
+    div.offcanvas-search-form
+      form(action="#")
+        input(type="search", name="q", placeholder="Search our store")
+        button(type="submit")
+          i.sli-magnifier
+// Offcanvas Search End
+
+// Offcanvas Cart Start
+div.offcanvas.offcanvas-end#offcanvas-cart
+  div.offcanvas-header
+    h5 Shopping Cart
+    button.btn-close.text-reset(type="button", data-bs-dismiss="offcanvas", aria-label="Close")
+  div.offcanvas-body.d-flex.flex-column
+    div.header-cart-body
+      div.header-cart-products
+        // Add more products as needed
+        div.header-cart-product
+          div.header-cart-product-thumb
+            a.header-cart-product-image(href="product-details.html")
+              img(src="public/assets/images/products/cart/product-1.jpg", alt="House Coffee Original", width="90", height="103")
+            button.header-cart-product-remove
+              i.sli-close
+          div.header-cart-product-content
+            h5.header-cart-product-title
+              a(href="product-details.pug") House Coffee Original
+            span.header-cart-product-quantity 1 x $110.00
+    div.header-cart-footer
+      h4.header-cart-total Total: 
+        span $129.00
+    div.header-cart-buttons
+      a.btn.btn-outline-dark.btn-primary-hover(href="checkout.pug") CHECKOUT
+      a.btn.btn-outline-dark.btn-primary-hover(href="cart.pug") VIEW CART
+// Offcanvas Cart End
+
+// Offcanvas Header Start
+div.offcanvas.offcanvas-end#offcanvas-header
+  div.offcanvas-header
+    h5 Mobile Menu
+    button.btn-close.text-reset(type="button", data-bs-dismiss="offcanvas", aria-label="Close")
+  div.offcanvas-body
+    nav.mobile-menu
+      ul
+        // Add more list items as needed
+        li
+          a(href="index.pug") Home
+          button.mobile-sub-menu-toggle
+          ul.mobile-sub-menu
+            li
+              a(href="index.pug") Home One
+// Offcanvas Header End
+
+            // Page Banner Section Start
+div.page-banner-section.section
+  div.container
+    ul.breadcrumb
+      li
+        a(href="index.html") Home
+      li Login
+// Page Banner Section End
+
+// Login Section
+div.section.section-padding
+  div.container
+    div.login-register-form
+      h3.title Login
+      p Please Register using account detail bellow.
+      form(action="/login" method="post")
+        div
+          label(for="username") Username:
+          input.form-field(type="text" id="username" name="username" required)
+        div
+          label(for="password") Password:
+          input.form-field(type="password" id="password" name="password" required)
+        div
+          input.btn.btn-dark.btn-primary-hover.rounded-0.w-100(type="submit", value="Login")
+      div.col Don't have an account? 
+        a(href="register.html")
+          b Create One
+
+// Footer Section Start
+div.footer-section.section
+  // Footer Top Section Start
+  div.footer-top.section
+    div.container
+      div.row.mb-n8.gy-lg-0.gy-4
+        // Footer Widget Start
+        div.col-lg-4.col-sm-6.col-12.mb-8
+          div.footer-widget.footer-widget-dark
+            h5.footer-widget-title About Info
+            p This is the perfect place to find a nice and cozy spot to sip some. You'll find the Java Jungle.
+            ul.footer-widget-list-icon
+              li
+                i.sli-location-pin
+                | Addresss: 123 Pall Mall, London England
+              li
+                i.sli-envelope
+                | Email: hello@example.com
+              li
+                i.sli-phone
+                | Phone: (012) 345 6789
+        // Footer Widget End
+        // More Footer Widgets...
+  // Footer Top Section End
+  // Footer Bottom Section Start
+  div.footer-bottom.footer-bottom-dark.section
+    div.container
+      div.row.justify-content-between.align-items-center.mb-n2
+        // Footer Widget Start
+        div.col-md-auto.col-12.mb-2
+          p.footer-copyright.footer-copyright-dark.text-center Copyright 
+            b.text-primary Kofi 
+            | &copy;2023
+        // Footer Widget End
+        // More Footer Widgets...
+  // Footer Bottom Section End
+// Footer Section End
+
+button.scroll-to-top
+  i.sli-arrow-up
+
+// JS Vendor, Plugins & Activation Script Files
+script(src="public/assets/js/vendor/modernizr-3.11.7.min.js")
+script(src="public/assets/js/vendor/jquery-3.6.0.min.js")
+// More Scripts...
+
+body
+// Mirrored from htmldemo.net/kofi/kofi/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:09 GMT
+html
