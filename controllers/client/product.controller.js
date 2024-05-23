@@ -1,5 +1,7 @@
 const Product = require("../../models/product.model")
 const ProductCategory = require("../../models/product-category.model")
+const Comment = require("../../models/comment.model")
+
 
 const paginationHelper = require("../../helpers/pagination")
 const productsHelper = require("../../helpers/product") 
@@ -45,7 +47,6 @@ module.exports.index =  async (req, res) => {
 module.exports.detail =  async (req, res) => {
     try {
 
-
         const find = {
             deleted:false,
             slug: req.params.slugProduct,
@@ -53,7 +54,7 @@ module.exports.detail =  async (req, res) => {
         }
 
         const product = await Product.findOne(find)
-
+        
         if(product.product_category_id) {
             const category = await ProductCategory.findOne({
                 _id: product.product_category_id,
@@ -78,11 +79,16 @@ module.exports.detail =  async (req, res) => {
             status: "available",
         })
 
+        const comments = await Comment.find({
+            product_id: product._id.toString()
+        })
 
+        // console.log(comments)
         res.render("client/pages/products/detail-test", {
             pageTitle: product.title,
             product: product,
-            products: products
+            products: products,
+            comments:comments
         })
     } catch (error) {
         res.redirect(`/products`)

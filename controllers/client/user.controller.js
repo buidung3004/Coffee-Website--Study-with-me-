@@ -8,7 +8,7 @@ const generateHelper = require("../../helpers/generate")
 const sendMailHelper = require("../../helpers/sendMail")
 // [GET]/user/register
 module.exports.register = async (req, res) => {
-    res.render("client/pages/user/register", {
+    res.render("client/pages/user/register-test", {
         pageTitle: "Đăng ký tài khoản"
     })
 }
@@ -59,7 +59,7 @@ module.exports.registerPost = async (req, res) => {
 // [GET] user/register/otp
 module.exports.otpRegister = async (req, res) => {
     const email = req.query.email
-    res.render("client/pages/user/otp-register", {
+    res.render("client/pages/user/otp-register-test", {
         pageTitle:"Nhập mã OTP",
         email: email
     })
@@ -99,7 +99,7 @@ module.exports.otpRegisterPost = async (req, res) => {
 
 // [GET] user/login
 module.exports.login= async (req, res) => {
-    res.render("client/pages/user/login",{
+    res.render("client/pages/user/login-test",{
         pageTitle:"Đăng nhập tài khoản",
     })
 }
@@ -151,7 +151,7 @@ module.exports.logout = async (req, res) => {
 
 // [GET] user/password/forgot
 module.exports.forgotPassword = async (req, res) => {
-    res.render("client/pages/user/forgot-password", {
+    res.render("client/pages/user/forgot-password-test", {
         pageTitle:"Lấy lại mật khẩu"
     })
 }
@@ -199,7 +199,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
 module.exports.otpPassword = async (req, res) => {
     const email = req.query.email
 
-    res.render("client/pages/user/otp-password", {
+    res.render("client/pages/user/otp-password-test", {
         pageTitle:"Nhập mã OTP",
         email: email
     })
@@ -231,7 +231,7 @@ module.exports.otpPasswordPost = async (req, res) => {
 
 // [GET] user/password/reset
 module.exports.resetPassword = async (req, res) => {
-    res.render("client/pages/user/reset-password", {
+    res.render("client/pages/user/reset-password-test", {
         pageTitle:"Đổi mật khẩu",
     })
 }
@@ -252,7 +252,7 @@ module.exports.resetPasswordPost = async (req, res) => {
 
 // [GET] user/info
 module.exports.info = async (req, res) => {
-    res.render("client/pages/user/info", {
+    res.render("client/pages/user/info-test", {
         pageTitle:"Thông tin tài khoản",
     })
 }

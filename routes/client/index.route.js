@@ -7,7 +7,7 @@ const checkoutRoutes = require("./checkout.route")
 const userRoutes = require("./user.route")
 const paypalRoutes = require("./paypal.route")
 const vnpayRoutes = require("./vnpay.route")
-
+const commentRoutes = require("./comment.route")
 
 const settingMiddleware = require("../../middlewares/client/setting.middleware")
 const categoryMiddleware = require("../../middlewares/client/category.middleware")
@@ -29,4 +29,5 @@ module.exports = (app) => {
     app.use("/user", userRoutes)
     app.use("/",paypalRoutes)
     app.use("/",vnpayRoutes)
+    app.use("/comment",commentRoutes)
 }

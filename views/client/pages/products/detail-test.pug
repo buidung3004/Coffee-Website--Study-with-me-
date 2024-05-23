@@ -1,5 +1,6 @@
 include ../../mixins/sub-menu.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
 
 doctype html
 
@@ -28,6 +29,7 @@ head
   // Style CSS
   link(rel='stylesheet' href='/assets/css/style.css')
 body
+  //- +alert-success(3000)
   .header.sticky-header.section
     .container-fluid
       .row.align-items-center
@@ -91,6 +93,8 @@ body
             input(type="text" placeholder="Nhập từ khóa..." class="form-control" name="keyword" value=keyword)
             button(type="submit" class="btn btn-primary")
               i.sli-magnifier
+
+              
           li
             a(href='contact.html') Contact Us
 
@@ -287,55 +291,56 @@ body
           #product-description.tab-pane.fade.show.active
             .single-product-description
               p
-                | #{product.description}
+                | !{product.description}
           // Description End
           // Comments Start
           #product-comments.tab-pane.fade
             .block-title-2
-              h4.title Comments (2)
+              h4.title Comments #{comments.length}
             // Comment List Start
             ul.comment-list
-              li
-                .comment-item
-                  .comment-thumb
-                    img(src='/assets/images/testimonial/testimonial-1.png' alt='Edna Watson')
-                  .comment-content
-                    .comment-meta
-                      h5.comment-name Edna Watson
-                      span.comment-date November 27, 2023
-                    p
-                      | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
-                    a.comment-reply(href='#') Reply
-                ul.comment-child
-                  li
-                    .comment-item
-                      .comment-thumb
-                        img(src='/assets/images/testimonial/testimonial-2.png' alt='Hester Perkins')
-                      .comment-content
-                        .comment-meta
-                          h5.comment-name Hester Perkins
-                          span.comment-date November 27, 2023
-                        p
-                          | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
+              each comment in comments
+                li
+                  .comment-item
+                    .comment-thumb
+                      img(src=comment.userInfo.avatar alt=comment.userInfo.fullName)
+                    .comment-content
+                      .comment-meta
+                        h5.comment-name #{comment.userInfo.fullName}
+                        span.comment-date #{comment.createdAt}
+                      p
+                        | #{comment.comment}
+                      a.comment-reply(href='#') Reply
+                //- ul.comment-child
+                //-   li
+                //-     .comment-item
+                //-       .comment-thumb
+                //-         img(src='/assets/images/testimonial/testimonial-2.png' alt='Hester Perkins')
+                //-       .comment-content
+                //-         .comment-meta
+                //-           h5.comment-name Hester Perkins
+                //-           span.comment-date November 27, 2023
+                //-         p
+                //-           | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
                         a.comment-reply(href='#') Reply
             // Comment List End
             .block-title-2
               h4.title Leave your thought here
             // Comment Form Start
             .comment-form
-              form(action='#')
-                .row.g-4
-                  .col-sm-6
-                    label(for='comment-name') Name
-                    input#comment-name.form-field(name='name' type='text' placeholder='Enter your name')
-                  .col-sm-6
-                    label(for='comment-email') Email
-                    input#comment-email.form-field(name='email' type='email' placeholder='john.smith@example.com')
-                  .col-12
-                    label(for='comment-message') Message
-                    textarea#comment-message.form-field(name='message' placeholder='Write your messages here')
-                  .col-12
-                    input.btn.btn-dark.btn-primary-hover.rounded-0(type='submit' value='Submit')
+              if(user)
+                form(action=`/comment/add/${product.id}` method="POST")
+                  .row.g-4
+                    .col-12
+                      label(for='comment') Comment
+                      textarea#comment-message.form-field(name='comment' placeholder='Write your messages here' required)
+                    .col-12
+                      input.btn.btn-dark.btn-primary-hover.rounded-0(type='submit' value='Submit')
+              else
+                .col
+                  | Please Login to be able comment 
+                a(href='/user/login')
+                  b Login
             // Comment Form End
           // Comments End
           // Reviews Start
