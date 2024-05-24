@@ -51,7 +51,7 @@ body
                   a(href=pathProduct) Products
                       +sub-menu(layoutProductsCategory, pathProduct)
               li
-                a(href='contact.html') Contact Us
+                a(href='/contact') Contact Us
         // Menu End
         // Action Start
         .col-auto
@@ -84,6 +84,9 @@ body
               button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-header')
                 i.sli-menu
         // Action End
+
+  +alert-success(3000)
+  
   #offcanvas-search.offcanvas.offcanvas-end.w-100.bg-dark.border-0
     .offcanvas-body.d-flex.align-items-center.justify-content-center
       button.btn-close.offcanvas-search-close-btn.text-white(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
@@ -96,7 +99,7 @@ body
 
               
           li
-            a(href='contact.html') Contact Us
+            a(href='/contact') Contact Us
 
   // Page Banner Section Start
   .page-banner-section.section

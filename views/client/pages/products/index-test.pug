@@ -11,7 +11,7 @@ head
   meta(name='description' content='Kofi - Coffee Shop Website Template')
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
   // Favicon
-  link(rel='shortcut icon' type='image/x-icon' href='assets/images/favicon.png')
+  link(rel='shortcut icon' type='image/x-icon' href='/assets/images/favicon.png')
   // CSS (Font, Vendor, Icon, Plugins & Style CSS files)
   // Fonts CSS
   link(rel='preconnect' href='https://fonts.googleapis.com/')
@@ -36,7 +36,7 @@ body
           .header-logo
             a(href="/")
               img(src=settingGeneral.logo, width='125' height='42' alt='kofi logo')
-              img.light(src='assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
+              img.light(src='/assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
         // Logo End
         // Menu Start
         .col.d-none.d-lg-block
@@ -49,7 +49,7 @@ body
                   a(href=pathProduct) Products
                       +sub-menu(layoutProductsCategory, pathProduct)
               li
-                a(href='contact.html') Contact Us
+                a(href='/contact') Contact Us
         // Menu End
         // Action Start
         .col-auto
@@ -92,7 +92,7 @@ body
             button(type="submit" class="btn btn-primary")
               i.sli-magnifier
           li
-            a(href='contact.html') Contact Us
+            a(href='/contact') Contact Us
 
   body 
   // Page Banner Section Start
@@ -354,7 +354,7 @@ body
           // Footer Widget Start
           .col-md-auto.col-12.mb-2
             .footer-payment.text-center
-              img(loading='lazy' src='assets/images/footer/footer-payment.png' alt='footer payment' width='342' height='30')
+              img(loading='lazy' src='/assets/images/footer/footer-payment.png' alt='footer payment' width='342' height='30')
           // Footer Widget End
     // Footer Bottom Section End
   // Footer Section End
@@ -380,13 +380,13 @@ body
                   .quickview-product-image-slider.swiper
                     .swiper-wrapper
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-1.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-1.png' alt='Signature Blend Roast Coffee')
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-2.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-2.png' alt='Signature Blend Roast Coffee')
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-3.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-3.png' alt='Signature Blend Roast Coffee')
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-4.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-4.png' alt='Signature Blend Roast Coffee')
                     .swiper-pagination.d-none
                     .swiper-button-prev.d-none
                     .swiper-button-next.d-none
@@ -395,13 +395,13 @@ body
                   .quickview-product-thumb-carousel.swiper
                     .swiper-wrapper
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-1.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-1.png' alt='Signature Blend Roast Coffee')
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-2.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-2.png' alt='Signature Blend Roast Coffee')
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-3.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-3.png' alt='Signature Blend Roast Coffee')
                       .swiper-slide
-                        img(loading='lazy' src='assets/images/products/single/single-product-4.png' alt='Signature Blend Roast Coffee')
+                        img(loading='lazy' src='/assets/images/products/single/single-product-4.png' alt='Signature Blend Roast Coffee')
                     .swiper-pagination.d-none
                     .swiper-button-prev
                     .swiper-button-next
@@ -509,33 +509,33 @@ body
                       span.label Share :
                       span.value.social
                         a(href='#')
-                          img(src='assets/images/icons/social/facebook.png' alt='facebook')
+                          img(src='/assets/images/icons/social/facebook.png' alt='facebook')
                         a(href='#')
-                          img(src='assets/images/icons/social/twitter.png' alt='twitter')
+                          img(src='/assets/images/icons/social/twitter.png' alt='twitter')
                         a(href='#')
-                          img(src='assets/images/icons/social/pinterest.png' alt='pinterest')
+                          img(src='/assets/images/icons/social/pinterest.png' alt='pinterest')
                   .single-product-safe-payment
                     p Guaranteed safe checkout
-                    img(src='assets/images/footer/footer-payment.png' alt='payment')
+                    img(src='/assets/images/footer/footer-payment.png' alt='payment')
               // Product Content End
             // Single Product Top Area End
   button.scroll-to-top
     i.sli-arrow-up
   // JS Vendor, Plugins & Activation Script Files
   // Vendors JS
-  script(src='assets/js/vendor/modernizr-3.11.7.min.js')
-  script(src='assets/js/vendor/jquery-3.6.0.min.js')
-  script(src='assets/js/vendor/jquery-migrate-3.3.2.min.js')
-  script(src='assets/js/vendor/bootstrap.bundle.min.js')
+  script(src='/assets/js/vendor/modernizr-3.11.7.min.js')
+  script(src='/assets/js/vendor/jquery-3.6.0.min.js')
+  script(src='/assets/js/vendor/jquery-migrate-3.3.2.min.js')
+  script(src='/assets/js/vendor/bootstrap.bundle.min.js')
   // Plugins JS
-  script(src='assets/js/plugins/swiper-bundle.min.js')
-  script(src='assets/js/plugins/jquery.countdown.min.js')
-  script(src='assets/js/plugins/svg-inject.min.js')
-  script(src='assets/js/plugins/jquery.magnific-popup.min.js')
-  script(src='assets/js/plugins/ion.rangeSlider.min.js')
-  script(src='assets/js/plugins/jquery.zoom.min.js')
-  script(src='assets/js/plugins/resize-sensor.js')
-  script(src='assets/js/plugins/jquery.sticky-sidebar.min.js')
+  script(src='/assets/js/plugins/swiper-bundle.min.js')
+  script(src='/assets/js/plugins/jquery.countdown.min.js')
+  script(src='/assets/js/plugins/svg-inject.min.js')
+  script(src='/assets/js/plugins/jquery.magnific-popup.min.js')
+  script(src='/assets/js/plugins/ion.rangeSlider.min.js')
+  script(src='/assets/js/plugins/jquery.zoom.min.js')
+  script(src='/assets/js/plugins/resize-sensor.js')
+  script(src='/assets/js/plugins/jquery.sticky-sidebar.min.js')
   // Activation JS
-  script(src='assets/js/active.js')
+  script(src='/assets/js/active.js')
   // Mirrored from htmldemo.net/kofi/kofi/shop-list-no-sidebar.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:07 GMT

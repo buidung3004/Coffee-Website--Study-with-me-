@@ -39,7 +39,7 @@ module.exports.addPost = async (req, res) => {
   const comment = new Comment(objectComment)
   await comment.save()
 
-  req.flash("success", "Add to cart successful")
+  req.flash("success", "Thank you for your contributions")
 
   res.redirect("back")
 

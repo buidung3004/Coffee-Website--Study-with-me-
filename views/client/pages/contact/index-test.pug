@@ -1,9 +1,9 @@
 include ../../mixins/sub-menu.pug
-//- include ../../mixins/pagination.pug
-include ../../mixins/alert.pug 
+include ../../mixins/alert.pug
+
 
 doctype html
-
+// Mirrored from htmldemo.net/kofi/kofi/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:41:25 GMT
 head
   meta(charset='utf-8')
   meta(http-equiv='x-ua-compatible' content='ie=edge')
@@ -12,7 +12,7 @@ head
   meta(name='description' content='Kofi - Coffee Shop Website Template')
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
   // Favicon
-  link(rel='shortcut icon' type='image/x-icon' href='/assets/images/favicon.png')
+  link(rel='shortcut icon' type='image/x-icon' href='assets/images/favicon.png')
   // CSS (Font, Vendor, Icon, Plugins & Style CSS files)
   // Fonts CSS
   link(rel='preconnect' href='https://fonts.googleapis.com/')
@@ -28,9 +28,7 @@ head
   link(rel='stylesheet' href='/assets/css/plugins/ion.rangeSlider.min.css')
   // Style CSS
   link(rel='stylesheet' href='/assets/css/style.css')
-body
-  
-  
+body 
   .header.sticky-header.section
     .container-fluid
       .row.align-items-center
@@ -39,7 +37,7 @@ body
           .header-logo
             a(href="/")
               img(src=settingGeneral.logo, width='125' height='42' alt='kofi logo')
-              img.light(src='assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
+              img.light(src='/assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
         // Logo End
         // Menu Start
         .col.d-none.d-lg-block
@@ -64,6 +62,7 @@ body
               a.header-action-toggle(href='/cart')
                 i.sli-basket-loaded
                   span.count (#{miniCart ? miniCart.totalQuantity : "0"})
+
             .header-action-item.dropdown
               button.header-action-toggle(type='button' data-bs-toggle='dropdown')
                 i.sli-settings
@@ -85,7 +84,9 @@ body
               button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-header')
                 i.sli-menu
         // Action End
-  +alert-error(5000)
+
+  +alert-success(3000)
+
 
   #offcanvas-search.offcanvas.offcanvas-end.w-100.bg-dark.border-0
     .offcanvas-body.d-flex.align-items-center.justify-content-center
@@ -98,31 +99,63 @@ body
               i.sli-magnifier
           li
             a(href='/contact') Contact Us
-
 // Page Banner Section Start
+
+
+
 .page-banner-section.section
   .container
     ul.breadcrumb
       li
         a(href='/') Home
-      li Reset Password
+      li Contact Us
 // Page Banner Section End
-// Login Section Start
+// Contact Section Start
+
 .section.section-padding
   .container
-    .login-register-form
-      h3.title Reset Password
-      p
-      form(action='/user/password/reset' method='POST')
-        .row.row-cols-1.g-4
-          .col
-            input.form-field(type='password' name='password' id='password' placeholder='Password' required )
-          .col
-            input.form-field(type='password' name='confirmPassword' id='confirmPassword' placeholder='Confirm Password'  required)
-          .col
-            input.btn.btn-dark.btn-primary-hover.rounded-0.w-100(type='submit' value='Confirm')
-
-// Login Section End
+    .row.row-cols-md-2.row-cols-1.g-4
+      .col
+        .block-title
+          h2.sub-title Keep in Touch
+        ul.contact-info
+          li
+            i.sli-location-pin
+            | Address goes here, street, 
+            br
+            |  Crossroad 123.
+          li
+            i.sli-envelope
+            | info@example.com 
+            br
+            |  info@example.com
+          li
+            i.sli-phone
+            | +1 35 776 859 000 
+            br
+            |  +1 35 776 859 011
+      .col
+        .contact-form
+          form(action='/contact/add' method="POST")
+            .row.row-cols-1.g-4
+              .col-sm-6.col-md-12.col-lg-6.col
+                input.form-field(name='name' type='text' placeholder='Name')
+              .col-sm-6.col-md-12.col-lg-6.col
+                input.form-field(name='email' type='email' placeholder='Email')
+              .col
+                input.form-field(name='subject' type='text' placeholder='Subject')
+              .col
+                textarea.form-field(name='message' placeholder='Message')
+              .col
+                input.btn.btn-dark.btn-primary-hover.rounded-0.w-100(type='submit' value='Send Message')
+          p.form-messege
+// Contact Section End
+// Contact Map Section Start
+.section.section-padding.pt-0
+  .container
+    .ratio.ratio-21x9
+      iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14896.229452685377!2d105.84462229950897!3d21.03039063990639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abbf59d8f429%3A0x7830a3dfd6e566a1!2zSG_DoG4gS2nhur9tLCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1716539340351!5m2!1svi!2s" allowfullscreen='' loading='lazy')
+// Contact Map Section End
 // Footer Section Start
 .footer-section.section
   // Footer Top Section Start
@@ -242,4 +275,4 @@ script(src='/assets/js/plugins/resize-sensor.js')
 script(src='/assets/js/plugins/jquery.sticky-sidebar.min.js')
 // Activation JS
 script(src='/assets/js/active.js')
-// Mirrored from htmldemo.net/kofi/kofi/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:09 GMT
+// Mirrored from htmldemo.net/kofi/kofi/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:09 GMT
