@@ -156,9 +156,9 @@ body
                             )
 
                         td #{item.productInfo.title} 
-                        td #{item.priceNew}$  
+                        td #{item.priceNew} VND
                         td #{item.quantity}
-                        td #{item.totalPrice}$ 
+                        td #{item.totalPrice} VND
                     
 
       .row
@@ -179,7 +179,7 @@ body
                   else
                       | Payment on delivery
               if(order.products.length > 0)
-                  h3(class="text-right") Total Order: #{order.totalPrice}$
+                  h3(class="text-right") Total Order: #{order.totalPrice} VND
 // Shopping Cart Section End
 // Footer Section Start
 .footer-section.section

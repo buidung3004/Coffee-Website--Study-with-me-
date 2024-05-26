@@ -219,7 +219,7 @@ body
                   each item, index in cartDetail.products
                     tr
                       td #{item.productInfo.title} x #{item.quantity}
-                      td #{item.productInfo.newPrice}$ 
+                      td #{item.productInfo.newPrice} VND
                     //- tr
                     //-   td.border-top Sub Total
                     //-   td.border-top $129.00
@@ -229,7 +229,7 @@ body
                   tfoot
                     tr
                       th.border-top Grand Total
-                      th.border-top #{cartDetail.totalPrice}$ 
+                      th.border-top #{cartDetail.totalPrice} VND
           // Checkout Summary End
           // Delivery Method Start
           .checkout-box

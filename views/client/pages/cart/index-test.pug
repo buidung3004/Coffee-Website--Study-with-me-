@@ -136,13 +136,13 @@ body
                       img(src=item.productInfo.thumbnail alt=item.productInfo.title)
                   td
                     a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
-                  td #{item.productInfo.newPrice}$
+                  td #{item.productInfo.newPrice} VND
                   td
                     .product-quantity-count
                       button.dec.qty-btn(type='button' data-product-id=item.product_id) -
                       input.product-quantity-box(type='number' name='quantity' value=item.quantity min='1' product-id=item.product_id style='width: 60px')
                       button.inc.qty-btn(type='button' data-product-id=item.product_id) +
-                  td #{item.totalPrice}$
+                  td #{item.totalPrice} VND
                   td
                     a(href=`/cart/delete/${item.product_id}` class="btn btn-danger remove-btn")
                       i.sli-close
@@ -171,7 +171,7 @@ body
                 th Total
                 td
                   strong
-                    span.amount &pound;$#{cartDetail.totalPrice} 
+                    span.amount VND #{cartDetail.totalPrice} 
           a.btn.btn-dark.btn-primary-hover.rounded-0(href="/checkout") Proceed to checkout
       // Cart Totals End
 // Shopping Cart Section End

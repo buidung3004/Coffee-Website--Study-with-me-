@@ -36,7 +36,7 @@ module.exports.vnpayCreatePayment = async (req, res) => {
     const orderId = date.format('HHmmss');
 
     // Đảm bảo rằng amount là một số hợp lệ
-    const amount = parseFloat(req.body.amount * 24500 *100); // Sử dụng req.body thay vì req.query và nhân với 24500 để chuyển đổi sang đồng
+    const amount = parseFloat(req.body.amount * 100); // Sử dụng req.body thay vì req.query và nhân với 24500 để chuyển đổi sang đồng
     if (isNaN(amount)) {
         return res.status(400).send('Invalid amount');
     }
