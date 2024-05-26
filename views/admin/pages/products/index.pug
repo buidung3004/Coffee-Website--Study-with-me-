@@ -54,6 +54,7 @@ block main
                     th Tiêu đề
                     th Giá
                     th Vị trí 
+                    th Còn lại
                     th Trạng thái
                     th Người tạo
                     th Người cập nhật gần nhất
@@ -86,6 +87,7 @@ block main
                                 min="1"
                                 name="position"
                             )
+                        td #{item.stock}
                         td
                             if(role.permissions.includes("products_edit"))      
                                 if(item.status=="available")

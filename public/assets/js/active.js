@@ -588,3 +588,35 @@ if (sortWrapper) {
   }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Select the quantity buttons
+    const qtyButtons = document.querySelectorAll('.qty-btn');
+    const addToCartButton = document.querySelector('#add-to-cart');
+
+    qtyButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            // Prevent default behavior
+            event.preventDefault();
+            // Prevent the event from bubbling up
+            event.stopPropagation();
+            
+            // Handle the quantity change logic here
+            const input = this.parentElement.querySelector('.product-quantity-box');
+            let currentValue = parseInt(input.value);
+            if (isNaN(currentValue)) currentValue = 1;
+
+            if (this.classList.contains('dec')) {
+                input.value = currentValue > 1 ? currentValue - 1 : 1;
+            } else if (this.classList.contains('inc')) {
+                input.value = currentValue + 1;
+            }
+        });
+    });
+
+    addToCartButton.addEventListener('click', function(event) {
+        // Handle the add to cart logic here
+        const quantity = document.querySelector('.product-quantity-box').value;
+        console.log('Adding to cart:', quantity);
+        // Perform the add to cart action
+    });
+});

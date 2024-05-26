@@ -235,8 +235,8 @@ body
                   a(href=`/products/detail/${item.slug}`) #{item.title} 
                 p #{item.shortDescription}
               span.coffee-menu-price
-                | #{item.priceNew}$ 
-                del #{item.price}$
+                | #{item.priceNew} VND
+                del #{item.price} VND
   // Coffee Menu Section End
   // Product Section Start
   .h1-product-section.section.section-padding.pt-0
@@ -278,8 +278,8 @@ body
                   h5.product-title
                     a(href=`/products/detail/${item.slug}`) #{item.title}
                   .product-price
-                    del #{item.price}$
-                    | #{item.priceNew}$ 
+                    del #{item.price} VND
+                    | #{item.priceNew} VND
                   .product-rating
                     span.product-rating-bg
                       span.product-rating-active(style='width: 90%;')

@@ -1,5 +1,6 @@
 include ../../mixins/sub-menu.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
 
 doctype html
 
@@ -28,6 +29,7 @@ head
   // Style CSS
   link(rel='stylesheet' href='/assets/css/style.css')
 body
+  //- +alert-success(3000)
   .header.sticky-header.section
     .container-fluid
       .row.align-items-center
@@ -82,6 +84,9 @@ body
               button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-header')
                 i.sli-menu
         // Action End
+
+  +alert-success(3000)
+  
   #offcanvas-search.offcanvas.offcanvas-end.w-100.bg-dark.border-0
     .offcanvas-body.d-flex.align-items-center.justify-content-center
       button.btn-close.offcanvas-search-close-btn.text-white(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
@@ -91,23 +96,218 @@ body
             input(type="text" placeholder="Nhập từ khóa..." class="form-control" name="keyword" value=keyword)
             button(type="submit" class="btn btn-primary")
               i.sli-magnifier
+
+              
           li
             a(href='/contact') Contact Us
-
 // Page Banner Section Start
 .page-banner-section.section
   .container
     ul.breadcrumb
       li
         a(href='/') Home
-      li Info
+      li My Account
 // Page Banner Section End
-// Login Section Start
+// My Account Section Start
 .section.section-padding
   .container
-    .login-register-form
-      div #{user}
-// Login Section End
+    .row.g-lg-10.g-6
+      // My Account Tab List Start
+      .col-lg-4.col-12
+        ul.my-account-tab-list.nav
+          li
+            a.active(href='#dashboad' data-bs-toggle='tab')
+              i.sli-home
+              |  Dashboard
+          li
+            a(href='#orders' data-bs-toggle='tab')
+              i.sli-notebook
+              |  Orders
+          li
+            a(href='#download' data-bs-toggle='tab')
+              i.sli-cloud-download
+              |  Download
+          li
+            a(href='#address' data-bs-toggle='tab')
+              i.sli-map
+              |  address
+          li
+            a(href='#account-info' data-bs-toggle='tab')
+              i.sli-user
+              |  Account Details
+          li
+            a(href='login.html')
+              i.sli-logout
+              |  Logout
+      // My Account Tab List End
+      // My Account Tab Content Start
+      .col-lg-8.col-12
+        .tab-content
+          // Single Tab Content Start
+          #dashboad.tab-pane.fade.show.active
+            .myaccount-content.dashboad
+              .alert.alert-light
+                | Hello 
+                b didiv91396
+                |  (not 
+                b didiv91396
+                | ? 
+                a(href='login.html') Log out
+                | )
+              p
+                | From your account dashboard you can view your 
+                u recent orders
+                | , manage your 
+                u shipping and billing addresses
+                | , and 
+                u edit your password and account details
+                | .
+          // Single Tab Content End
+          // Single Tab Content Start
+          #orders.tab-pane.fade
+            .myaccount-content.order
+              .table-responsive
+                table.table
+                  thead
+                    tr
+                      th Order
+                      th Date
+                      th Status
+                      th Total
+                      th Action
+                  tbody
+                    tr
+                      td 1
+                      td Aug 22, 2023
+                      td Pending
+                      td $3000
+                      td
+                        a(href='shopping-cart.html')
+                          b View
+                    tr
+                      td 2
+                      td July 22, 2023
+                      td Approved
+                      td $200
+                      td
+                        a(href='shopping-cart.html')
+                          b View
+                    tr
+                      td 3
+                      td June 12, 2017
+                      td On Hold
+                      td $990
+                      td
+                        a(href='shopping-cart.html')
+                          b View
+          // Single Tab Content End
+          // Single Tab Content Start
+          #download.tab-pane.fade
+            .myaccount-content.download
+              .table-responsive
+                table.table
+                  thead
+                    tr
+                      th Product
+                      th Date
+                      th Expire
+                      th Download
+                  tbody
+                    tr
+                      td Haven - Free Real Estate PSD Template
+                      td Aug 22, 2023
+                      td Yes
+                      td
+                        a(href='#')
+                          i.sli-cloud-download.mr-1
+                          b Download File
+                    tr
+                      td HasTech - Profolio Business Template
+                      td Sep 12, 2023
+                      td Never
+                      td
+                        a(href='#')
+                          i.sli-cloud-download.mr-1
+                          b Download File
+          // Single Tab Content End
+          // Single Tab Content Start
+          #address.tab-pane.fade
+            .myaccount-content.address
+              .alert.alert-light The following addresses will be used on the checkout page by default.
+              .row.learts-mb-n30
+                .col-md-6.col-12
+                  h4.title
+                    | Billing Address 
+                    a.edit-link(href='#') edit
+                  address
+                    p
+                      strong Alex Tuntuni
+                    p
+                      | 1355 Market St, Suite 900 
+                      br
+                      |                                                 San Francisco, CA 94103
+                    p Mobile: (123) 456-7890
+                .col-md-6.col-12
+                  h4.title
+                    | Shipping Address 
+                    a.edit-link(href='#') edit
+                  address
+                    p
+                      strong Alex Tuntuni
+                    p
+                      | 1355 Market St, Suite 900 
+                      br
+                      |                                                 San Francisco, CA 94103
+                    p Mobile: (123) 456-7890
+          // Single Tab Content End
+          // Single Tab Content Start
+          #account-info.tab-pane.fade
+            .myaccount-content.account-details
+              .account-details-form
+                form(action='#')
+                  .row.g-4
+                    .col-md-6.col-12
+                      .single-input-item
+                        label(for='first-name')
+                          | First Name 
+                          abbr.required *
+                        input#first-name.form-field(type='text')
+                    .col-md-6.col-12
+                      .single-input-item
+                        label(for='last-name')
+                          | Last Name 
+                          abbr.required *
+                        input#last-name.form-field(type='text')
+                    .col-12
+                      label(for='display-name')
+                        | Display Name 
+                        abbr.required *
+                      input#display-name.form-field(type='text')
+                      p.small.mt-1
+                        | This will be how your name will be displayed in the account section and in reviews
+                    .col-12
+                      label(for='email')
+                        | Email Addres 
+                        abbr.required *
+                      input#email.form-field(type='email')
+                    .col-12
+                      fieldset
+                        legend Password change
+                        .row.g-4
+                          .col-12
+                            label(for='current-pwd') Current password (leave blank to leave unchanged)
+                            input#current-pwd.form-field(type='password')
+                          .col-12
+                            label(for='new-pwd') New password (leave blank to leave unchanged)
+                            input#new-pwd.form-field(type='password')
+                          .col-12
+                            label(for='confirm-pwd') Confirm new password
+                            input#confirm-pwd.form-field(type='password')
+                    .col-12
+                      button.btn.btn-dark.btn-primary-hover Save Changes
+          // Single Tab Content End
+      // My Account Tab Content End
+// My Account Section End
 // Footer Section Start
 .footer-section.section
   // Footer Top Section Start
@@ -227,4 +427,4 @@ script(src='/assets/js/plugins/resize-sensor.js')
 script(src='/assets/js/plugins/jquery.sticky-sidebar.min.js')
 // Activation JS
 script(src='/assets/js/active.js')
-// Mirrored from htmldemo.net/kofi/kofi/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:09 GMT
+// Mirrored from htmldemo.net/kofi/kofi/my-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:08 GMT

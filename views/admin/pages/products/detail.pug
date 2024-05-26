@@ -31,7 +31,9 @@ block main
     if (product.position)
         div(class="mb-4") Position: <b> #{product.position} </b>
 
-    if (product.description)
+    if (product.shortDescription)
+        div(class="mb-4") !{product.shortDescription}
+    if (product.description)       
         div(class="mb-4") !{product.description}
 
     a(

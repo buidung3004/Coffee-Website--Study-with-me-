@@ -161,8 +161,8 @@ body
           .single-product-content
             h1.single-product-title #{product.title}
             .single-product-price
-              | $#{product.priceNew}
-              del $#{product.price}
+              | #{product.priceNew} VND
+              del #{product.price} VND
             ul.single-product-meta
               li
                 span.label Category:
@@ -286,7 +286,7 @@ body
         .nav.single-product-description-area-nav
           button.active(data-bs-toggle='tab' data-bs-target='#product-description') Description
           button(data-bs-toggle='tab' data-bs-target='#product-comments') Comments
-          button(data-bs-toggle='tab' data-bs-target='#product-reviews') Reviews
+          //- button(data-bs-toggle='tab' data-bs-target='#product-reviews') Reviews
           button(data-bs-toggle='tab' data-bs-target='#product-size-chart') Size Chart
           button(data-bs-toggle='tab' data-bs-target='#product-shipping-policy') Shipping Policy
         .tab-content
@@ -346,113 +346,113 @@ body
                   b Login
             // Comment Form End
           // Comments End
-          // Reviews Start
-          #product-reviews.tab-pane.fade
-            .block-title-2
-              h4.title Customer Reviews
-            // Review List Start
-            .review-list
-              .review-item
-                .review-thumb
-                  img(src='/assets/images/testimonial/testimonial-1.png' alt='Edna Watson')
-                .review-content
-                  .review-rating
-                    span.review-rating-bg
-                      span.review-rating-active(style='width: 90%')
-                  .review-meta
-                    h5.review-name Edna Watson
-                    span.review-date November 27, 2023
-                  p
-                    | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
-              .review-item
-                .review-thumb
-                  img(src='assets/images/testimonial/testimonial-2.png' alt='Hester Perkins')
-                .review-content
-                  .review-rating
-                    span.review-rating-bg
-                      span.review-rating-active(style='width: 100%')
-                  .review-meta
-                    h5.review-name Hester Perkins
-                    span.review-date November 27, 2023
-                  p
-                    | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
-            // Review List End
-            .block-title-2
-              h4.title Write a review
-            // Review Form Start
-            .review-form
-              form(action='#')
-                .row.g-4
-                  .col-12
-                    label(for='review-rating') Rating
-                    select#review-rating.form-field(name='rating')
-                      option(value='1') One
-                      option(value='2') Two
-                      option(value='3') Three
-                      option(value='4') Four
-                      option(value='5') Five
-                  .col-sm-6
-                    label(for='review-name') Name
-                    input#review-name.form-field(name='name' type='text' placeholder='Enter your name')
-                  .col-sm-6
-                    label(for='review-email') Email
-                    input#review-email.form-field(name='email' type='email' placeholder='john.smith@example.com')
-                  .col-12
-                    label(for='review-comment') Body of Review (1500)
-                    textarea#review-comment.form-field(name='comment' placeholder='Write your comments here')
-                  .col-12
-                    input.btn.btn-dark.btn-primary-hover.rounded-0(type='submit' value='Submit Review')
-            // Review Form End
-          // Reviews End
+          //- // Reviews Start
+          //- #product-reviews.tab-pane.fade
+          //-   .block-title-2
+          //-     h4.title Customer Reviews
+          //-   // Review List Start
+          //-   .review-list
+          //-     .review-item
+          //-       .review-thumb
+          //-         img(src='/assets/images/testimonial/testimonial-1.png' alt='Edna Watson')
+          //-       .review-content
+          //-         .review-rating
+          //-           span.review-rating-bg
+          //-             span.review-rating-active(style='width: 90%')
+          //-         .review-meta
+          //-           h5.review-name Edna Watson
+          //-           span.review-date November 27, 2023
+          //-         p
+          //-           | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
+          //-     .review-item
+          //-       .review-thumb
+          //-         img(src='assets/images/testimonial/testimonial-2.png' alt='Hester Perkins')
+          //-       .review-content
+          //-         .review-rating
+          //-           span.review-rating-bg
+          //-             span.review-rating-active(style='width: 100%')
+          //-         .review-meta
+          //-           h5.review-name Hester Perkins
+          //-           span.review-date November 27, 2023
+          //-         p
+          //-           | Thanks for always keeping your WordPress themes up to date. Your level of support and dedication is second to none.
+          //-   // Review List End
+          //-   .block-title-2
+          //-     h4.title Write a review
+          //-   // Review Form Start
+          //-   .review-form
+          //-     form(action='#')
+          //-       .row.g-4
+          //-         .col-12
+          //-           label(for='review-rating') Rating
+          //-           select#review-rating.form-field(name='rating')
+          //-             option(value='1') One
+          //-             option(value='2') Two
+          //-             option(value='3') Three
+          //-             option(value='4') Four
+          //-             option(value='5') Five
+          //-         .col-sm-6
+          //-           label(for='review-name') Name
+          //-           input#review-name.form-field(name='name' type='text' placeholder='Enter your name')
+          //-         .col-sm-6
+          //-           label(for='review-email') Email
+          //-           input#review-email.form-field(name='email' type='email' placeholder='john.smith@example.com')
+          //-         .col-12
+          //-           label(for='review-comment') Body of Review (1500)
+          //-           textarea#review-comment.form-field(name='comment' placeholder='Write your comments here')
+          //-         .col-12
+          //-           input.btn.btn-dark.btn-primary-hover.rounded-0(type='submit' value='Submit Review')
+          //-   // Review Form End
+          //- // Reviews End
           // Size Chart Start
           #product-size-chart.tab-pane.fade
             table.table.table-bordered
               tbody
                 tr
                   td.cun-name
-                    span UK
+                    span Size
                   td 18
                   td 20
                   td 22
                   td 24
                   td 26
-                tr
-                  td.cun-name
-                    span European
-                  td 46
-                  td 48
-                  td 50
-                  td 52
-                  td 54
-                tr
-                  td.cun-name
-                    span usa
-                  td 14
-                  td 16
-                  td 18
-                  td 20
-                  td 22
-                tr
-                  td.cun-name
-                    span Australia
-                  td 28
-                  td 10
-                  td 12
-                  td 14
-                  td 16
-                tr
-                  td.cun-name
-                    span Canada
-                  td 24
-                  td 18
-                  td 14
-                  td 42
-                  td 36
+                //- tr
+                //-   td.cun-name
+                //-     span European
+                //-   td 46
+                //-   td 48
+                //-   td 50
+                //-   td 52
+                //-   td 54
+                //- tr
+                //-   td.cun-name
+                //-     span usa
+                //-   td 14
+                //-   td 16
+                //-   td 18
+                //-   td 20
+                //-   td 22
+                //- tr
+                //-   td.cun-name
+                //-     span Australia
+                //-   td 28
+                //-   td 10
+                //-   td 12
+                //-   td 14
+                //-   td 16
+                //- tr
+                //-   td.cun-name
+                //-     span Canada
+                //-   td 24
+                //-   td 18
+                //-   td 14
+                //-   td 42
+                //-   td 36
           // Size Chart End
           // Shipping Policy Start
           #product-shipping-policy.tab-pane.fade
             .block-title-2
-              h4.title Shipping policy of our store
+              h4.title Shipping Policy
             p
               | Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
             ul
@@ -511,8 +511,8 @@ body
                   h5.product-title
                     a(href=`/products/detail/${item.slug}`) #{item.title}
                   .product-price
-                    del #{item.price}$
-                    | #{item.priceNew}$ 
+                    del #{item.price} VND
+                    | #{item.priceNew} VND
                   .product-rating
                     span.product-rating-bg
                       span.product-rating-active(style='width: 90%;')

@@ -1,6 +1,7 @@
 include ../../mixins/sub-menu.pug
 include ../../mixins/pagination.pug
 include ../../mixins/sort.pug
+include ../../mixins/alert.pug
 
 doctype html
 
@@ -83,6 +84,10 @@ body
               button.header-action-toggle(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvas-header')
                 i.sli-menu
         // Action End
+
+  +alert-success(5000)
+  +alert-error(5000)
+
   #offcanvas-search.offcanvas.offcanvas-end.w-100.bg-dark.border-0
     .offcanvas-body.d-flex.align-items-center.justify-content-center
       button.btn-close.offcanvas-search-close-btn.text-white(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
@@ -207,8 +212,8 @@ body
                     h5.product-title
                       a(href=`/products/detail/${item.slug}`) #{item.title}
                     .product-price
-                      del #{item.price}$
-                      | #{item.priceNew}$ 
+                      del #{item.price} VND
+                      | #{item.priceNew} VND
                     .product-rating
                       span.product-rating-bg
                         span.product-rating-active(style='width: 90%;')
@@ -232,8 +237,8 @@ body
                     p.product-excerpt
                       | #{item.shortDescription}
                     .product-price
-                      del #{item.price}$
-                      | #{item.priceNew}$
+                      del #{item.price} VND
+                      | #{item.priceNew} VND
                     .product-rating
                       span.product-rating-bg
                         span.product-rating-active(style='width: 90%;')
