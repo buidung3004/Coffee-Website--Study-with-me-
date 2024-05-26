@@ -181,25 +181,32 @@ module.exports.create = async(req,res) => {
 // [POST] /admin/products/create
 module.exports.createPost = async(req,res) => {
 
-    req.body.price = parseFloat(req.body.price)
-    req.body.discountPercentage = parseInt(req.body.discountPercentage)
-    req.body.stock = parseInt(req.body.stock)
+    req.body.price = parseFloat(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
 
     if(req.body.position == "") {
         const countProducts = await Product.countDocuments();
-        req.body.position = countProducts + 1
+        req.body.position = countProducts + 1;
     } else {
-        req.body.position = parseInt(req.body.position)
+        req.body.position = parseInt(req.body.position);
     }
     req.body.createdBy = {
         account_id : res.locals.user.id,
+    };
+
+    // Handle additional images
+    if (req.files) {
+        req.body.additionalImage1 = req.files['additionalImage1'] ? req.files['additionalImage1'][0].path : '';
+        req.body.additionalImage2 = req.files['additionalImage2'] ? req.files['additionalImage2'][0].path : '';
+        req.body.additionalImage3 = req.files['additionalImage3'] ? req.files['additionalImage3'][0].path : '';
     }
 
-    const product = new Product(req.body)
-    await product.save()
+    const product = new Product(req.body);
+    await product.save();
 
-    res.redirect(`${systemConfig.prefixAdmin}/products`)
-}
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
 
 // [GET] /admin/products/edit/:id
 module.exports.edit = async(req,res) => {
@@ -231,34 +238,60 @@ module.exports.edit = async(req,res) => {
 
 // [PATCH] /admin/products/edit/:id
 module.exports.editPatch = async(req,res) => {
-    const id = req.params.id
+    const id = req.params.id;
+    console.log(req.files);
 
-    req.body.price = parseFloat(req.body.price)
-    req.body.discountPercentage = parseInt(req.body.discountPercentage)
-    req.body.stock = parseInt(req.body.stock)
-    req.body.position = parseInt(req.body.position)
-    // if (req.file) {
-    //     req.body.thumbnail = `/uploads/${req.file.filename}`
-    // }
-    // console.log(req.body.thumbnail)
+    req.body.price = parseFloat(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    req.body.position = parseInt(req.body.position);
+
+    const currentProduct = await Product.findOne({_id: id});
+    // Handle additional images
+    req.body.additionalImage1 = req.body.additionalImage1 || currentProduct.additionalImage1;
+    req.body.additionalImage2 = req.body.additionalImage2 || currentProduct.additionalImage2;
+    req.body.additionalImage3 = req.body.additionalImage3 || currentProduct.additionalImage3;
+
     try {
         const updatedBy = {
             account_id: res.locals.user.id,
             updatedAt: new Date(),
+        };
+
+        // Retrieve the current product from the database
+        const currentProduct = await Product.findOne({_id: id});
+
+        // If no new file is uploaded, keep the current image path
+        if (!req.body.additionalImage1) {
+            req.body.additionalImage1 = currentProduct.additionalImage1;
+        }
+        if (!req.body.additionalImage2) {
+            req.body.additionalImage2 = currentProduct.additionalImage2;
+        }
+        if (!req.body.additionalImage3) {
+            req.body.additionalImage3 = currentProduct.additionalImage3;
         }
 
         await Product.updateOne({_id:id} ,{
             ...req.body,
             $push: { updatedBy: updatedBy}
-        })
-        req.flash("success", "Cập nhật sản phẩm thành công  ")
+        });
+
+        // Retrieve the updated product from the database
+        const updatedProduct = await Product.findOne({_id: id});
+
+        // Check the additionalImage fields
+        console.log(updatedProduct.additionalImage1);
+        console.log(updatedProduct.additionalImage2);
+        console.log(updatedProduct.additionalImage3);
+
+        req.flash("success", "Cập nhật sản phẩm thành công  ");
     } catch (error) {
-        req.flash("error", "Update fail")
+        req.flash("error", "Update fail");
     }
 
     res.redirect("back");
-
-}
+};
 
 // [GET] /admin/products/detail/:id
 module.exports.detail = async(req,res) => {
