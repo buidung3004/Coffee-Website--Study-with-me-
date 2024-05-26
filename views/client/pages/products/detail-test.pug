@@ -130,12 +130,15 @@ body
               .swiper-wrapper
                 .swiper-slide.image-zoom
                   img(src=product.thumbnail alt=product.title)
-                .swiper-slide.image-zoom
-                  img(src=product.thumbnail alt=product.title)
-                .swiper-slide.image-zoom
-                  img(src=product.thumbnail alt=product.title)
-                .swiper-slide.image-zoom
-                  img(src=product.thumbnail alt=product.title)
+                if product.additionalImage1
+                  .swiper-slide.image-zoom
+                    img(src=product.additionalImage1 alt=product.title)
+                if product.additionalImage2
+                  .swiper-slide.image-zoom
+                    img(src=product.additionalImage2 alt=product.title)
+                if product.additionalImage3
+                  .swiper-slide.image-zoom
+                    img(src=product.additionalImage3 alt=product.title)
               .swiper-pagination.d-none
               .swiper-button-prev.d-none
               .swiper-button-next.d-none
@@ -145,12 +148,15 @@ body
               .swiper-wrapper
                 .swiper-slide
                   img(src=product.thumbnail alt=product.title)
-                .swiper-slide
-                  img(src=product.thumbnail alt=product.title)
-                .swiper-slide
-                  img(src=product.thumbnail alt=product.title)
-                .swiper-slide
-                  img(src=product.thumbnail alt=product.title)
+                if product.additionalImage1
+                  .swiper-slide
+                    img(src=product.additionalImage1 alt=product.title)
+                if product.additionalImage2
+                  .swiper-slide
+                    img(src=product.additionalImage2 alt=product.title)
+                if product.additionalImage3
+                  .swiper-slide
+                    img(src=product.additionalImage3 alt=product.title)
               .swiper-pagination.d-none
               .swiper-button-prev
               .swiper-button-next
