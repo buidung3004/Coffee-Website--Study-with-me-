@@ -1,0 +1,16 @@
+mixin sort()
+  .filter-bar
+    table
+      tr
+        td
+          label(for="SortBy") Sort:
+        td
+          select#SortBy(name="SortBy" class="form-control" sort-select)
+            option(value="position-desc") Date, new to old
+            option(value="position-asc") Date, old to new
+            option(value="price-desc") Price, high to low
+            option(value="price-asc") Price, low to high
+            option(value="title-asc") Alphabetically, A-Z
+            option(value="title-desc") Alphabetically, Z-A
+        td
+          button.btn.btn-dark.btn-primary-hover.rounded-0.mt-6(sort-clear) Clear

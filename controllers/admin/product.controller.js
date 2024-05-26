@@ -118,16 +118,34 @@ module.exports.changeMulti = async (req, res) => {
             req.flash("success",`Cập nhật trạng thái thành công ${ids.length} sản phẩm`)
             break
         case "delete-all":
-            await Product.updateMany(
-                {_id:{$in: ids}}, 
-                {
-                    deleted: true,
-                    deletedBy: {
-                        account_id: res.locals.user.id,
-                        deletedAt: new Date(),
+            const products = await Product.find({_id: {$in: ids}});
+            let hasNaN = false;
+        
+            products.forEach(product => {
+                if (isNaN(product.position)) {
+                    hasNaN = true;
+                    console.error(`Product with ID ${product._id} has NaN in position`);
+                }
+            });
+        
+            if (!hasNaN) {
+                await Product.updateMany(
+                    {_id: {$in: ids}}, 
+                    {
+                        deleted: true,
+                        deletedBy: {
+                            account_id: res.locals.user.id,
+                            deletedAt: new Date(),
+                        }
                     }
-                })
-            req.flash("success",`Đã xóa thành công ${ids.length} sản phẩm`)
+                );
+                req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm`);
+            } else {
+                req.flash("error", "Có sản phẩm với giá trị position không hợp lệ.");
+            }
+            break;
+        
+
         case "change-position":
             for (const item of ids) {
                 let [id, position] = item.split("-")

@@ -27,10 +27,21 @@ module.exports.index =  async (req, res) => {
         countProducts
     )
 
+
+    // Sort
+    let sort = {};
+
+    if(req.query.sortKey && req.query.sortValue) {
+        sort[req.query.sortKey] = req.query.sortValue
+    } else {
+        sort.position = "desc"
+    }
+    
+
     const products = await Product.find({
         status: "available",
         deleted: false
-    }).sort({position:"asc"}).limit(objectPagination.limitItems).skip(objectPagination.skip);
+    }).sort({position:"asc"}).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip);
 
     const newProducts = productsHelper.priceNewProducts(products)
 
