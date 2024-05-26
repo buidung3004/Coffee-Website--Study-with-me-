@@ -1,5 +1,6 @@
 include ../../mixins/sub-menu.pug
 include ../../mixins/pagination.pug
+include ../../mixins/sort.pug
 
 doctype html
 
@@ -109,16 +110,7 @@ body
       // Shop Top Bar Start
       .shop-top-bar
         .shop-top-bar-item
-          label(for='SortBy') Sort by :
-          select#SortBy(name='SortBy')
-            option(value='manual') Featured
-            option(value='best-selling') Best Selling
-            option(value='title-ascending') Alphabetically, A-Z
-            option(value='title-descending') Alphabetically, Z-A
-            option(value='price-ascending') Price, low to high
-            option(value='price-descending') Price, high to low
-            option(value='created-descending') Date, new to old
-            option(value='created-ascending') Date, old to new
+          +sort()
         .shop-top-bar-item
           p Showing 1 - 12 of 25 result
         .shop-top-bar-item
