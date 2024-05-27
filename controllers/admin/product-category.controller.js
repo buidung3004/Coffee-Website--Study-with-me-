@@ -107,3 +107,41 @@ module.exports.deleteItem = async (req, res) => {
     // cập nhật và tự chuyển hướng
     res.redirect("back");
 };
+
+// [GET] /admin/products-category/detail/:id
+module.exports.detail = async(req,res) => {
+    try {
+        const find = {
+            deleted:false,
+            _id: req.params.id
+        }
+
+        const product_category = await ProductCategory.findOne(find)
+
+        res.render("admin/pages/products-category/detail", {
+            pageTitle: product_category.title,
+            product_category: product_category
+        })
+    }
+    catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products-category`)
+    }
+}
+
+// [PATCH] /admin/products-category/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    const status = req.params.status;
+    const id = req.params.id;
+
+    // const updatedBy = {
+    //     account_id: res.locals.user.id,
+    //     updateAt: new Date(),
+    // }
+
+    await ProductCategory.updateOne({_id:id},{status:status,
+        // $push: { updatedBy: updatedBy}
+    })
+    // cập nhật và tự chuyển hướng
+    req.flash("success","Cập nhật trạng thái thành công")
+    res.redirect("back");
+};

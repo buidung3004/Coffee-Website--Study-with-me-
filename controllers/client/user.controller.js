@@ -258,13 +258,16 @@ module.exports.info = async (req, res) => {
         // Truy vấn các đơn hàng của người dùng
         const orders = await Order.find({ user_id: user._id });
 
-        // Tính tổng tiền cho từng đơn hàng
+        // Tính tổng tiền cho từng đơn hàng, bao gồm cả phí vận chuyển
         orders.forEach(order => {
             order.totalPrice = order.products.reduce((total, product) => {
                 const discount = product.price * (product.discountPercentage / 100);
                 const finalPrice = product.price - discount;
                 return total + (finalPrice * product.quantity);
             }, 0);
+
+            // Add shipping fee to the total price of the order
+            order.totalPrice += order.shippingFee; // Assume shippingFee is already a number and properly defined on each order
         });
 
         // Gửi dữ liệu đến view
@@ -277,7 +280,8 @@ module.exports.info = async (req, res) => {
         console.error(error);
         res.status(500).send("Internal Server Error");
     }
-}
+};
+
 
 // [POST] /user/cancel-order/:id
 module.exports.cancelOrder = async (req, res) => {

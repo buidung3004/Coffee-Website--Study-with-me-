@@ -14,6 +14,8 @@ const controller = require("../../controllers/admin/product-category.controller"
 
 router.get("/", controller.index);
 
+router.patch("/change-status/:status/:id", controller.changeStatus);
+
 router.get("/create", controller.create);
 
 router.post(
@@ -34,5 +36,8 @@ router.patch(
     controller.editPatch)
 
 router.delete("/delete/:id", controller.deleteItem);
- 
+
+
+router.get("/detail/:id", controller.detail);
+
 module.exports = router

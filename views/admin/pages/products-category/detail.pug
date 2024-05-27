@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug
+
+block main
+    if (product_category.title)
+        h1(class="mb-4") #{product_category.title}
+
+    //- if (product.price)
+    //-     div(class="mb-4") Price: <b> #{product.price}$ </b>
+    
+    //- if (product.discountPercentage)
+    //-     div(class="mb-4") Discount: <b> #{product.discountPercentage} </b>
+
+    //- if (product.stock)
+    //-     div(class="mb-4") Stock: <b> #{product.stock} </b>
+
+    if (product_category.thumbnail)
+        div(class="mb-4")
+            img(
+                src= product_category.thumbnail
+                style= "width: 100px"
+            )
+
+    if (product_category.status)
+        div(class="mb-4")
+            span Status:
+            if (product_category.status === "available") 
+                span(class= "badge badge-success") Available
+            else 
+                span(class= "badge badge-dange") Unavailable
+        
+    if (product_category.position)
+        div(class="mb-4") Position: <b> #{product_category.position} </b>
+
+    //- if (product.shortDescription)
+    //-     div(class="mb-4") !{product.shortDescription}
+    if (product_category.description)       
+        div(class="mb-4") !{product_category.description}
+
+    a(
+        href=`${prefixAdmin}/products-category/edit/${product_category.id}`
+        class="btn btn-warning btn-sm"
+    ) Edit
+
+    //- script(src="/admin/js/product.js")

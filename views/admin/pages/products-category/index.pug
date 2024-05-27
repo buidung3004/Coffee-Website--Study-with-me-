@@ -9,6 +9,9 @@ include ../../mixins/table-tree.pug
 
 
 block main 
+    +alert-success(5000)
+    +alert-success(5000)
+
     if(role.permissions.includes("products-category_view"))
         h1 Danh mục sản phẩm
 
@@ -42,6 +45,13 @@ block main
 
             tbody
                 +table-tree(records)
+
+        form(
+            action="#"
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/products-category/change-status`        
+        ) 
 
         form(
             action="#"
