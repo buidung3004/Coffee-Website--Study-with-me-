@@ -1,0 +1,153 @@
+extends ../../layouts/default.pug
+include ../../mixins/filterStatus.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/formChangeMulti.pug
+include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+include ../../mixins/moment.pug
+
+block main 
+    +alert-success("5000")
+
+    if(role.permissions.includes("contacts_view"))      
+        //- h1 Danh sách sản phẩm
+        //- .card.mb-3 
+        //-     .card-header Bộ lọc và Tìm kiếm
+        //-     .card-body
+        //-         .row
+        //-             .col-6
+        //-                 +filter-status(filterStatus)
+        //-             .col-6 
+        //-                 +search(keyword)
+        //- .card.mb-3 
+        //-     .card-header Danh sách
+        //-         .card-body
+        //-             .row 
+        //-                 .col-8
+        //-                     if(role.permissions.includes("products_edit"))  
+        //-                         +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        //-                 .col-4 
+        //-                     if(role.permissions.includes("products_create"))      
+        //-                         a(
+        //-                             href=`${prefixAdmin}/products/create`
+        //-                             class="btn btn-outline-success"
+        //-                         ) + Add Products
+
+        //- .card.mb-3 
+        //-     .card-header Sort 
+        //-     .card-body 
+        //-         .row 
+        //-             .col-4 
+        //-                 +sort()
+        table(
+            class="table table-hover table-sm"
+            checkbox-multi
+            
+        )
+            thead 
+                tr 
+                    th 
+                        input(type="checkbox" name="checkall")
+                    th STT 
+                    th Mã khiếu nại
+                    th Tên
+                    th Email 
+                    th Chủ đề
+                    th Trạng thái
+                    //- th Người tạo
+                    //- th Người cập nhật gần nhất
+                    th Hành động
+
+            tbody
+                each item, index in contacts
+                    tr
+                        td 
+                            input(
+                                type="checkbox"
+                                name="id"
+                                value=item._id 
+                            )
+                        //- td #{pagination.limitItems*(pagination.currentPage - 1) + (index + 1)}
+                        td #{index+1}
+                        td #{item._id}
+                            //- img(
+                            //-     src=item.thumbnail
+                            //-     alt=item.title
+                            //-     width="100px"
+                            //-     height="auto"
+                            //- )
+                        td #{item.name} 
+                        td #{item.email}
+                        td #{item.subject}
+                        //- td 
+                        //-     input(
+                        //-         type= "number"
+                        //-         value=item.position
+                        //-         style="width: 60px"
+                        //-         min="1"
+                        //-         name="position"
+                        //-     )
+                        //- td #{item.stock}
+                        td
+                            if(role.permissions.includes("contacts_edit"))      
+                                if(item.status=="responsive")
+                                    a(
+                                        href="javascript:;"  
+                                        data-status =item.status
+                                        data-id=item._id
+                                        button-change-status
+                                        class="badge badge-success"
+                                    ) Responsive
+                                else
+                                    a(
+                                        href="javascript:;"  
+                                        data-status =item.status
+                                        data-id=item._id
+                                        button-change-status
+                                        class="badge badge-danger"
+                                    ) Unresponsive
+                        //- td 
+                        //-     p #{item.accountFullName}
+                        //-     +formatDateTime(item.createdBy.createdAt)
+                        //- td 
+                        //-     - const updatedBy = item.updatedBy.slice(-1)[0]
+                        //-     if(updatedBy)
+                        //-         p #{updatedBy.accountFullName}
+                        //-         p 
+                        //-             +formatDateTime(updatedBy.updatedAt)
+                        td
+                            a(
+                                href=`${prefixAdmin}/contacts/detail/${item._id}`
+                                class="btn btn-secondary btn-sm"
+                            ) Detail Contact
+                            //- if(role.permissions.includes("users_edit"))  
+                            //-     a(
+                            //-         href=`${prefixAdmin}/products/edit/${item.id}`
+                            //-         class="btn btn-warning btn-sm"
+                            //-     ) Edit
+                            if(role.permissions.includes("contacts_delete"))  
+                                button(
+                                    data-id = item._id
+                                    button-delete
+                                    class="btn btn-danger btn-sm ml-1"
+                                ) Delete
+        //- +pagination(pagination)
+
+        form(
+            action="#"
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/contacts/change-status`        
+        ) 
+
+        form(
+            action="#"
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/contacts/delete`        
+        ) 
+
+
+
+        script(src="/admin/js/contact.js")

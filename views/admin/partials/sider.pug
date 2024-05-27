@@ -15,6 +15,9 @@
             if(role.permissions.includes("users_view"))
                 li
                     a(href=`${prefixAdmin}/users`) Danh sách người dùng
+            if(role.permissions.includes("contacts_view"))
+                li
+                    a(href=`${prefixAdmin}/contacts`) Danh sách khiếu nại           
             if(role.permissions.includes("roles_view"))                        
                 li 
                     a(href=`${prefixAdmin}/roles`) Nhóm quyền       

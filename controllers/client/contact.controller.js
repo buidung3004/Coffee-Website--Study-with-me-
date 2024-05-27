@@ -15,7 +15,7 @@ module.exports.index = async (req, res) => {
 
 // [POST] /contact/add
 module.exports.addPost = async(req,res) => {
-  console.log(req.body)
+
   req.body.createdAt = new Date()
 
   const contact = new Contact(req.body)

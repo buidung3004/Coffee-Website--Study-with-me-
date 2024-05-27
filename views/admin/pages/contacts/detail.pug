@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.mt-4
+    .row
+      .col-md-8.offset-md-2
+        .card
+          .card-header.bg-primary.text-white
+            h4 Detail Contact
+          .card-body
+            form(method="POST" action=`${prefixAdmin}/contacts/respond/${contact._id}`)
+              .form-group.row
+                label.col-sm-3.col-form-label.font-weight-bold Name:
+                .col-sm-9
+                  input.form-control(type="text" name="name" value=contact.name required readonly)
+
+              .form-group.row
+                label.col-sm-3.col-form-label.font-weight-bold Email:
+                .col-sm-9
+                  input.form-control(type="email" name="email" value=contact.email  readonly)
+
+              .form-group.row
+                label.col-sm-3.col-form-label.font-weight-bold Subject:
+                .col-sm-9
+                  input.form-control(type="text" name="subject" value=contact.subject required readonly)
+
+              .form-group.row
+                label.col-sm-3.col-form-label.font-weight-bold Message:
+                .col-sm-9
+                  textarea.form-control(name="message" rows="4" required readonly)= contact.message
+
+              .form-group.row
+                label.col-sm-3.col-form-label Response:
+                .col-sm-9
+                  textarea.form-control(name="response" rows="5" required)
+
+              .form-group
+                button.btn.btn-primary(type="submit") Send Response
+
+          script(src="/admin/js/contact-detail.js")

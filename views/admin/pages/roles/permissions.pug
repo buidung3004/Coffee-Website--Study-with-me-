@@ -137,6 +137,32 @@ block main
                         each item in records 
                             td(class="text-center")
                                 input(type="checkbox")
+                    //- Khiếu nại
+                    tr
+                        td(colspan="4")
+                            b  Danh sách khiếu nại
+                    tr(data-name="contacts_view")
+                        td Xem
+                        each item in records 
+                            td(class="text-center")
+                                input(type="checkbox")
+
+                    //- tr(data-name="orders_create")
+                    //-     td Thêm mới
+                    //-     each item in records 
+                    //-         td(class="text-center")
+                    //-             input(type="checkbox")
+                    tr(data-name="contacts_edit")
+                        td Phản hồi
+                        each item in records 
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="contacts_delete")
+                        td Xóa
+                        each item in records 
+                            td(class="text-center")
+                                input(type="checkbox")
+
 
                     //- Nhóm quyền
                     tr
