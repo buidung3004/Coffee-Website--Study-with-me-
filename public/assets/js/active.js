@@ -620,3 +620,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Perform the add to cart action
     });
 });
+
+
+function updateTotalPrice(shippingFee, method) {
+    var cartTotal = cartDetail.totalPrice; // Ensure this is a number
+    var totalPrice = cartTotal + shippingFee;
+    
+    document.getElementById('totalPriceDisplay').innerText = `Total Price: ${totalPrice} VND`;
+    document.getElementById('cartTotalPrice').innerText = `${totalPrice} VND`;
+    document.getElementById('selectedDeliveryMethod').innerText = method;
+    document.getElementById('selectedDeliveryFee').innerText = `${shippingFee} VND`;
+  }
+  
+  document.getElementById('deliveryMethodFast').addEventListener('change', function() {
+    updateTotalPrice(30000, 'Fast');
+  });
+  
+  document.getElementById('deliveryMethodEconomical').addEventListener('change', function() {
+    updateTotalPrice(15000, 'Economical');
+  });
+  

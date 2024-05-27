@@ -49,7 +49,7 @@ module.exports.index = async (req, res) => {
                 const discount = product.price * (product.discountPercentage / 100);
                 const finalPrice = product.price - discount;
                 return total + (finalPrice * product.quantity);
-            }, 0);
+            }, 0) + orders[i].shippingFee;
         }
 
         res.render("admin/pages/orders/index", {
@@ -64,6 +64,7 @@ module.exports.index = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
+
 
 // [PATCH] /admin/orders/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
@@ -146,7 +147,6 @@ module.exports.changeMultiStatus = async (req, res) => {
     }
 };
 
-// [GET] /admin/orders/detail/:id
 module.exports.detail = async (req, res) => {
     try {
         const find = {
@@ -169,7 +169,7 @@ module.exports.detail = async (req, res) => {
 
         order.totalPrice = order.products.reduce((total, product) => {
             return total + product.finalPrice;
-        }, 0);
+        }, 0) + order.shippingFee;
 
         res.render("admin/pages/orders/detail", {
             pageTitle: order._id,

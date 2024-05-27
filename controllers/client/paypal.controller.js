@@ -29,12 +29,13 @@ module.exports.paypalTransactionComplete = async (req, res) => {
     }
 
     const objectOrder = {
+        user_id: res.locals.user._id,
         cart_id: cartId,
         userInfo: userInfo,
         products: products,
         deliveryMethod: req.body.deliveryMethod,
         paymentMethod: req.body.paymentMethod,
-        statusPayment: 'unpaid'
+        statusPayment: 'Unpaid'
     };
 
     const order = new Order(objectOrder);

@@ -138,10 +138,14 @@ body
                     a(href=`/products/detail/${item.productInfo.slug}`) #{item.productInfo.title}
                   td #{item.productInfo.newPrice} VND
                   td
-                    .product-quantity-count
-                      button.dec.qty-btn(type='button' data-product-id=item.product_id) -
-                      input.product-quantity-box(type='number' name='quantity' value=item.quantity min='1' product-id=item.product_id style='width: 60px')
-                      button.inc.qty-btn(type='button' data-product-id=item.product_id) +
+                    .product-quantity-count(style="display: table;")
+                      .qty-btn-wrapper(style="display: table-cell; padding: 0 10px;")
+                        button.dec.qty-btn(type='button' data-product-id=item.product_id) -
+                      .input-wrapper(style="display: table-cell; width: 60px; text-align: center;")
+                        input.product-quantity-box(type='number' name='quantity' value=item.quantity min='1' product-id=item.product_id style='width: 100%;')
+                      .qty-btn-wrapper(style="display: table-cell; padding: 0 10px;")
+                        button.inc.qty-btn(type='button' data-product-id=item.product_id) +
+
                   td #{item.totalPrice} VND
                   td
                     a(href=`/cart/delete/${item.product_id}` class="btn btn-danger remove-btn")

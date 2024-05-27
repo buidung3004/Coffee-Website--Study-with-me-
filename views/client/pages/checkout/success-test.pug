@@ -12,7 +12,7 @@ head
   meta(name='description' content='Kofi - Coffee Shop Website Template')
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
   // Favicon
-  link(rel='shortcut icon' type='image/x-icon' href='assets/images/favicon.png')
+  link(rel='shortcut icon' type='image/x-icon' href='/assets/images/favicon.png')
   // CSS (Font, Vendor, Icon, Plugins & Style CSS files)
   // Fonts CSS
   link(rel='preconnect' href='https://fonts.googleapis.com/')
@@ -41,7 +41,7 @@ body
           .header-logo
             a(href="/")
               img(src=settingGeneral.logo, width='125' height='42' alt='kofi logo')
-              img.light(src='assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
+              img.light(src='/assets/images/logo/logo-light.png' width='125' height='42' alt='kofi logo')
         // Logo End
         // Menu Start
         .col.d-none.d-lg-block
@@ -179,7 +179,7 @@ body
                   else
                       | Payment on delivery
               if(order.products.length > 0)
-                  h3(class="text-right") Total Order: #{order.totalPrice} VND
+                  h3(class="text-right") Total Order: #{order.totalPrice + order.shippingFee} VND
 // Shopping Cart Section End
 // Footer Section Start
 .footer-section.section
@@ -277,7 +277,7 @@ body
         // Footer Widget Start
         .col-md-auto.col-12.mb-2
           .footer-payment.text-center
-            img(loading='lazy' src='assets/images/footer/footer-payment.png' alt='footer payment' width='342' height='30')
+            img(loading='lazy' src='/assets/images/footer/footer-payment.png' alt='footer payment' width='342' height='30')
         // Footer Widget End
   // Footer Bottom Section End
 // Footer Section End
@@ -285,19 +285,19 @@ button.scroll-to-top
   i.sli-arrow-up
 // JS Vendor, Plugins & Activation Script Files
 // Vendors JS
-script(src='assets/js/vendor/modernizr-3.11.7.min.js')
-script(src='assets/js/vendor/jquery-3.6.0.min.js')
-script(src='assets/js/vendor/jquery-migrate-3.3.2.min.js')
-script(src='assets/js/vendor/bootstrap.bundle.min.js')
+script(src='/assets/js/vendor/modernizr-3.11.7.min.js')
+script(src='/assets/js/vendor/jquery-3.6.0.min.js')
+script(src='/assets/js/vendor/jquery-migrate-3.3.2.min.js')
+script(src='/assets/js/vendor/bootstrap.bundle.min.js')
 // Plugins JS
-script(src='assets/js/plugins/swiper-bundle.min.js')
-script(src='assets/js/plugins/jquery.countdown.min.js')
-script(src='assets/js/plugins/svg-inject.min.js')
-script(src='assets/js/plugins/jquery.magnific-popup.min.js')
-script(src='assets/js/plugins/ion.rangeSlider.min.js')
-script(src='assets/js/plugins/jquery.zoom.min.js')
-script(src='assets/js/plugins/resize-sensor.js')
-script(src='assets/js/plugins/jquery.sticky-sidebar.min.js')
+script(src='/assets/js/plugins/swiper-bundle.min.js')
+script(src='/assets/js/plugins/jquery.countdown.min.js')
+script(src='/assets/js/plugins/svg-inject.min.js')
+script(src='/assets/js/plugins/jquery.magnific-popup.min.js')
+script(src='/assets/js/plugins/ion.rangeSlider.min.js')
+script(src='/assets/js/plugins/jquery.zoom.min.js')
+script(src='/assets/js/plugins/resize-sensor.js')
+script(src='/assets/js/plugins/jquery.sticky-sidebar.min.js')
 // Activation JS
-script(src='assets/js/active.js')
+script(src='/assets/js/active.js')
 // Mirrored from htmldemo.net/kofi/kofi/shopping-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2024 14:42:08 GMT
