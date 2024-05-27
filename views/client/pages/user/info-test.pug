@@ -148,11 +148,11 @@ body
             .myaccount-content.dashboad
               .alert.alert-light
                 | Hello 
-                b didiv91396
+                b #{user.email}
                 |  (not 
-                b didiv91396
+                b #{user.email}
                 | ? 
-                a(href='login.html') Log out
+                a(href='/user/logout') Log out
                 | )
               p
                 | From your account dashboard you can view your 
@@ -167,39 +167,29 @@ body
           #orders.tab-pane.fade
             .myaccount-content.order
               .table-responsive
-                table.table
-                  thead
-                    tr
-                      th Order
-                      th Date
-                      th Status
-                      th Total
-                      th Action
-                  tbody
-                    tr
-                      td 1
-                      td Aug 22, 2023
-                      td Pending
-                      td $3000
-                      td
-                        a(href='shopping-cart.html')
-                          b View
-                    tr
-                      td 2
-                      td July 22, 2023
-                      td Approved
-                      td $200
-                      td
-                        a(href='shopping-cart.html')
-                          b View
-                    tr
-                      td 3
-                      td June 12, 2017
-                      td On Hold
-                      td $990
-                      td
-                        a(href='shopping-cart.html')
-                          b View
+                if (orders && orders.length)
+                  h2 Order
+                  table.table
+                      thead
+                          tr
+                              th Order
+                              th Date
+                              th Status
+                              th Total
+                              th Action
+                      tbody
+                          each order, index in orders
+                              tr
+                                  td #{index + 1}
+                                  td #{order.createdAt.toLocaleDateString()}
+                                  td #{order.status}
+                                  td #{order.totalPrice.toFixed(2)} VND
+                                  td
+                                      if ['pending', 'processing'].includes(order.status)
+                                          form(action=`/user/cancel-order/${order._id}`, method="POST")
+                                              button(type="submit" class="btn btn-danger btn-sm") Cancel
+                else
+                    p Empty
           // Single Tab Content End
           // Single Tab Content Start
           #download.tab-pane.fade

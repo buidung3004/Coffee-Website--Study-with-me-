@@ -22,11 +22,11 @@ const orderSchema = new mongoose.Schema(
         paymentMethod: String,
         status:{
             type: String,
-            default:"pending"
+            default:"Pending"
         },
         statusPayment:{
             type: String,
-            default:"unpaid"
+            default:"Unpaid"
         },
         deleted: {
             type: Boolean,

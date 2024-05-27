@@ -26,7 +26,14 @@ module.exports.index = async (req, res) => {
 
 
     if(keyword) {
+        // Sort
+        let sort = {};
 
+        if(req.query.sortKey && req.query.sortValue) {
+            sort[req.query.sortKey] = req.query.sortValue
+        } else {
+            sort.position = "desc"
+        }
     
 
         const keywordRegex = new RegExp(keyword, "i")
@@ -35,7 +42,8 @@ module.exports.index = async (req, res) => {
             title: keywordRegex,
             status: "available",
             deleted: false
-        }).limit(objectPagination.limitItems).skip(objectPagination.skip);
+        }).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip);
+
         
         newProducts = productsHelper.priceNewProducts(products)
 
@@ -46,7 +54,7 @@ module.exports.index = async (req, res) => {
     res.render("client/pages/search/index-test", {
         pageTitle: "Kết quả tìm kiếm",
         keyword: keyword,
-        products: newProducts,
+        newProducts: newProducts,
         pagination: objectPagination
     });
     

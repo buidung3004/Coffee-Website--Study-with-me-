@@ -33,4 +33,6 @@ router.post('/password/reset', validate.resetPasswordPost, controller.resetPassw
 
 router.get('/info',authMiddleware.requireAuth, controller.info);
 
+router.post('/cancel-order/:id', authMiddleware.requireAuth, controller.cancelOrder);
+
 module.exports = router

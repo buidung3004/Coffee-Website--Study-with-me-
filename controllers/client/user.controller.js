@@ -3,6 +3,7 @@ const User = require("../../models/user.model")
 const ForgotPassword = require("../../models/forgot-password.model")
 const ConfirmationUser = require("../../models/confirmation-user.model")
 const Cart = require("../../models/cart.model")
+const Order = require("../../models/order.model")
 
 const generateHelper = require("../../helpers/generate")
 const sendMailHelper = require("../../helpers/sendMail")
@@ -252,8 +253,56 @@ module.exports.resetPasswordPost = async (req, res) => {
 
 // [GET] user/info
 module.exports.info = async (req, res) => {
-    
-    res.render("client/pages/user/info-test", {
-        pageTitle:"Thông tin tài khoản",
-    })
+    const user = res.locals.user;
+    try {
+        // Truy vấn các đơn hàng của người dùng
+        const orders = await Order.find({ user_id: user._id });
+
+        // Tính tổng tiền cho từng đơn hàng
+        orders.forEach(order => {
+            order.totalPrice = order.products.reduce((total, product) => {
+                const discount = product.price * (product.discountPercentage / 100);
+                const finalPrice = product.price - discount;
+                return total + (finalPrice * product.quantity);
+            }, 0);
+        });
+
+        // Gửi dữ liệu đến view
+        res.render("client/pages/user/info-test", {
+            pageTitle: "Thông tin tài khoản",
+            orders: orders,
+            user: user
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+// [POST] /user/cancel-order/:id
+module.exports.cancelOrder = async (req, res) => {
+    const orderId = req.params.id;
+    const user = res.locals.user;
+    try {
+        const order = await Order.findOne({ _id: orderId, user_id: user._id });
+
+        if (!order) {
+            req.flash("error", "Order not found or you don't have permission to cancel this order");
+            return res.redirect("back");
+        }
+
+        if (['pending', 'processing'].includes(order.status)) {
+            order.status = 'cancelled';
+            await order.save();
+            req.flash("success", "Order has been cancelled successfully");
+        } else {
+            req.flash("error", "Order cannot be cancelled as it is already confirmed or shipped");
+        }
+
+        res.redirect("back");
+    } catch (error) {
+        console.error(error);
+        req.flash("error", "An error occurred while cancelling the order");
+        res.redirect("back");
+    }
 }
