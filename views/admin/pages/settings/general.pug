@@ -16,7 +16,7 @@ block main
             label(for="websiteName")  Website name
             input(
                 type="text"
-                class="form-control "
+                class="form-control"
                 id="websiteName"
                 name="websiteName"
                 value=(settingGeneral ? settingGeneral.websiteName : "")
@@ -34,16 +34,18 @@ block main
                 accept="image/*" 
                 upload-image-input   
             )
-            img(
-                src=(settingGeneral ? settingGeneral.logo : "")
-                upload-image-preview
-                class="image-preview"
-            )
+            if settingGeneral && settingGeneral.logo
+                img(
+                    src=settingGeneral.logo
+                    upload-image-preview
+                    class="image-preview"
+                    style="width: 150px; height: auto;"
+                )
         div(class="form-group")
             label(for="phone")  Phone
             input(
                 type="text"
-                class="form-control "
+                class="form-control"
                 id="phone"
                 name="phone"
                 value=(settingGeneral ? settingGeneral.phone : "")
@@ -52,7 +54,7 @@ block main
             label(for="email")  Email
             input(
                 type="email"
-                class="form-control "
+                class="form-control"
                 id="email"
                 name="email"
                 value=(settingGeneral ? settingGeneral.email : "")
@@ -61,7 +63,7 @@ block main
             label(for="address")  Address
             input(
                 type="text"
-                class="form-control "
+                class="form-control"
                 id="address"
                 name="address"
                 value=(settingGeneral ? settingGeneral.address : "")
@@ -70,7 +72,7 @@ block main
             label(for="copyright")  Copyright
             input(
                 type="text"
-                class="form-control "
+                class="form-control"
                 id="copyright"
                 name="copyright"
                 value=(settingGeneral ? settingGeneral.copyright : "")
@@ -80,5 +82,3 @@ block main
                 type="submit"
                 class="btn btn-primary"
             ) Update
-
-

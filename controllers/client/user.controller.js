@@ -252,6 +252,7 @@ module.exports.resetPasswordPost = async (req, res) => {
 
 // [GET] user/info
 module.exports.info = async (req, res) => {
+    
     res.render("client/pages/user/info-test", {
         pageTitle:"Thông tin tài khoản",
     })

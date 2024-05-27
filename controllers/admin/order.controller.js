@@ -88,8 +88,8 @@ module.exports.changeStatus = async (req, res) => {
 module.exports.updateOrderStatus = async (req, res) => {
     const { status, orderId } = req.body;
 
-    console.log("Status:", status); // Kiểm tra giá trị của status
-    console.log("Order ID:", orderId); // Kiểm tra giá trị của id
+    // console.log("Status:", status); // Kiểm tra giá trị của status
+    // console.log("Order ID:", orderId); // Kiểm tra giá trị của id
 
     try {
         await Order.updateOne({ _id: orderId }, { status: status });
