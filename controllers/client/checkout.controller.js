@@ -65,19 +65,19 @@ module.exports.order = async (req, res) => {
         paymentMethod: req.body.paymentMethod
     }
 
+    
     const order = new Order(objectOrder);
     await order.save()
 
     await Cart.updateOne({_id:cartId},{products: []})
 
-    res.redirect(`/checkout/success-test/${order.id}`)
+    res.redirect(`/checkout/success/${order.id}`)
 
 
 }
 
 // [GET] /checkout/success/:orderid
 module.exports.success = async (req, res) => {
-    console.log(req.params.orderId)
     const order = await Order.findOne({
         _id: req.params.orderId
     })

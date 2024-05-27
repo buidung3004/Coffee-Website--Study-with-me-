@@ -8,6 +8,7 @@ const authRoutes = require("./auth.route")
 const myAccountRoutes = require("./my-account.route")
 const settingRoutes = require("./setting.route")
 const powerbiRoutes = require("./powerbi.route")
+const orderRoutes = require("./order.route")
 
 const authMiddleware = require("../../middlewares/admin/auth.middleware")
 module.exports = (app) => {
@@ -54,5 +55,10 @@ module.exports = (app) => {
         PATH_ADMIN + "/powerbi",
         authMiddleware.requireAuth,
         powerbiRoutes
+    )
+    app.use(
+        PATH_ADMIN + "/orders",
+        authMiddleware.requireAuth,
+        orderRoutes
     )
 }

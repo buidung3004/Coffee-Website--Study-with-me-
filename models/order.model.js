@@ -27,7 +27,11 @@ const orderSchema = new mongoose.Schema(
         statusPayment:{
             type: String,
             default:"unpaid"
-        }
+        },
+        deleted: {
+            type: Boolean,
+            default: false
+        },
     },
     {
         timestamps: true

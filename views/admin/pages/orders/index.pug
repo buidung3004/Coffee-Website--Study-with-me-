@@ -1,0 +1,186 @@
+extends ../../layouts/default.pug
+include ../../mixins/filterStatus.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/formChangeMulti.pug
+include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+include ../../mixins/moment.pug
+
+block main 
+    +alert-success(5000)
+    +alert-error(5000)
+
+    if(role.permissions.includes("orders_view"))      
+        h1 Danh sách đơn hàng
+        //- .card.mb-3 
+        //-     .card-header Bộ lọc và Tìm kiếm
+        //-     .card-body
+        //-         .row
+        //-             .col-6
+        //-                 +filter-status(filterStatus)
+        //-             .col-6 
+        //-                 +search(keyword)
+        //- .card.mb-3 
+        //-     .card-header Danh sách
+        //-         .card-body
+        //-             .row 
+        //-                 .col-8
+        //-                     if(role.permissions.includes("products_edit"))  
+        //-                         +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        //-                 .col-4 
+        //-                     if(role.permissions.includes("products_create"))      
+        //-                         a(
+        //-                             href=`${prefixAdmin}/products/create`
+        //-                             class="btn btn-outline-success"
+        //-                         ) + Add Products
+
+        .card.mb-3 
+            .card-header Sort 
+            .card-body 
+                .row 
+                    .col-4 
+                        //- +sort()
+                        select.form-control(name="sortStatus" onchange="sortOrdersByStatus(this)")
+                            option(value="all") All
+                            option(value="pending") Pending
+                            option(value="processing") Processing
+                            option(value="confirmed") Confirmed
+                            option(value="shipped") Shipped
+                            option(value="delivered") Delivered
+                            option(value="completed") Completed
+                            option(value="cancelled") Cancelled
+                    .col-4
+                        select.form-control(name="sortPaymentStatus" onchange="sortOrdersByPaymentStatus(this)")
+                            option(value="all") All
+                            option(value="paid") Paid
+                            option(value="unpaid") Unpaid
+
+        form#form-change-multi(method="post" action="/admin/orders/change-multi-status")
+            table(
+                class="table table-hover table-sm"
+                checkbox-multi
+            )
+                thead 
+                    tr 
+                        th 
+                            input(type="checkbox" name="checkall" onclick="checkAll(this)")
+                        th STT 
+                        th Mã đơn hàng
+                        th Người đặt
+                        th Số điện thoại
+                        th Tổng tiền
+                        th Trạng thái
+                        //- th Người tạo
+                        //- th Người cập nhật gần nhất
+                        th Trạng thái thanh toán 
+                        th Hành động
+
+                tbody
+                    each item, index in orders
+                        tr
+                            td 
+                                input(
+                                    type="checkbox"
+                                    name="orderIds"
+                                    value=item._id 
+                                )
+                            td #{pagination.limitItems*(pagination.currentPage - 1) + (index + 1)}
+                            td #{item._id} 
+                            td #{item.userInfo.fullName}
+                            td #{item.userInfo.phone}
+                            td #{item.totalPrice.toFixed(2)} VND
+                            td 
+                                if(role.permissions.includes("orders_edit"))     
+                                form#form-change-order-status(method="post" action="/admin/orders/change-status" style="display:none;")
+                                    input(type="hidden" name="_method" value="PATCH")
+                                    input(type="hidden" name="orderId" value=item._id)
+                                    input(type="hidden" name="status" value=item.status)
+                                select(
+                                    class="form-control"
+                                    name="orderStatus"
+                                    data-order-id=item._id
+                                    onchange="updateOrderStatus(this)"
+                                )
+                                    option(value="pending" selected=item.status == "pending") Pending
+                                    option(value="processing" selected=item.status == "processing") Processing
+                                    option(value="confirmed" selected=item.status == "confirmed") Confirmed
+                                    option(value="shipped" selected=item.status == "shipped") Shipped
+                                    option(value="delivered" selected=item.status == "delivered") Delivered
+                                    option(value="completed" selected=item.status == "completed") Completed
+                                    option(value="cancelled" selected=item.status == "cancelled") Cancelled
+                            td 
+                                if(role.permissions.includes("orders_edit"))      
+                                    if(item.statusPayment=="paid")
+                                        a(
+                                            href="javascript:;"  
+                                            data-status =item.statusPayment
+                                            data-id=item._id
+                                            button-change-status
+                                            class="badge badge-success"
+                                        ) Paid
+                                    else
+                                        a(
+                                            href="javascript:;"  
+                                            data-status =item.statusPayment
+                                            data-id=item._id
+                                            button-change-status
+                                            class="badge badge-danger"
+                                        ) Unpaid
+                            //- td 
+                            //-     p #{item.accountFullName}
+                            //-     +formatDateTime(item.createdBy.createdAt)
+                            //- td 
+                            //-     - const updatedBy = item.updatedBy.slice(-1)[0]
+                            //-     if(updatedBy)
+                            //-         p #{updatedBy.accountFullName}
+                            //-         p 
+                            //-             +formatDateTime(updatedBy.updatedAt)
+                            td
+                                a(
+                                    href=`${prefixAdmin}/or/detail/${item._id}`
+                                    class="btn btn-secondary btn-sm"
+                                ) Detail Order
+                                //- if(role.permissions.includes("products_edit"))  
+                                //-     a(
+                                //-         href=`${prefixAdmin}/products/edit/${item._id}`
+                                //-         class="btn btn-warning btn-sm"
+                                //-     ) Edit
+                                if(role.permissions.includes("orders_delete"))  
+                                    button(
+                                        data-id = item._id
+                                        button-delete
+                                        class="btn btn-danger btn-sm ml-1"
+                                    ) Delete
+            .form-group.mt-3
+                select.form-control(name="newStatus")
+                    option(value="pending") Pending
+                    option(value="processing") Processing
+                    option(value="confirmed") Confirmed
+                    option(value="shipped") Shipped
+                    option(value="delivered") Delivered
+                    option(value="completed") Completed
+                    option(value="cancelled") Cancelled
+                button.btn.btn-primary(type="submit") Change Status
+
+                select.form-control.mt-2(name="newPaymentStatus")
+                    option(value="paid") Paid
+                    option(value="unpaid") Unpaid
+                button.btn.btn-primary(type="submit") Change Payment Status
+        +pagination(pagination)
+
+        form(
+            action="#"
+            method="POST"
+            id="form-change-statusPayment"
+            data-path=`${prefixAdmin}/orders/change-status`        
+        ) 
+
+        form(
+            action="#"
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/orders/delete`        
+        ) 
+
+        script(src="/admin/js/order.js")
