@@ -183,3 +183,38 @@ body {
 .image-previe[src=""] {
     display: none;
 }
+
+.badge-pending {
+    background-color: blue;
+    color: white;
+}
+
+.badge-processing {
+    background-color: orange;
+    color: white;
+}
+
+.badge-confirmed {
+    background-color: cyan;
+    color: black;
+}
+
+.badge-shipped {
+    background-color: purple;
+    color: white;
+}
+
+.badge-delivered {
+    background-color: green;
+    color: white;
+}
+
+.badge-completed {
+    background-color: darkgreen;
+    color: white;
+}
+
+.badge-cancelled {
+    background-color: red;
+    color: white;
+}

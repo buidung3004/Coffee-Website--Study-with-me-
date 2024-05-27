@@ -1,0 +1,92 @@
+extends ../../layouts/default.pug
+
+block main
+    if (order._id)
+        h1(class="mb-4") Order ID: #{order._id}
+
+    if (order.user_id)
+        div(class="mb-4") User ID: <b> #{order.user_id} </b>
+
+    if (order.cart_id)
+        div(class="mb-4") Cart ID: <b> #{order.cart_id} </b>
+    
+    if (order.userInfo)
+        div(class="mb-4") 
+            h2 User Information
+            table(class="table table-bordered")
+                tbody
+                    tr
+                        th Name
+                        td #{order.userInfo.fullName}
+                    tr
+                        th Phone
+                        td #{order.userInfo.phone}
+                    tr
+                        th Address
+                        td #{order.userInfo.address}
+
+    if (order.products && order.products.length)
+        div(class="mb-4") 
+            h2 Products
+            table(class="table table-bordered")
+                thead
+                    tr
+                        th Product Name
+                        th Price
+                        th Discount
+                        th Quantity
+                        th Final Price
+                tbody
+                    each product, index in order.products
+                        tr
+                            td #{product.product_name}
+                            td #{product.price}$
+                            td #{product.discountPercentage}%
+                            td #{product.quantity}
+                            td #{product.finalPrice}$
+
+    if (order.deliveryMethod)
+        div(class="mb-4")
+            h2 Delivery Method
+            table(class="table table-bordered")
+                tbody
+                    tr
+                        th Method
+                        td #{order.deliveryMethod}
+
+    if (order.paymentMethod)
+        div(class="mb-4")
+            h2 Payment Method
+            table(class="table table-bordered")
+                tbody
+                    tr
+                        th Method
+                        td #{order.paymentMethod}
+
+    if (order.status)
+        div(class="mb-4")
+            h2 Status
+            table(class="table table-bordered")
+                tbody
+                    tr
+                        th Status
+                        td 
+                            if (order.status === "available") 
+                                span(class="badge badge-success") Available
+                            else 
+                                span(class="badge badge-danger") #{order.status}
+            
+    if (order.statusPayment)
+        div(class="mb-4")
+            h2 Payment Status
+            table(class="table table-bordered")
+                tbody
+                    tr
+                        th Status
+                        td 
+                            if (order.statusPayment === "paid") 
+                                span(class="badge badge-success") Paid
+                            else 
+                                span(class="badge badge-danger") Unpaid
+
+    script(src="/admin/js/order.js")

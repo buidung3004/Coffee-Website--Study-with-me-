@@ -13,28 +13,6 @@ block main
 
     if(role.permissions.includes("orders_view"))      
         h1 Danh sách đơn hàng
-        //- .card.mb-3 
-        //-     .card-header Bộ lọc và Tìm kiếm
-        //-     .card-body
-        //-         .row
-        //-             .col-6
-        //-                 +filter-status(filterStatus)
-        //-             .col-6 
-        //-                 +search(keyword)
-        //- .card.mb-3 
-        //-     .card-header Danh sách
-        //-         .card-body
-        //-             .row 
-        //-                 .col-8
-        //-                     if(role.permissions.includes("products_edit"))  
-        //-                         +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-        //-                 .col-4 
-        //-                     if(role.permissions.includes("products_create"))      
-        //-                         a(
-        //-                             href=`${prefixAdmin}/products/create`
-        //-                             class="btn btn-outline-success"
-        //-                         ) + Add Products
-
         .card.mb-3 
             .card-header Sort 
             .card-body 
@@ -55,6 +33,10 @@ block main
                             option(value="all") All
                             option(value="paid") Paid
                             option(value="unpaid") Unpaid
+                    .col-4
+                        select.form-control(name="sortCreatedAt" onchange="sortOrdersByCreatedAt(this)")
+                            option(value="desc" selected=sortCreatedAt === "desc") Mới nhất
+                            option(value="asc" selected=sortCreatedAt === "asc") Sớm nhất
 
         form#form-change-multi(method="post" action="/admin/orders/change-multi-status")
             table(
@@ -71,8 +53,7 @@ block main
                         th Số điện thoại
                         th Tổng tiền
                         th Trạng thái
-                        //- th Người tạo
-                        //- th Người cập nhật gần nhất
+                        th Thời gian tạo
                         th Trạng thái thanh toán 
                         th Hành động
 
@@ -109,6 +90,7 @@ block main
                                     option(value="delivered" selected=item.status == "delivered") Delivered
                                     option(value="completed" selected=item.status == "completed") Completed
                                     option(value="cancelled" selected=item.status == "cancelled") Cancelled
+                            td #{item.createdAt.toLocaleString()} 
                             td 
                                 if(role.permissions.includes("orders_edit"))      
                                     if(item.statusPayment=="paid")
@@ -127,25 +109,11 @@ block main
                                             button-change-status
                                             class="badge badge-danger"
                                         ) Unpaid
-                            //- td 
-                            //-     p #{item.accountFullName}
-                            //-     +formatDateTime(item.createdBy.createdAt)
-                            //- td 
-                            //-     - const updatedBy = item.updatedBy.slice(-1)[0]
-                            //-     if(updatedBy)
-                            //-         p #{updatedBy.accountFullName}
-                            //-         p 
-                            //-             +formatDateTime(updatedBy.updatedAt)
                             td
                                 a(
-                                    href=`${prefixAdmin}/or/detail/${item._id}`
+                                    href=`${prefixAdmin}/orders/detail/${item._id}`
                                     class="btn btn-secondary btn-sm"
                                 ) Detail Order
-                                //- if(role.permissions.includes("products_edit"))  
-                                //-     a(
-                                //-         href=`${prefixAdmin}/products/edit/${item._id}`
-                                //-         class="btn btn-warning btn-sm"
-                                //-     ) Edit
                                 if(role.permissions.includes("orders_delete"))  
                                     button(
                                         data-id = item._id

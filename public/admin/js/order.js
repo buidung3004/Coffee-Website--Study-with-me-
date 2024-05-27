@@ -175,3 +175,10 @@ function sortOrdersByPaymentStatus(selectElement) {
       }
   });
 }
+
+function sortOrdersByCreatedAt(selectElement) {
+  const sortCreatedAt = selectElement.value;
+  const url = new URL(window.location.href);
+  url.searchParams.set('sortCreatedAt', sortCreatedAt);
+  window.location.href = url.href;
+}

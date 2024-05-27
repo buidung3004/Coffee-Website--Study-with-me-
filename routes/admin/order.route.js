@@ -13,4 +13,6 @@ router.delete("/delete/:id", controller.deleteItem);
 
 router.post('/change-multi-status', controller.changeMultiStatus);
 
+router.get("/detail/:id", controller.detail);
+
 module.exports = router
