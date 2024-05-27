@@ -129,6 +129,69 @@ block  main
                     id="delete-preview" 
                     style="display: none;"
                 ) X
+            div(class="form-group additional-images")
+                label Additional Images
+                div(class="image-inputs")
+                    div(class="form-group thumbnail-container" upload-image)
+                        label(for="additionalImage1") Image 1
+                        input(
+                            type="file"
+                            class="form-control-file"
+                            id="additionalImage1"
+                            name="additionalImage1"    
+                            accept="image/*" 
+                            upload-image-input   
+                        )
+                        if product && product.additionalImage1
+                            img(
+                                src=product.additionalImage1
+                                upload-image-preview
+                                class="image-preview"
+                            )
+                        button(
+                            id="delete-preview" 
+                            style="display: none;"
+                        ) X
+                    div(class="form-group thumbnail-container" upload-image)
+                        label(for="additionalImage2") Image 2
+                        input(
+                            type="file"
+                            class="form-control-file"
+                            id="additionalImage2"
+                            name="additionalImage2"    
+                            accept="image/*" 
+                            upload-image-input   
+                        )
+                        if product && product.additionalImage2
+                            img(
+                                src=product.additionalImage2
+                                upload-image-preview
+                                class="image-preview"
+                            )
+                        button(
+                            id="delete-preview" 
+                            style="display: none;"
+                        ) X
+                    div(class="form-group thumbnail-container" upload-image)
+                        label(for="additionalImage3") Image 3
+                        input(
+                            type="file"
+                            class="form-control-file"
+                            id="additionalImage3"
+                            name="additionalImage3"    
+                            accept="image/*" 
+                            upload-image-input   
+                        )
+                        if product && product.additionalImage3
+                            img(
+                                src=product.additionalImage3
+                                upload-image-preview
+                                class="image-preview"
+                            )
+                        button(
+                            id="delete-preview" 
+                            style="display: none;"
+                        ) X
             div(class="form-group")
                 label(for="position") Position
                 input(

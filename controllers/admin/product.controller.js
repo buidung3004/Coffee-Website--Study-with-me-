@@ -213,18 +213,39 @@ module.exports.createPost = async(req,res) => {
         account_id : res.locals.user.id,
     };
 
-    // Handle additional images
-    if (req.files) {
-        req.body.additionalImage1 = req.files['additionalImage1'] ? req.files['additionalImage1'][0].path : '';
-        req.body.additionalImage2 = req.files['additionalImage2'] ? req.files['additionalImage2'][0].path : '';
-        req.body.additionalImage3 = req.files['additionalImage3'] ? req.files['additionalImage3'][0].path : '';
-    }
-
-    const product = new Product(req.body);
-    await product.save();
-
-    res.redirect(`${systemConfig.prefixAdmin}/products`);
-};
+     // If no new file is uploaded, set the additionalImage fields to null
+     req.body.additionalImage1 = req.body.additionalImage1 || null;
+     req.body.additionalImage2 = req.body.additionalImage2 || null;
+     req.body.additionalImage3 = req.body.additionalImage3 || null;
+ 
+     try {
+         const createdBy = {
+             account_id: res.locals.user.id,
+             createdAt: new Date(),
+         };
+ 
+         // Create the new product
+         const newProduct = new Product({
+             ...req.body,
+             createdBy: createdBy
+         });
+ 
+         // Save the new product to the database
+         await newProduct.save();
+ 
+         // Check the additionalImage fields
+         console.log(newProduct.additionalImage1);
+         console.log(newProduct.additionalImage2);
+         console.log(newProduct.additionalImage3);
+ 
+         req.flash("success", "Tạo mới sản phẩm thành công");
+     } catch (error) {
+         console.error(error); // Log the error
+         req.flash("error", "Create fail");
+     }
+ 
+     res.redirect("/admin/products");
+ };
 
 // [GET] /admin/products/edit/:id
 module.exports.edit = async(req,res) => {
