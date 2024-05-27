@@ -33,3 +33,20 @@ module.exports.changeStatus = async (req, res) => {
   req.flash("success","Cập nhật trạng thái thành công")
   res.redirect("back");
 };
+
+// [DELETE] /admin/users/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+
+  // await Product.deleteOne({_id:id})
+  await User.updateOne({_id:id}, { 
+      deleted: true,
+      // deletedBy: {
+      //     account_id: res.locals.user.id,
+      //     deletedAt: new Date(),
+      // }
+  })
+  req.flash("success",`Đã xóa thành công sản phẩm`)
+  // cập nhật và tự chuyển hướng
+  res.redirect("back");
+};

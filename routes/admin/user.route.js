@@ -8,8 +8,8 @@ router.get("/", controller.index);
 router.patch("/change-status/:status/:id", controller.changeStatus);
 // 
 // router.post("/change-status", controller.updateOrderStatus);
-// 
-// router.delete("/delete/:id", controller.deleteItem);
+
+router.delete("/delete/:id", controller.deleteItem);
 // 
 // router.post('/change-multi-status', controller.changeMultiStatus);
 // 
